@@ -15,7 +15,7 @@ import (
 )
 
 const groqURL = "https://api.groq.com/openai/v1/chat/completions"
-const groqModel = "llama-3.1-8b-instant"
+const groqModel = "openai/gpt-oss-120b"
 
 type AIService struct {
 	apiKey string
