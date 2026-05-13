@@ -14,7 +14,7 @@ type AIService struct {
 }
 
 func NewAIService(ctx context.Context) (*AIService, error) {
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, 20*time.Second)
 	defer cancel()
 
 	apiKey := os.Getenv("GEMINI_API_KEY")
