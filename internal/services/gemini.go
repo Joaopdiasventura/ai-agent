@@ -19,7 +19,10 @@ func NewAIService(ctx context.Context) (*AIService, error) {
 
 	apiKey := os.Getenv("GEMINI_API_KEY")
 	if apiKey == "" {
-		return nil, fmt.Errorf("missing GEMINI_API_KEY")
+		apiKey = os.Getenv("GOOGLE_API_KEY")
+	}
+	if apiKey == "" {
+		return nil, fmt.Errorf("missing GEMINI_API_KEY or GOOGLE_API_KEY")
 	}
 
 	client, err := genai.NewClient(ctx, &genai.ClientConfig{

@@ -14,24 +14,26 @@ import (
 const allowedOrigin = "https://joaopdias.dev.br"
 
 var (
-	initOnce sync.Once
-	handler  http.Handler
-	initErr  error
+	handlerMu sync.Mutex
+	handler   http.Handler
 )
 
 func Handler() (http.Handler, error) {
-	initOnce.Do(func() {
-		aiService, err := services.NewAIService(context.Background())
-		if err != nil {
-			log.Printf("failed to initialize AI service: %v", err)
-			initErr = err
-			return
-		}
+	handlerMu.Lock()
+	defer handlerMu.Unlock()
 
-		handler = NewHandler(aiService)
-	})
+	if handler != nil {
+		return handler, nil
+	}
 
-	return handler, initErr
+	aiService, err := services.NewAIService(context.Background())
+	if err != nil {
+		log.Printf("failed to initialize AI service: %v", err)
+		return nil, err
+	}
+
+	handler = NewHandler(aiService)
+	return handler, nil
 }
 
 func NewHandler(aiService *services.AIService) http.Handler {
