@@ -14,7 +14,7 @@ type AIService struct {
 }
 
 func NewAIService(ctx context.Context) (*AIService, error) {
-	ctx, cancel := context.WithTimeout(ctx, 20*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
 
 	apiKey := os.Getenv("GEMINI_API_KEY")
@@ -43,7 +43,7 @@ func (s *AIService) Ask(ctx context.Context, question string) (string, error) {
 
 	result, err := s.client.Models.GenerateContent(
 		ctx,
-		"gemma-4-26b-a4b-it",
+		"gemini-2.5-flash-lite",
 		genai.Text(prompt),
 		nil,
 	)
@@ -59,7 +59,7 @@ func (s *AIService) AskStream(ctx context.Context, question string, onChunk func
 
 	for result, err := range s.client.Models.GenerateContentStream(
 		ctx,
-		"gemma-4-26b-a4b-it",
+		"gemini-2.5-flash-lite",
 		genai.Text(prompt),
 		nil,
 	) {

@@ -4,7 +4,7 @@
   "buildCommand": "",
   "functions": {
     "api/index.go": {
-      "maxDuration": 20
+      "maxDuration": 10
     }
   },
   "routes": [
