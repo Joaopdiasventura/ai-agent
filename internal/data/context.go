@@ -14,6 +14,13 @@ Profile:
 - Language: Advanced English.
 - Availability: open to engineering roles involving distributed systems, critical backend flows, and architectural responsibility.
 
+Career facts:
+- First public professional experience listed in the portfolio: Systems Development Intern / Estagiário em Desenvolvimento de Sistemas at Representa Online.
+- First public professional experience period: Jun 2024 - Aug 2024.
+- Current public seniority listed in the portfolio: Mid-level Developer / Desenvolvedor Pleno.
+- Current public role listed in the portfolio: Mid-level Developer / Desenvolvedor Pleno at uFind Tecnologia, Jun 2025 - Present.
+- Public career duration based on the listed experience start: since Jun 2024.
+
 Education and certificates:
 - Fatec Osasco - Multiplatform Software Development (2026-2028).
 - Etec Guarulhos - Systems Development (2023-2025).
@@ -35,6 +42,15 @@ Impact metrics:
 - +16GB television media data processed.
 - R$1M+ monthly billed volume automated.
 - 1.23 GiB/s compression throughput measured.
+
+Project comparison:
+- The portfolio does not declare one best project.
+- For financial transactional flows, Auronix is the strongest public example.
+- For distributed microservices and architecture, Modularis is the strongest public example.
+- For measured runtime performance, Votrix is the strongest public HTTP runtime example.
+- For measured systems/concurrency performance, GGCompress is the strongest public Go systems example.
+- For auditability and voting integrity, VOX is the public example.
+- For music streaming and product delivery, Etecfy is the public example.
 
 Projects:
 - Auronix: digital banking and transactional settlement. Teaser: digital banking core with asynchronous settlement, Redis-backed concurrency control, and live transfer feedback over SSE. Role: full-stack architecture, transactional backend design, real-time workflow UX. Timeline: independent engineering project. Stack: NestJS, Fastify, PostgreSQL, Redis, BullMQ, Angular, SSE. Metrics: 248 automated tests; 10 min request expiry; 100 / 24h SSE replay window. Links: https://auronix.joaopdias.dev.br, https://github.com/joaopdiasventura/Auronix-server, https://github.com/joaopdiasventura/Auronix-client.
