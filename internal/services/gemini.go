@@ -40,3 +40,33 @@ func (s *AIService) Ask(ctx context.Context, question string) (string, error) {
 
 	return result.Text(), nil
 }
+
+func (s *AIService) AskStream(ctx context.Context, question string, onChunk func(chunk string) error) error {
+	prompt := BuildPortfolioPrompt(question)
+
+	for result, err := range s.client.Models.GenerateContentStream(
+		ctx,
+		"gemini-3-flash-preview",
+		genai.Text(prompt),
+		nil,
+	) {
+		if err != nil {
+			return err
+		}
+
+		if result == nil {
+			continue
+		}
+
+		text := result.Text()
+		if text == "" {
+			continue
+		}
+
+		if err := onChunk(text); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}

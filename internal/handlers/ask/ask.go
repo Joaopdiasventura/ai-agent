@@ -57,16 +57,38 @@ func (h *AskHandler) Handle(lang Language) http.HandlerFunc {
 			return
 		}
 
-		response, err := h.aiService.Ask(r.Context(), content)
-		if err != nil {
+		flusher, ok := w.(http.Flusher)
+		if !ok {
 			writeJSON(w, http.StatusServiceUnavailable, AskResponse{
 				Response: messages.ServiceError,
 			})
 			return
 		}
 
-		writeJSON(w, http.StatusOK, AskResponse{
-			Response: response,
+		writeSSEHeaders(w)
+		w.WriteHeader(http.StatusOK)
+		flusher.Flush()
+
+		err = h.aiService.AskStream(r.Context(), content, func(chunk string) error {
+			err := writeSSE(w, "", sseChunk{
+				Chunk: chunk,
+			})
+			if err != nil {
+				return err
+			}
+
+			flusher.Flush()
+			return nil
 		})
+		if err != nil {
+			_ = writeSSE(w, "error", sseError{
+				Message: "service unavailable",
+			})
+			flusher.Flush()
+			return
+		}
+
+		_ = writeSSE(w, "done", struct{}{})
+		flusher.Flush()
 	}
 }
