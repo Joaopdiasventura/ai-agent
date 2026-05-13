@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 
 	"github.com/Joaopdiasventura/ai-agent/internal/services"
@@ -57,17 +58,16 @@ func (h *AskHandler) Handle(lang Language) http.HandlerFunc {
 			return
 		}
 
-		flusher, ok := w.(http.Flusher)
-		if !ok {
-			writeJSON(w, http.StatusServiceUnavailable, AskResponse{
-				Response: messages.ServiceError,
-			})
-			return
+		flush := func() {}
+		if flusher, ok := w.(http.Flusher); ok {
+			flush = flusher.Flush
+		} else {
+			log.Printf("response writer does not support http.Flusher; SSE response may be buffered")
 		}
 
 		writeSSEHeaders(w)
 		w.WriteHeader(http.StatusOK)
-		flusher.Flush()
+		flush()
 
 		err = h.aiService.AskStream(r.Context(), content, func(chunk string) error {
 			err := writeSSE(w, "", sseChunk{
@@ -77,18 +77,19 @@ func (h *AskHandler) Handle(lang Language) http.HandlerFunc {
 				return err
 			}
 
-			flusher.Flush()
+			flush()
 			return nil
 		})
 		if err != nil {
+			log.Printf("failed to stream Gemini response: %v", err)
 			_ = writeSSE(w, "error", sseError{
 				Message: "service unavailable",
 			})
-			flusher.Flush()
+			flush()
 			return
 		}
 
 		_ = writeSSE(w, "done", struct{}{})
-		flusher.Flush()
+		flush()
 	}
 }
