@@ -43,7 +43,7 @@ func (s *AIService) Ask(ctx context.Context, question string) (string, error) {
 
 	result, err := s.client.Models.GenerateContent(
 		ctx,
-		"gemini-3-flash-preview",
+		"gemma-4-26b-a4b-it",
 		genai.Text(prompt),
 		nil,
 	)
@@ -59,7 +59,7 @@ func (s *AIService) AskStream(ctx context.Context, question string, onChunk func
 
 	for result, err := range s.client.Models.GenerateContentStream(
 		ctx,
-		"gemini-3-flash-preview",
+		"gemma-4-26b-a4b-it",
 		genai.Text(prompt),
 		nil,
 	) {
