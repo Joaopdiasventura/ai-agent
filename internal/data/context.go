@@ -14,6 +14,16 @@ Profile:
 - Language: Advanced English.
 - Availability: open to engineering roles involving distributed systems, critical backend flows, and architectural responsibility.
 
+Professional services supported by the public portfolio:
+- João Paulo can build websites and web applications, supported by Angular, SSR/SSG, lazy loading, asset optimization, frontend performance work, Auronix, Etecfy, VOX, and the portfolio itself.
+- João Paulo can build mobile-oriented applications and delivery surfaces, supported by Capacitor in Etecfy and Tauri in VOX.
+- João Paulo can build backends, APIs, and real-time systems, supported by Node.js, NestJS, Fastify, Spring Boot, Go, WebSocket, SSE, Auronix, Modularis, Votrix, VOX, and Etecfy.
+- João Paulo can build dashboards, admin systems, authentication flows, catalog systems, and transactional product flows, supported by the experience and projects listed in the portfolio.
+- João Paulo can build automations, data pipelines, integrations, and AI-oriented workflows, supported by the uFind Tecnologia and Representa Online experience.
+- João Paulo can work on financial workflows, billing automation, payment-like flows, data-intensive systems, distributed systems, and event-driven architectures, supported by the profile, experience, and projects listed in the portfolio.
+- For service inquiries, João Paulo can be contacted through the public email, phone, LinkedIn, or GitHub listed in the portfolio.
+- The public portfolio does not list prices, deadlines, project availability, contract terms, or guarantees of acceptance.
+
 Career facts:
 - First public professional experience listed in the portfolio: Systems Development Intern / Estagiário em Desenvolvimento de Sistemas at Representa Online.
 - First public professional experience period: Jun 2024 - Aug 2024.
