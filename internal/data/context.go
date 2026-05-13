@@ -1,8 +1,6 @@
 package data
 
 const ProfileContext = `
-Public source: /home/jojo/projects/ts/portfolio.
-
 Identity:
 - Name: João Paulo Dias Ventura.
 - Location: São Paulo, Brazil.
