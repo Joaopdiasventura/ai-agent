@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"log"
 	"net/http"
 	"sync"
 
@@ -22,6 +23,7 @@ func Handler() (http.Handler, error) {
 	initOnce.Do(func() {
 		aiService, err := services.NewAIService(context.Background())
 		if err != nil {
+			log.Printf("failed to initialize AI service: %v", err)
 			initErr = err
 			return
 		}

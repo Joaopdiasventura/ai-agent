@@ -2,6 +2,8 @@ package services
 
 import (
 	"context"
+	"fmt"
+	"os"
 	"time"
 
 	"google.golang.org/genai"
@@ -15,7 +17,15 @@ func NewAIService(ctx context.Context) (*AIService, error) {
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
 
-	client, err := genai.NewClient(ctx, nil)
+	apiKey := os.Getenv("GEMINI_API_KEY")
+	if apiKey == "" {
+		return nil, fmt.Errorf("missing GEMINI_API_KEY")
+	}
+
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{
+		Backend: genai.BackendGeminiAPI,
+		APIKey:  apiKey,
+	})
 	if err != nil {
 		return nil, err
 	}
