@@ -1,85 +1,48 @@
 package data
 
 const ProfileContext = `
-João Paulo Dias Ventura is a Brazilian Software Engineer based in São Paulo.
+Public source: /home/jojo/projects/ts/portfolio.
 
-Career timeline:
-- João started his first formal software job at Representa Online in 2024.
-- His first role was Systems Developer at Representa Online.
-- He later worked as Full Stack Junior Developer at Representa Online.
-- He currently works as Full Stack Software Engineer / Desenvolvedor Full Stack Pleno at uFind Tecnologia.
+Identity:
+- Name: João Paulo Dias Ventura.
+- Location: São Paulo, Brazil.
+- Portfolio description: portfolio focused on distributed systems, financial workflows, and resilient data-intensive architecture.
+- Professional summary: software engineer focused on distributed systems and data-intensive applications, building financial and operational flows with transactional consistency, event-driven communication, and resilient high-volume processing.
 
-Current role:
-Full Stack Software Engineer / Desenvolvedor Full Stack Pleno at uFind Tecnologia.
+Profile:
+- Hands-on full-stack delivery across backend, frontend, cloud, and messaging layers.
+- Focus: transactional consistency, asynchronous processing, operational traceability, event-driven architecture, distributed systems, concurrency control, idempotent flows, financial systems, billing workflows, streaming ingestion, data pipelines, distributed processing, Angular SSR, hydration, lazy loading, and frontend performance optimization.
+- Technical stack listed in the portfolio: Node.js, Java, Go, Angular, PostgreSQL, MongoDB, RabbitMQ, Redis, AWS, CI/CD, S3, ECS, IAM, NestJS, Spring Boot, Fastify, BullMQ, SSE, Docker Compose, nginx, AsyncAPI, TypeScript, node:http, autocannon, Tauri, Capacitor, gzip, SHA-256, goroutines, channels, CLI.
+- Language: Advanced English.
+- Availability: open to engineering roles involving distributed systems, critical backend flows, and architectural responsibility.
 
-Previous experience:
-Systems Developer and Full Stack Junior Developer at Representa Online.
-
-Professional focus:
-- Distributed systems
-- Event-driven architecture
-- Financial systems
-- Data-intensive applications
-- High-volume data pipelines
-- AI integrations
-- Backend architecture
-- Cloud-backed services
-- High-performance web applications
-
-Technical stack:
-- Backend: Node.js, NestJS, TypeScript, Go, Java, Spring Boot
-- Frontend: Angular, React Native
-- Databases: PostgreSQL, MongoDB
-- Messaging and queues: RabbitMQ, Redis
-- Cloud and DevOps: AWS, ECS, S3, IAM, Docker, CI/CD
-- Architecture: microservices, REST APIs, streams, saga flows, idempotency, retries, SSE, JWT, OAuth2
+Education and certificates:
+- Fatec Osasco - Multiplatform Software Development (2026-2028).
+- Etec Guarulhos - Systems Development (2023-2025).
+- AWS - Event-Driven Architecture Modeling and Deploying Microservices on Amazon EKS.
+- MongoDB - Financial Services Industry Knowledge.
 
 Public contact:
-- Email: joaopdias.dev@gmail.com
-- Phone/WhatsApp: +55 11 98655-3558
-- LinkedIn: www.linkedin.com/in/joaopdias-dev
-- Portfolio: joaopdias.dev.br
-- GitHub: github.com/Joaopdiasventura
+- Email: joaopdias.dev@gmail.com.
+- Phone: +55 (11) 98655-3558.
+- LinkedIn: linkedin.com/in/joaopdias-dev.
+- GitHub: github.com/Joaopdiasventura.
 
-Professional experience:
-At uFind Tecnologia, João works on financial systems, data pipelines, automation, and cloud infrastructure. He led an insurance billing automation flow processing more than R$1,000,000.00 in monthly financial operations, reducing manual processing from days to minutes. He also works with AWS services such as ECS, S3, and IAM.
+Experience:
+- uFind Tecnologia, Mid-level Developer / Desenvolvedor Pleno, Jun 2025 - Present. João Paulo leads implementation of an insurance billing workflow that ingests heterogeneous financial files, reconciles transactional state, and automates monthly processing above R$1M with end-to-end traceability. Highlights: stream-based ingestion pipelines for multiple financial layouts with Strategy Pattern, critical validations, and consistency guarantees across the billing flow; reduced manual processing from days to minutes; evolved AWS architecture standards around S3, ECS, and IAM with high autonomy.
+- Representa Online, Junior Developer / Desenvolvedor Júnior, Sep 2024 - May 2025. João Paulo designed AI-oriented data pipelines for more than 16 GB of television media data, structuring ingestion, transformation, and vector-store storage for model consumption. Highlights: event-driven Node.js pipelines with flow control, fault isolation, and distributed processing; bidirectional real-time communication over WebSocket integrated with the OpenAI API.
+- Representa Online, Systems Development Intern / Estagiário em Desenvolvimento de Sistemas, Jun 2024 - Aug 2024. João Paulo built catalog and authentication features focused on scalable discovery, SSR/SSG delivery, and frontend performance for content-heavy experiences. Highlights: proximity search with the Haversine formula; optimized queries for catalog discovery; JWT and Google OAuth2 authentication; SSR/SSG pages with lazy loading, asset optimization, and render control to improve TTFB and LCP.
 
-At Representa Online, João worked on data ingestion and processing pipelines for television media, handling more than 16GB of data for AI consumption. He also developed a real-time communication system integrated with the OpenAI API using asynchronous Node.js processing.
+Impact metrics:
+- +16GB television media data processed.
+- R$1M+ monthly billed volume automated.
+- 1.23 GiB/s compression throughput measured.
 
-Main projects:
-- Auronix: modular digital banking project with NestJS, PostgreSQL, Redis, queues, Angular, transactional flows, payment requests, and SSE.
-- Modularis: distributed microservices ecosystem with NestJS, Spring Boot, Go, PostgreSQL, MongoDB, RabbitMQ, API Gateway, retries, idempotency, Docker, and saga flows.
-- GGCompress: high-performance compression engine written in Go, reaching up to 1.23 GiB/s in a 9.77 GiB benchmark scenario.
-- Votrix: lightweight Node.js HTTP framework focused on fast routing and high-performance APIs.
-- Auditex: Java backend project related to blockchain-like auditability and transactional modeling.
-- language-count: tool for generating SVG GitHub language usage cards.
-
-Measured impact:
-- Automated more than R$1,000,000.00 per month in insurance billing operations.
-- Reduced manual operational processing from days to minutes.
-- Processed more than 16GB of television media data for AI consumption.
-- Built a real-time chat system integrated with OpenAI.
-- Built distributed projects using queues, transactions, microservices, idempotency, retries, SSE, and event-driven flows.
-- Built a Go compression engine reaching up to 1.23 GiB/s in benchmarks.
-
-Education:
-Technical degree in Systems Development at Etec de Guarulhos, from February 2023 to December 2025.
-Started a degree in Multiplatform Software Development at Fatec Osasco in February 2026, expected to finish in December 2028.
-
-Languages:
-Portuguese: native or bilingual.
-English: advanced or full professional proficiency.
-
-Certifications:
-- Designing Event-Driven Architectures
-- Deploying Microservices to Amazon EKS
-- MongoDB Data Modeling Path
-- Financial Services Industry Knowledge Accelerator
-- Postgres Distributed v5
-
-Recognition:
-7th place in a programming marathon.
-
-Professional positioning:
-João should be presented as a software engineer with strong backend and architecture foundations, production autonomy, fast learning ability, and experience solving complex business problems with consistency, traceability, performance, and operational impact.
+Projects:
+- Auronix: digital banking and transactional settlement. Teaser: digital banking core with asynchronous settlement, Redis-backed concurrency control, and live transfer feedback over SSE. Role: full-stack architecture, transactional backend design, real-time workflow UX. Timeline: independent engineering project. Stack: NestJS, Fastify, PostgreSQL, Redis, BullMQ, Angular, SSE. Metrics: 248 automated tests; 10 min request expiry; 100 / 24h SSE replay window. Links: https://auronix.joaopdias.dev.br, https://github.com/joaopdiasventura/Auronix-server, https://github.com/joaopdiasventura/Auronix-client.
+- Modularis: event-driven microservices and distributed onboarding. Teaser: polyglot microservice platform where a persisted onboarding saga coordinates identity, payment intent, signed webhooks, and premium activation through RabbitMQ contracts. Role: distributed backend architecture, saga orchestration, async contracts, operational resilience. Timeline: independent engineering project. Stack: NestJS, Spring Boot, Go, RabbitMQ, PostgreSQL, MongoDB, Docker Compose, nginx, AsyncAPI. Metrics: 6 deployable services; 9 async channels; 3 runtime stacks. Link: https://github.com/joaopdiasventura/Modularis.
+- Votrix: high-performance Node.js HTTP runtime. Teaser: TypeScript HTTP runtime built for direct routing, deferred parsing, and inspectable benchmark gains. Role: runtime architecture, performance engineering, benchmark methodology. Timeline: independent engineering project. Stack: TypeScript, node:http, autocannon. Metrics: 30.1K local RPS; 37.25% lead vs Fastify; 42.08% lead vs Express. Benchmark artifact dated 2026-04-03T03:18:21.722Z shows Votrix leading all four measured scenarios and peaking at 30,124.80 RPS on GET /health. Link: https://github.com/joaopdiasventura/Votrix.
+- GGCompress: concurrent archive engine and deterministic extraction. Teaser: Go archive engine built around ordered chunk pipelines, deterministic indexing, integrity verification, and measured multi-gigabyte throughput. Role: systems design, archive format engineering, concurrency pipeline, and benchmark methodology. Timeline: independent engineering project. Stack: Go, goroutines, channels, gzip, SHA-256, CLI. Metrics: 1.23 GiB/s observed throughput; 9.77 GiB benchmark input; 8 workers / 4 MiB chunk size. Measured CLI run dated April 23, 2026 finished in 7.952s while preserving deterministic archive order. Link: https://github.com/Joaopdiasventura/ggc.
+- VOX: auditability and voting integrity. Teaser: voting platform focused on explicit state, auditability, and operator clarity under concurrent load. Role: product architecture, backend design, audit-oriented modeling. Timeline: independent engineering project. Stack: Tauri, NestJS, Redis. Metrics: +500 concurrent users; 29 HTTP routes; 108 automated tests. Link: https://vox.joaopdias.dev.br.
+- Etecfy: music streaming. Teaser: streaming platform built for catalog growth, fast discovery, and smooth playback. Role: architecture, product structure, media-oriented frontend. Timeline: independent engineering project. Stack: Angular, NestJS, Capacitor. Metrics: 1.3K launch accesses in 6h; 10s chunk size; 3 delivery surfaces. Links: https://etecfy.joaopdias.dev.br, https://github.com/joaopdiasventura/etecfy-server, https://github.com/joaopdiasventura/etecfy-client.
 `
