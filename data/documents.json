@@ -1,0 +1,27 @@
+[
+    {
+        "id": "career-first-job",
+        "category": "career",
+        "content": "O primeiro emprego de João Paulo foi como estagiário em desenvolvimento de sistemas na Representa Online entre junho e agosto de 2024."
+    },
+    {
+        "id": "career-current-job",
+        "category": "career",
+        "content": "João Paulo trabalha atualmente como desenvolvedor pleno na uFind Tecnologia desde junho de 2025."
+    },
+    {
+        "id": "education-fiap",
+        "category": "education",
+        "content": "João Paulo cursa Inteligência Artificial na FIAP entre 2026 e 2028."
+    },
+    {
+        "id": "project-auronix",
+        "category": "project",
+        "content": "Auronix é um projeto de banco digital com processamento transacional, liquidação assíncrona, Redis, BullMQ, PostgreSQL, NestJS, Angular e SSE."
+    },
+    {
+        "id": "project-ggcompress",
+        "category": "project",
+        "content": "GGCompress é um motor de compressão concorrente desenvolvido em Go com goroutines, channels, gzip e verificação de integridade usando SHA-256."
+    }
+]

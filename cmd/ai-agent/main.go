@@ -1,0 +1,76 @@
+package main
+
+import (
+	"ai-agent/internal/answer"
+	"ai-agent/internal/knowledge"
+	"ai-agent/internal/memory"
+	"ai-agent/internal/search"
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+const minimumSimilarity = 0.20
+const knowledgeBasePath = "data/documents.json"
+
+func main() {
+	documents, err := knowledge.LoadDocuments(knowledgeBasePath)
+
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	engine := search.NewEngine(documents, minimumSimilarity)
+
+	session := &memory.Session{}
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Println("Chatbot iniciado.")
+	fmt.Printf("%d documentos carregados.\n", len(documents))
+	fmt.Println("Digite 'sair' para encerrar.")
+
+	for {
+		fmt.Print("\nVocê: ")
+
+		if !scanner.Scan() {
+			break
+		}
+
+		question := strings.TrimSpace(scanner.Text())
+
+		if question == "" {
+			continue
+		}
+
+		if shouldExit(question) {
+			fmt.Println("Chatbot encerrado.")
+			break
+		}
+
+		result, found := engine.Search(question, session)
+
+		if !found {
+			fmt.Println("Bot: Não encontrei informações relacionadas à pergunta.")
+			continue
+		}
+
+		response := answer.Generate(result)
+
+		fmt.Printf("Bot: %s\n", response)
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Erro ao ler a entrada:", err)
+	}
+}
+
+func shouldExit(input string) bool {
+	input = strings.ToLower(strings.TrimSpace(input))
+
+	return input == "sair" ||
+		input == "exit" ||
+		input == "quit" ||
+		input == "encerrar"
+}
