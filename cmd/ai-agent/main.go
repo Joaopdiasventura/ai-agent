@@ -24,7 +24,7 @@ func main() {
 
 	engine := search.NewEngine(documents, minimumSimilarity)
 
-	session := &memory.Session{}
+	session := memory.NewSession()
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Chatbot iniciado.")
@@ -56,7 +56,11 @@ func main() {
 			continue
 		}
 
-		response := answer.Generate(result)
+		plan := answer.BuildPlan(result)
+
+		template := answer.SelectTemplateForPlan(plan, session)
+
+		response := answer.RenderTemplate(template, plan)
 
 		fmt.Printf("Bot: %s\n", response)
 	}
