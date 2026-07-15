@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const minimumSimilarity = 0.20
+const minimumSimilarity = 0.15
 const knowledgeBasePath = "data/documents.json"
 
 func main() {

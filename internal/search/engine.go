@@ -34,20 +34,14 @@ func (engine *Engine) Search(question string, session *memory.Session) (Result, 
 		return Result{}, false
 	}
 
-	intent := nlp.DetectIntent(tokens)
-
 	detectedEntity, hasDetectedEntity := nlp.DetecEntity(tokens)
 
 	entity, hasEntity := session.ResolveEntity(question, detectedEntity, hasDetectedEntity)
 
-	candidates := FilterDocumentsByIntent(engine.Documents, intent)
+	intent := nlp.DetectIntent(tokens)
+	intent = nlp.ResolveIntent(intent, entity, hasEntity)
 
-	if hasEntity {
-		candidates = FilterDocumentsByEntity(
-			candidates,
-			entity,
-		)
-	}
+	candidates := FilterDocumentsByIntent(engine.Documents, intent)
 
 	if len(candidates) == 0 {
 		return Result{}, false
