@@ -4,6 +4,7 @@ var queryExpansions = map[string][]string{
 	"faz": {
 		"trabalha",
 		"cursa",
+		"estuda",
 		"atualmente",
 		"desenvolvedor",
 	},
@@ -35,6 +36,11 @@ var queryExpansions = map[string][]string{
 		"trabalha",
 		"atualmente",
 		"desenvolvedor",
+	},
+	"feito": {
+		"desenvolvido",
+		"criado",
+		"como",
 	},
 	"cargo": {
 		"trabalha",

@@ -16,6 +16,9 @@ var keywords = map[string]map[Intent]int{
 	"faz": {
 		IntentCurrentJob: 3,
 	},
+	"desenvolvido": {
+		IntentTechnologies: 3,
+	},
 	"trabalha": {
 		IntentCurrentJob: 3,
 	},
