@@ -3,6 +3,7 @@ package answer
 import (
 	"ai-agent/internal/memory"
 	"ai-agent/internal/nlp"
+	"strings"
 )
 
 var templatesByIntent = map[nlp.Intent][]string{
@@ -43,6 +44,15 @@ func SelectTemplateForPlan(plan Plan, session *memory.Session) string {
 	lastIndex := session.GetLastTemplateIndex(plan.Intent)
 
 	template, selectedIndex := SelectTemplate(templates, lastIndex)
+
+	if plan.DetailLevel == DetailMedium ||
+		plan.DetailLevel == DetailDetailed {
+		template = strings.ReplaceAll(
+			template,
+			"{fact}",
+			"{facts}",
+		)
+	}
 
 	if selectedIndex >= 0 {
 		session.SetLastTemplateIndex(plan.Intent, selectedIndex)

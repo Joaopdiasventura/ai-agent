@@ -7,10 +7,12 @@ import (
 )
 
 type Plan struct {
-	Intent       nlp.Intent
-	Subject      string
-	Facts        []string
-	Technologies []string
+	Intent         nlp.Intent
+	Subject        string
+	Facts          []string
+	Technologies   []string
+	DetailLevel    DetailLevel
+	FormattedFacts string
 }
 
 func BuildPlan(result search.Result) Plan {
@@ -58,10 +60,26 @@ func BuildPlanFromResults(results []search.Result) Plan {
 		}
 	}
 
+	detailLevel := SelectDetailLevel()
+	selectedFacts := SelectFactsByDetail(facts, detailLevel)
+	formattedFacts := FormatFacts(selectedFacts)
+
 	return Plan{
-		Intent:       results[0].Intent,
-		Subject:      subject,
-		Facts:        facts,
-		Technologies: technologies,
+		Intent:         results[0].Intent,
+		Subject:        subject,
+		Facts:          facts,
+		Technologies:   technologies,
+		FormattedFacts: formattedFacts,
+		DetailLevel:    detailLevel,
 	}
+}
+
+func PreparePlan(plan Plan) Plan {
+	plan.DetailLevel = SelectDetailLevel()
+
+	selectedFacts := SelectFactsByDetail(plan.Facts, plan.DetailLevel)
+
+	plan.FormattedFacts = FormatFacts(selectedFacts)
+
+	return plan
 }

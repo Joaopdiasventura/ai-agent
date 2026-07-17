@@ -1,5 +1,60 @@
 [
     {
+        "id": "identity-basic",
+        "category": "identity",
+        "content": "João Paulo Dias Ventura é um engenheiro de software localizado em São Paulo, Brasil."
+    },
+    {
+        "id": "identity-professional-summary",
+        "category": "identity",
+        "content": "João Paulo é um engenheiro de software focado em sistemas distribuídos, aplicações intensivas em dados, fluxos financeiros, consistência transacional e processamento resiliente de alto volume."
+    },
+    {
+        "id": "profile-focus",
+        "category": "profile",
+        "content": "João Paulo trabalha com consistência transacional, processamento assíncrono, rastreabilidade operacional, arquitetura orientada a eventos, sistemas distribuídos, controle de concorrência e fluxos idempotentes."
+    },
+    {
+        "id": "profile-backend-technologies",
+        "category": "technology",
+        "content": "João Paulo utiliza tecnologias de backend como Node.js, TypeScript, NestJS, Fastify, Java, Spring Boot e Go."
+    },
+    {
+        "id": "profile-frontend-technologies",
+        "category": "technology",
+        "content": "João Paulo utiliza Angular no frontend, incluindo SSR, SSG, hydration, lazy loading e otimização de performance."
+    },
+    {
+        "id": "profile-database-technologies",
+        "category": "technology",
+        "content": "João Paulo trabalha com bancos de dados e armazenamento usando PostgreSQL, MongoDB, Redis e Amazon S3."
+    },
+    {
+        "id": "profile-messaging-technologies",
+        "category": "technology",
+        "content": "João Paulo utiliza RabbitMQ, BullMQ, WebSocket, SSE e AsyncAPI em sistemas assíncronos e aplicações em tempo real."
+    },
+    {
+        "id": "profile-infrastructure-technologies",
+        "category": "technology",
+        "content": "João Paulo trabalha com AWS, S3, ECS, IAM, Docker Compose, nginx e pipelines de CI/CD."
+    },
+    {
+        "id": "profile-mobile-technologies",
+        "category": "technology",
+        "content": "João Paulo utiliza Capacitor para aplicações móveis híbridas e Tauri para aplicações desktop."
+    },
+    {
+        "id": "profile-language",
+        "category": "profile",
+        "content": "João Paulo possui inglês avançado."
+    },
+    {
+        "id": "profile-availability",
+        "category": "profile",
+        "content": "João Paulo está aberto a oportunidades de engenharia envolvendo sistemas distribuídos, fluxos críticos de backend e responsabilidade arquitetural."
+    },
+    {
         "id": "career-first-job",
         "category": "career",
         "content": "O primeiro emprego de João Paulo foi como estagiário em desenvolvimento de sistemas na Representa Online entre junho e agosto de 2024."
@@ -10,18 +65,263 @@
         "content": "João Paulo trabalha atualmente como desenvolvedor pleno na uFind Tecnologia desde junho de 2025."
     },
     {
+        "id": "career-current-activities",
+        "category": "career",
+        "content": "Na uFind Tecnologia, João Paulo desenvolve um fluxo de faturamento de seguros que processa arquivos financeiros, reconcilia estados transacionais e mantém rastreabilidade de ponta a ponta."
+    },
+    {
+        "id": "career-current-impact",
+        "category": "career",
+        "content": "Na uFind Tecnologia, João Paulo automatizou um volume mensal de faturamento superior a um milhão de reais e reduziu atividades manuais de dias para minutos."
+    },
+    {
+        "id": "career-current-architecture",
+        "category": "career",
+        "content": "Na uFind Tecnologia, João Paulo desenvolveu pipelines de ingestão em streaming para diferentes layouts financeiros usando Strategy Pattern, validações críticas e garantias de consistência."
+    },
+    {
+        "id": "career-current-aws",
+        "category": "career",
+        "content": "Na uFind Tecnologia, João Paulo evoluiu padrões de arquitetura AWS envolvendo S3, ECS e IAM."
+    },
+    {
+        "id": "career-junior-job",
+        "category": "career",
+        "content": "João Paulo trabalhou como desenvolvedor júnior na Representa Online entre setembro de 2024 e maio de 2025."
+    },
+    {
+        "id": "career-junior-data-pipelines",
+        "category": "career",
+        "content": "Na Representa Online, João Paulo desenvolveu pipelines de dados orientados a inteligência artificial que processaram mais de 16 GB de conteúdo de televisão."
+    },
+    {
+        "id": "career-junior-realtime",
+        "category": "career",
+        "content": "Na Representa Online, João Paulo desenvolveu comunicação bidirecional em tempo real usando WebSocket e integração com a API da OpenAI."
+    },
+    {
+        "id": "career-intern-activities",
+        "category": "career",
+        "content": "Como estagiário na Representa Online, João Paulo desenvolveu funcionalidades de catálogo, descoberta de conteúdo e autenticação."
+    },
+    {
+        "id": "career-intern-search",
+        "category": "career",
+        "content": "Como estagiário, João Paulo implementou busca por proximidade usando a fórmula de Haversine e otimizou consultas de descoberta de catálogo."
+    },
+    {
+        "id": "career-intern-authentication",
+        "category": "career",
+        "content": "Como estagiário, João Paulo implementou autenticação com JWT e Google OAuth2."
+    },
+    {
+        "id": "career-intern-frontend",
+        "category": "career",
+        "content": "Como estagiário, João Paulo desenvolveu páginas com SSR, SSG, lazy loading, otimização de assets e controle de renderização para melhorar TTFB e LCP."
+    },
+    {
         "id": "education-fiap",
         "category": "education",
         "content": "João Paulo cursa Inteligência Artificial na FIAP entre 2026 e 2028."
     },
     {
-        "id": "project-auronix",
-        "category": "project",
-        "content": "Auronix é um projeto de banco digital com processamento transacional. Feito com liquidação assíncrona, com Redis, BullMQ, PostgreSQL, NestJS, Angular e SSE."
+        "id": "education-etec",
+        "category": "education",
+        "content": "João Paulo cursou Desenvolvimento de Sistemas na Etec Guarulhos entre 2023 e 2025."
     },
     {
-        "id": "project-ggcompress",
+        "id": "certificate-aws",
+        "category": "certificate",
+        "content": "João Paulo possui certificação da AWS sobre modelagem de arquitetura orientada a eventos e implantação de microsserviços no Amazon EKS."
+    },
+    {
+        "id": "certificate-mongodb",
+        "category": "certificate",
+        "content": "João Paulo possui certificação da MongoDB sobre conhecimentos da indústria de serviços financeiros."
+    },
+    {
+        "id": "contact-email",
+        "category": "contact",
+        "content": "O email público de João Paulo é joaopdias.dev@gmail.com."
+    },
+    {
+        "id": "contact-phone",
+        "category": "contact",
+        "content": "O telefone público de João Paulo é +55 (11) 98655-3558."
+    },
+    {
+        "id": "contact-linkedin",
+        "category": "contact",
+        "content": "O LinkedIn de João Paulo está disponível em linkedin.com/in/joaopdias-dev."
+    },
+    {
+        "id": "contact-github",
+        "category": "contact",
+        "content": "O GitHub de João Paulo está disponível em github.com/Joaopdiasventura."
+    },
+    {
+        "id": "services-web",
+        "category": "service",
+        "content": "João Paulo pode desenvolver sites e aplicações web usando Angular, SSR, SSG, lazy loading e técnicas de otimização de performance."
+    },
+    {
+        "id": "services-backend",
+        "category": "service",
+        "content": "João Paulo pode desenvolver backends, APIs, sistemas transacionais, microsserviços e aplicações em tempo real."
+    },
+    {
+        "id": "services-mobile",
+        "category": "service",
+        "content": "João Paulo pode desenvolver aplicações móveis híbridas com Capacitor e aplicações desktop com Tauri."
+    },
+    {
+        "id": "services-business-systems",
+        "category": "service",
+        "content": "João Paulo pode desenvolver dashboards, sistemas administrativos, autenticação, catálogos e fluxos transacionais."
+    },
+    {
+        "id": "services-data",
+        "category": "service",
+        "content": "João Paulo pode desenvolver automações, integrações, pipelines de dados e fluxos orientados a inteligência artificial."
+    },
+    {
+        "id": "services-commercial-limitations",
+        "category": "service",
+        "content": "O portfólio público de João Paulo não informa preços, prazos, disponibilidade atual, termos contratuais ou garantias de aceitação de projetos."
+    },
+    {
+        "id": "project-auronix-description",
         "category": "project",
-        "content": "GGCompress é um motor de compressão concorrente desenvolvido em Go com goroutines, channels, gzip e verificação de integridade usando SHA-256."
+        "content": "Auronix é um projeto de banco digital focado em processamento transacional, transferências, liquidação assíncrona e atualização em tempo real."
+    },
+    {
+        "id": "project-auronix-technologies",
+        "category": "project",
+        "content": "As tecnologias utilizadas no Auronix são NestJS, Fastify, PostgreSQL, Redis, BullMQ, Angular e SSE."
+    },
+    {
+        "id": "project-auronix-architecture",
+        "category": "project",
+        "content": "O Auronix utiliza Redis para controle de concorrência, BullMQ para liquidação assíncrona e SSE para atualizações em tempo real."
+    },
+    {
+        "id": "project-auronix-metrics",
+        "category": "project",
+        "content": "O Auronix possui 248 testes automatizados, solicitações com expiração de 10 minutos e uma janela de replay SSE de 100 eventos por 24 horas."
+    },
+    {
+        "id": "project-modularis-description",
+        "category": "project",
+        "content": "Modularis é uma plataforma de microsserviços orientada a eventos que utiliza uma saga persistida para coordenar identidade, intenção de pagamento, webhooks assinados e ativação premium."
+    },
+    {
+        "id": "project-modularis-technologies",
+        "category": "project",
+        "content": "As tecnologias utilizadas no Modularis são NestJS, Spring Boot, Go, RabbitMQ, PostgreSQL, MongoDB, Docker Compose, nginx e AsyncAPI."
+    },
+    {
+        "id": "project-modularis-metrics",
+        "category": "project",
+        "content": "O Modularis possui seis serviços implantáveis, nove canais assíncronos e três stacks de execução."
+    },
+    {
+        "id": "project-votrix-description",
+        "category": "project",
+        "content": "Votrix é um runtime HTTP de alta performance desenvolvido em TypeScript com roteamento direto, parsing adiado e benchmarks reproduzíveis."
+    },
+    {
+        "id": "project-votrix-technologies",
+        "category": "project",
+        "content": "As tecnologias utilizadas no Votrix são TypeScript, node:http e autocannon."
+    },
+    {
+        "id": "project-votrix-performance",
+        "category": "project",
+        "content": "O Votrix alcançou 30124,80 requisições por segundo, superando o Fastify em 37,25 por cento e o Express em 42,08 por cento nos benchmarks medidos."
+    },
+    {
+        "id": "project-ggcompress-description",
+        "category": "project",
+        "content": "GGCompress é um motor de compressão e arquivamento concorrente desenvolvido em Go com processamento ordenado de chunks e extração determinística."
+    },
+    {
+        "id": "project-ggcompress-technologies",
+        "category": "project",
+        "content": "As tecnologias utilizadas no GGCompress são Go, goroutines, channels, gzip, SHA-256 e CLI."
+    },
+    {
+        "id": "project-ggcompress-integrity",
+        "category": "project",
+        "content": "O GGCompress utiliza indexação determinística e verificação de integridade com SHA-256."
+    },
+    {
+        "id": "project-ggcompress-performance",
+        "category": "project",
+        "content": "O GGCompress alcançou throughput de 1,23 GiB por segundo ao processar uma entrada de 9,77 GiB usando oito workers e chunks de 4 MiB."
+    },
+    {
+        "id": "project-vox-description",
+        "category": "project",
+        "content": "VOX é uma plataforma de votação focada em integridade, auditabilidade, estado explícito e clareza operacional sob carga concorrente."
+    },
+    {
+        "id": "project-vox-technologies",
+        "category": "project",
+        "content": "As tecnologias utilizadas no VOX são Tauri, NestJS e Redis."
+    },
+    {
+        "id": "project-vox-metrics",
+        "category": "project",
+        "content": "O VOX suporta mais de 500 usuários concorrentes, possui 29 rotas HTTP e 108 testes automatizados."
+    },
+    {
+        "id": "project-etecfy-description",
+        "category": "project",
+        "content": "Etecfy é uma plataforma de streaming de música construída para crescimento de catálogo, descoberta rápida e reprodução contínua."
+    },
+    {
+        "id": "project-etecfy-technologies",
+        "category": "project",
+        "content": "As tecnologias utilizadas no Etecfy são Angular, NestJS e Capacitor."
+    },
+    {
+        "id": "project-etecfy-metrics",
+        "category": "project",
+        "content": "O Etecfy recebeu 1,3 mil acessos nas primeiras seis horas, utiliza chunks de streaming de 10 segundos e possui três superfícies de entrega."
+    },
+    {
+        "id": "project-comparison-financial",
+        "category": "comparison",
+        "content": "Para fluxos financeiros e transacionais, Auronix é o principal exemplo público de João Paulo."
+    },
+    {
+        "id": "project-comparison-distributed",
+        "category": "comparison",
+        "content": "Para microsserviços distribuídos e arquitetura orientada a eventos, Modularis é o principal exemplo público de João Paulo."
+    },
+    {
+        "id": "project-comparison-http-performance",
+        "category": "comparison",
+        "content": "Para performance de runtime HTTP, Votrix é o principal exemplo público de João Paulo."
+    },
+    {
+        "id": "project-comparison-go-performance",
+        "category": "comparison",
+        "content": "Para programação de sistemas, concorrência e performance em Go, GGCompress é o principal exemplo público de João Paulo."
+    },
+    {
+        "id": "project-comparison-auditability",
+        "category": "comparison",
+        "content": "Para auditabilidade e integridade em sistemas de votação, VOX é o principal exemplo público de João Paulo."
+    },
+    {
+        "id": "project-comparison-streaming",
+        "category": "comparison",
+        "content": "Para streaming de música e entrega de produto, Etecfy é o principal exemplo público de João Paulo."
+    },
+    {
+        "id": "project-comparison-best",
+        "category": "comparison",
+        "content": "O portfólio de João Paulo não declara um único melhor projeto, pois cada projeto representa uma especialidade diferente."
     }
 ]

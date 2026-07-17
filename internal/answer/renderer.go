@@ -2,44 +2,6 @@ package answer
 
 import "strings"
 
-func normalizeFactForSubject(subject string, fact string) string {
-	subject = strings.TrimSpace(subject)
-	fact = strings.TrimSpace(fact)
-
-	if subject == "" || fact == "" {
-		return fact
-	}
-
-	prefixes := []string{
-		subject + " é ",
-		subject + " foi ",
-		subject + " utiliza ",
-		subject + " usa ",
-		subject + " trabalha ",
-		subject + " atua ",
-	}
-
-	lowerFact := strings.ToLower(fact)
-
-	for _, prefix := range prefixes {
-		lowerPrefix := strings.ToLower(prefix)
-
-		if !strings.HasPrefix(lowerFact, lowerPrefix) {
-			continue
-		}
-
-		remainingFact := strings.TrimSpace(fact[len(prefix):])
-
-		if remainingFact == "" {
-			return fact
-		}
-
-		return strings.ToLower(remainingFact[:1] + remainingFact[1:])
-	}
-
-	return fact
-}
-
 func RenderTemplate(template string, plan Plan) string {
 	fact := ""
 
@@ -49,9 +11,16 @@ func RenderTemplate(template string, plan Plan) string {
 
 	technologies := formatList(plan.Technologies)
 
+	formattedFacts := strings.TrimSpace(plan.FormattedFacts)
+
+	if formattedFacts == "" {
+		formattedFacts = fact
+	}
+
 	replacer := strings.NewReplacer(
 		"{subject}", plan.Subject,
 		"{fact}", fact,
+		"{facts}", formattedFacts,
 		"{technologies}", technologies,
 	)
 
