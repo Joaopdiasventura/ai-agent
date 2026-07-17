@@ -15,10 +15,6 @@ type Plan struct {
 	FormattedFacts string
 }
 
-func BuildPlan(result search.Result) Plan {
-	return BuildPlanFromResults([]search.Result{result})
-}
-
 func BuildPlanFromResults(results []search.Result) Plan {
 	if len(results) == 0 {
 		return Plan{}
@@ -72,14 +68,4 @@ func BuildPlanFromResults(results []search.Result) Plan {
 		FormattedFacts: formattedFacts,
 		DetailLevel:    detailLevel,
 	}
-}
-
-func PreparePlan(plan Plan) Plan {
-	plan.DetailLevel = SelectDetailLevel()
-
-	selectedFacts := SelectFactsByDetail(plan.Facts, plan.DetailLevel)
-
-	plan.FormattedFacts = FormatFacts(selectedFacts)
-
-	return plan
 }

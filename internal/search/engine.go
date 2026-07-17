@@ -44,7 +44,7 @@ func (engine *Engine) SearchResults(
 
 	expandedTokens := nlp.ExpandQuery(tokens)
 
-	detectedEntity, hasDetectedEntity := nlp.DetecEntity(expandedTokens)
+	detectedEntity, hasDetectedEntity := nlp.DetectEntity(expandedTokens)
 
 	entity, hasEntity := session.ResolveEntity(question, detectedEntity, hasDetectedEntity)
 
@@ -89,21 +89,4 @@ func (engine *Engine) SearchResults(
 	}
 
 	return results, true
-}
-
-func (engine *Engine) Search(
-	question string,
-	session *memory.Session,
-) (Result, bool) {
-	results, found := engine.SearchResults(
-		question,
-		session,
-		1,
-	)
-
-	if !found {
-		return Result{}, false
-	}
-
-	return results[0], true
 }
