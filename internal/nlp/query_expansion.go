@@ -41,6 +41,16 @@ var queryExpansions = map[string][]string{
 		"desenvolvido",
 		"criado",
 		"como",
+		"utilizou",
+	},
+	"utiliza": {
+		"usa",
+		"utilizou",
+		"fez",
+		"usou",
+		"feito",
+		"fez",
+		"desenvolvido",
 	},
 	"cargo": {
 		"trabalha",

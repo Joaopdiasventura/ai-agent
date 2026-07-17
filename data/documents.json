@@ -17,7 +17,7 @@
     {
         "id": "project-auronix",
         "category": "project",
-        "content": "Auronix é um projeto de banco digital com processamento transacional, liquidação assíncrona, Redis, BullMQ, PostgreSQL, NestJS, Angular e SSE."
+        "content": "Auronix é um projeto de banco digital com processamento transacional. Feito com liquidação assíncrona, com Redis, BullMQ, PostgreSQL, NestJS, Angular e SSE."
     },
     {
         "id": "project-ggcompress",

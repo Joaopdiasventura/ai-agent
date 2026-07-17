@@ -27,27 +27,35 @@ func NewEngine(documents []domain.Document, minimumSimilarity float64) *Engine {
 	}
 }
 
-func (engine *Engine) Search(question string, session *memory.Session) (Result, bool) {
+func (engine *Engine) SearchResults(
+	question string,
+	session *memory.Session,
+	limit int,
+) ([]Result, bool) {
+	if limit <= 0 {
+		return nil, false
+	}
+
 	tokens := tokenizer.Tokenize(question)
 
 	if len(tokens) == 0 {
-		return Result{}, false
+		return nil, false
 	}
 
-	detectedEntity, hasDetectedEntity := nlp.DetecEntity(tokens)
+	expandedTokens := nlp.ExpandQuery(tokens)
+
+	detectedEntity, hasDetectedEntity := nlp.DetecEntity(expandedTokens)
 
 	entity, hasEntity := session.ResolveEntity(question, detectedEntity, hasDetectedEntity)
 
-	intent := nlp.DetectIntent(tokens)
+	intent := nlp.DetectIntent(expandedTokens)
 	intent = nlp.ResolveIntent(intent, entity, hasEntity)
 
 	candidates := FilterDocumentsByIntent(engine.Documents, intent)
 
 	if len(candidates) == 0 {
-		return Result{}, false
+		return nil, false
 	}
-
-	expandedTokens := nlp.ExpandQuery(tokens)
 
 	if hasEntity {
 		entityTokens := tokenizer.Tokenize(entity.Value)
@@ -57,22 +65,45 @@ func (engine *Engine) Search(question string, session *memory.Session) (Result, 
 	questionVector := tfidf.CalculateTFIDF(expandedTokens, engine.IDF)
 
 	if len(questionVector) == 0 {
-		return Result{}, false
+		return nil, false
 	}
 
-	result, found := FindBestDocument(candidates, engine.DocumentVectors, questionVector)
+	searchLimit := 1
+
+	if ShouldSearchMultipleDocuments(intent, hasEntity) {
+		searchLimit = limit
+	}
+
+	results := FindTopDocuments(candidates, engine.DocumentVectors, questionVector, searchLimit)
+
+	results = FilterRelevantResults(results, engine.MinimumSimilarity)
+
+	if len(results) == 0 {
+		return nil, false
+	}
+
+	for index := range results {
+		results[index].Intent = intent
+		results[index].Entity = entity
+		results[index].HasEntity = hasEntity
+	}
+
+	return results, true
+}
+
+func (engine *Engine) Search(
+	question string,
+	session *memory.Session,
+) (Result, bool) {
+	results, found := engine.SearchResults(
+		question,
+		session,
+		1,
+	)
 
 	if !found {
 		return Result{}, false
 	}
 
-	if !IsRelevant(result.Similarity, engine.MinimumSimilarity) {
-		return Result{}, false
-	}
-
-	result.Intent = intent
-	result.Entity = entity
-	result.HasEntity = hasEntity
-
-	return result, true
+	return results[0], true
 }

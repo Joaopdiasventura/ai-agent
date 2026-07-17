@@ -12,6 +12,7 @@ import (
 )
 
 const minimumSimilarity = 0.15
+const maximumSearchResults = 5
 const knowledgeBasePath = "data/documents.json"
 
 func main() {
@@ -49,14 +50,14 @@ func main() {
 			break
 		}
 
-		result, found := engine.Search(question, session)
+		results, found := engine.SearchResults(question, session, maximumSearchResults)
 
 		if !found {
 			fmt.Println("Bot: Não encontrei informações relacionadas à pergunta.")
 			continue
 		}
 
-		plan := answer.BuildPlan(result)
+		plan := answer.BuildPlanFromResults(results)
 
 		template := answer.SelectTemplateForPlan(plan, session)
 

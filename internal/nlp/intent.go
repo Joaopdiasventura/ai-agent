@@ -104,6 +104,9 @@ var keywords = map[string]map[Intent]int{
 	"linguagens": {
 		IntentTechnologies: 2,
 	},
+	"usa": {
+		IntentTechnologies: 3,
+	},
 	"contato": {
 		IntentContact: 3,
 	},
