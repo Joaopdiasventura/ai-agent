@@ -1,9 +1,6 @@
 package app
 
 import (
-	"ai-agent/internal/answer"
-	"ai-agent/internal/knowledge"
-	"ai-agent/internal/search"
 	"bufio"
 	"fmt"
 	"os"
@@ -11,9 +8,6 @@ import (
 )
 
 func Run() {
-	documents := knowledge.Documents()
-	engine := search.NewEngine(documents, minimumSimilarity)
-
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Chatbot iniciado.")
@@ -38,18 +32,12 @@ func Run() {
 			break
 		}
 
-		searchResult := engine.Search(question, maximumSearchResults)
+		response, hasResponse := AgentResponse(question)
 
-		if !searchResult.Found {
+		if !hasResponse {
 			fmt.Println("Bot: Não encontrei informações relacionadas à pergunta.")
 			continue
 		}
-
-		plan := answer.BuildPlan(searchResult.Tokens, searchResult.Intent, searchResult.Results)
-
-		template := answer.SelectTemplateForPlan(plan)
-
-		response := answer.RenderTemplate(template, plan)
 
 		fmt.Printf("Bot: %s\n", response)
 	}
