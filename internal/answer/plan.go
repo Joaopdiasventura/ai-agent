@@ -8,6 +8,7 @@ import (
 
 type Plan struct {
 	Intent         nlp.Intent
+	Language       nlp.Language
 	Subject        string
 	Facts          []string
 	Technologies   []string
@@ -15,24 +16,24 @@ type Plan struct {
 	FormattedFacts string
 }
 
-func BuildPlan(tokens []string, intent nlp.Intent, results []search.Result) Plan {
-	if len(results) == 0 {
+func BuildPlan(searchResult *search.SearchResult) Plan {
+	if len(searchResult.Results) == 0 {
 		return Plan{}
 	}
 
 	subject := "João Paulo"
 
-	if results[0].HasEntity {
-		subject = results[0].Entity.Value
+	if searchResult.Results[0].HasEntity {
+		subject = searchResult.Results[0].Entity.Value
 	}
 
-	facts := make([]string, 0, len(results))
+	facts := make([]string, 0, len(searchResult.Results))
 	technologies := make([]string, 0)
 
 	knowFacts := make(map[string]struct{})
 	knowTechnologies := make(map[string]struct{})
 
-	for _, result := range results {
+	for _, result := range searchResult.Results {
 		fact := strings.TrimSpace(result.Document.Content)
 
 		if fact != "" {
@@ -56,13 +57,14 @@ func BuildPlan(tokens []string, intent nlp.Intent, results []search.Result) Plan
 		}
 	}
 
-	detailLevel := SelectDetailLevel(tokens)
-	detailLevel = SelectIntentDetailLevel(intent, detailLevel)
+	detailLevel := SelectDetailLevel(searchResult.Tokens)
+	detailLevel = SelectIntentDetailLevel(searchResult.Intent, detailLevel)
 	selectedFacts := SelectFactsByDetail(facts, detailLevel)
-	formattedFacts := FormatFacts(selectedFacts)
+	formattedFacts := FormatFacts(selectedFacts, searchResult.Language)
 
 	return Plan{
-		Intent:         intent,
+		Intent:         searchResult.Intent,
+		Language:       searchResult.Language,
 		Subject:        subject,
 		Facts:          facts,
 		Technologies:   technologies,

@@ -21,9 +21,27 @@ var queryExpansions = map[string][]string{
 		"software",
 		"sistemas",
 	},
+	"who": {
+		"developer",
+		"software",
+		"systems",
+	},
+	"what": {
+		"developer",
+		"software",
+		"systems",
+	},
 	"projetos": {
 		"projeto",
 		"portfólio",
+		"portfolio",
+	},
+	"projects": {
+		"project",
+		"portfolio",
+	},
+	"project": {
+		"projects",
 		"portfolio",
 	},
 	"portfolio": {
@@ -40,6 +58,11 @@ var queryExpansions = map[string][]string{
 		"entrar",
 		"email",
 		"telefone",
+		"linkedin",
+	},
+	"contact": {
+		"email",
+		"phone",
 		"linkedin",
 	},
 	"serviços": {
@@ -78,11 +101,39 @@ var queryExpansions = map[string][]string{
 		"integrações",
 		"sistemas",
 	},
+	"services": {
+		"develop",
+		"web",
+		"applications",
+		"automations",
+		"integrations",
+		"systems",
+	},
+	"service": {
+		"develop",
+		"web",
+		"applications",
+		"automations",
+		"integrations",
+		"systems",
+	},
 	"contratar": {
 		"confiáveis",
 		"negócio",
 		"automações",
 		"produtos",
+	},
+	"hire": {
+		"reliable",
+		"business",
+		"automation",
+		"products",
+	},
+	"hiring": {
+		"reliable",
+		"business",
+		"automation",
+		"products",
 	},
 	"contrataria": {
 		"confiáveis",
@@ -94,6 +145,14 @@ var queryExpansions = map[string][]string{
 		"trabalha",
 		"atualmente",
 		"desenvolvedor",
+	},
+	"work": {
+		"currently",
+		"developer",
+	},
+	"works": {
+		"currently",
+		"developer",
 	},
 	"trabalha": {
 		"atualmente",
@@ -132,6 +191,16 @@ var queryExpansions = map[string][]string{
 		"usou",
 		"feito",
 		"desenvolvido",
+	},
+	"uses": {
+		"technologies",
+		"stack",
+		"developed",
+	},
+	"use": {
+		"technologies",
+		"stack",
+		"developed",
 	},
 	"cargo": {
 		"trabalha",

@@ -1,8 +1,11 @@
 package answer
 
-import "strings"
+import (
+	"ai-agent/internal/nlp"
+	"strings"
+)
 
-func FormatFacts(facts []string) string {
+func FormatFacts(facts []string, language nlp.Language) string {
 	if len(facts) == 0 {
 		return ""
 	}
@@ -26,12 +29,7 @@ func FormatFacts(facts []string) string {
 		return formattedFacts[0] + "."
 	}
 
-	connectors := []string{
-		" Além disso, ",
-		" Também ",
-		" Outro ponto relevante é que ",
-		" Somado a isso, ",
-	}
+	connectors := connectorsByLanguage(language)
 
 	weights := []float64{
 		0.40,
@@ -55,4 +53,22 @@ func FormatFacts(facts []string) string {
 	builder.WriteString(".")
 
 	return builder.String()
+}
+
+func connectorsByLanguage(language nlp.Language) []string {
+	if language == nlp.LanguageEnglish {
+		return []string{
+			" Also, ",
+			" Another relevant point is that ",
+			" In addition, ",
+			" On top of that, ",
+		}
+	}
+
+	return []string{
+		" Além disso, ",
+		" Também ",
+		" Outro ponto relevante é que ",
+		" Somado a isso, ",
+	}
 }

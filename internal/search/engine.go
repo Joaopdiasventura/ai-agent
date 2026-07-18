@@ -15,10 +15,11 @@ type Engine struct {
 }
 
 type SearchResult struct {
-	Results []Result
-	Tokens  []string
-	Intent  nlp.Intent
-	Found   bool
+	Results  []Result
+	Tokens   []string
+	Intent   nlp.Intent
+	Language nlp.Language
+	Found    bool
 }
 
 func NewEngine(documents []*domain.Document, minimumSimilarity float64) *Engine {
@@ -36,18 +37,21 @@ func NewEngine(documents []*domain.Document, minimumSimilarity float64) *Engine 
 func (engine *Engine) Search(
 	question string,
 	limit int,
-) SearchResult {
+) *SearchResult {
 	if limit <= 0 {
-		return SearchResult{
-			Found: false,
+		return &SearchResult{
+			Language: nlp.LanguagePortuguese,
+			Found:    false,
 		}
 	}
 
 	tokens := tokenizer.Tokenize(question)
+	language := nlp.DetectLanguage(tokens)
 
 	if len(tokens) == 0 {
-		return SearchResult{
-			Found: false,
+		return &SearchResult{
+			Language: language,
+			Found:    false,
 		}
 	}
 
@@ -55,13 +59,14 @@ func (engine *Engine) Search(
 
 	entity, hasEntity := nlp.DetectEntity(expandedTokens)
 
-	analysis := nlp.AnalyzeQuery(expandedTokens, entity, hasEntity)
+	analysis := nlp.AnalyzeQuery(expandedTokens, entity, hasEntity, language)
 
-	candidates := FilterDocumentsByIntent(engine.Documents, analysis.PrimaryIntent)
+	candidates := FilterDocumentsByIntent(engine.Documents, analysis)
 
 	if len(candidates) == 0 {
-		return SearchResult{
-			Found: false,
+		return &SearchResult{
+			Language: language,
+			Found:    false,
 		}
 	}
 
@@ -73,8 +78,9 @@ func (engine *Engine) Search(
 	questionVector := tfidf.CalculateTFIDF(expandedTokens, engine.IDF)
 
 	if len(questionVector) == 0 {
-		return SearchResult{
-			Found: false,
+		return &SearchResult{
+			Language: language,
+			Found:    false,
 		}
 	}
 
@@ -87,8 +93,9 @@ func (engine *Engine) Search(
 	results := FindTopDocuments(candidates, engine, questionVector, analysis, searchLimit)
 
 	if len(results) == 0 {
-		return SearchResult{
-			Found: false,
+		return &SearchResult{
+			Language: language,
+			Found:    false,
 		}
 	}
 
@@ -97,10 +104,11 @@ func (engine *Engine) Search(
 		results[index].HasEntity = hasEntity
 	}
 
-	return SearchResult{
-		Results: results,
-		Tokens:  expandedTokens,
-		Intent:  analysis.PrimaryIntent,
-		Found:   true,
+	return &SearchResult{
+		Results:  results,
+		Tokens:   expandedTokens,
+		Intent:   analysis.PrimaryIntent,
+		Language: language,
+		Found:    true,
 	}
 }

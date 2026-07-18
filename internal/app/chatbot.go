@@ -32,10 +32,10 @@ func Run() {
 			break
 		}
 
-		response, hasResponse := AgentResponse(question)
+		response, hasResponse, language := AgentResponse(question)
 
 		if !hasResponse {
-			fmt.Println("Bot: Não encontrei informações relacionadas à pergunta.")
+			fmt.Println("Bot:", NotFoundMessage(language))
 			continue
 		}
 

@@ -67,11 +67,11 @@ func Handle() http.HandlerFunc {
 			return
 		}
 
-		response, hasResponse := app.AgentResponse(question)
+		response, hasResponse, language := app.AgentResponse(question)
 
 		if !hasResponse {
 			writeJSON(w, http.StatusNotFound, AskResponse{
-				Response: "Não encontrei informações relacionadas à pergunta.",
+				Response: app.NotFoundMessage(language),
 			})
 			return
 		}

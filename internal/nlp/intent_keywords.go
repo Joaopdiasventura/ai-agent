@@ -31,10 +31,22 @@ var intentKeywords = map[string]map[Intent]int{
 	"quem": {
 		IntentVisitorSummary: 3,
 	},
+	"who": {
+		IntentVisitorSummary: 3,
+	},
+	"what": {
+		IntentVisitorSummary: 1,
+	},
 	"resumo": {
 		IntentVisitorSummary: 3,
 	},
+	"summary": {
+		IntentVisitorSummary: 3,
+	},
 	"perfil": {
+		IntentVisitorSummary: 3,
+	},
+	"profile": {
 		IntentVisitorSummary: 3,
 	},
 	"apresentação": {
@@ -49,7 +61,26 @@ var intentKeywords = map[string]map[Intent]int{
 	"trabalha": {
 		IntentCurrentJob: 3,
 	},
+	"work": {
+		IntentCurrentJob:      2,
+		IntentVisitorServices: 1,
+	},
+	"works": {
+		IntentCurrentJob: 3,
+	},
+	"working": {
+		IntentCurrentJob: 2,
+	},
 	"trabalho": {
+		IntentCurrentJob: 2,
+	},
+	"job": {
+		IntentCurrentJob: 3,
+	},
+	"current": {
+		IntentCurrentJob: 2,
+	},
+	"currently": {
 		IntentCurrentJob: 2,
 	},
 	"profissão": {
@@ -67,9 +98,18 @@ var intentKeywords = map[string]map[Intent]int{
 	"primeiro": {
 		IntentFirstJob: 3,
 	},
+	"first": {
+		IntentFirstJob: 3,
+	},
 	"emprego": {
 		IntentFirstJob:   2,
 		IntentCurrentJob: 1,
+	},
+	"intern": {
+		IntentFirstJob: 2,
+	},
+	"internship": {
+		IntentFirstJob: 2,
 	},
 	"estágio": {
 		IntentFirstJob: 2,
@@ -86,7 +126,19 @@ var intentKeywords = map[string]map[Intent]int{
 	"estuda": {
 		IntentEducation: 3,
 	},
+	"studies": {
+		IntentEducation: 3,
+	},
+	"study": {
+		IntentEducation: 3,
+	},
 	"faculdade": {
+		IntentEducation: 3,
+	},
+	"college": {
+		IntentEducation: 3,
+	},
+	"education": {
 		IntentEducation: 3,
 	},
 	"curso": {
@@ -102,7 +154,15 @@ var intentKeywords = map[string]map[Intent]int{
 		IntentVisitorProjects: 3,
 		IntentProject:         2,
 	},
+	"project": {
+		IntentVisitorProjects: 3,
+		IntentProject:         2,
+	},
 	"projetos": {
+		IntentVisitorProjects: 3,
+		IntentProject:         2,
+	},
+	"projects": {
 		IntentVisitorProjects: 3,
 		IntentProject:         2,
 	},
@@ -151,7 +211,13 @@ var intentKeywords = map[string]map[Intent]int{
 	"tecnologia": {
 		IntentTechnologies: 3,
 	},
+	"technology": {
+		IntentTechnologies: 3,
+	},
 	"tecnologias": {
+		IntentTechnologies: 3,
+	},
+	"technologies": {
 		IntentTechnologies: 3,
 	},
 	"stack": {
@@ -169,6 +235,9 @@ var intentKeywords = map[string]map[Intent]int{
 	"contato": {
 		IntentContact: 3,
 	},
+	"contact": {
+		IntentContact: 3,
+	},
 	"contatar": {
 		IntentContact: 3,
 	},
@@ -182,6 +251,9 @@ var intentKeywords = map[string]map[Intent]int{
 	"telefone": {
 		IntentContact: 3,
 	},
+	"phone": {
+		IntentContact: 3,
+	},
 	"linkedin": {
 		IntentContact: 3,
 	},
@@ -191,10 +263,16 @@ var intentKeywords = map[string]map[Intent]int{
 	"serviço": {
 		IntentVisitorServices: 10,
 	},
+	"service": {
+		IntentVisitorServices: 10,
+	},
 	"servico": {
 		IntentVisitorServices: 10,
 	},
 	"serviços": {
+		IntentVisitorServices: 10,
+	},
+	"services": {
 		IntentVisitorServices: 10,
 	},
 	"servicos": {
@@ -206,6 +284,20 @@ var intentKeywords = map[string]map[Intent]int{
 	"desenvolve": {
 		IntentVisitorServices: 3,
 	},
+	"develop": {
+		IntentVisitorServices: 3,
+	},
+	"develops": {
+		IntentVisitorServices: 3,
+	},
+	"build": {
+		IntentVisitorServices: 2,
+		IntentVisitorSummary:  1,
+	},
+	"builds": {
+		IntentVisitorServices: 2,
+		IntentVisitorSummary:  1,
+	},
 	"cria": {
 		IntentVisitorServices: 2,
 		IntentVisitorSummary:  1,
@@ -215,6 +307,12 @@ var intentKeywords = map[string]map[Intent]int{
 		IntentHireReason:      2,
 	},
 	"contratar": {
+		IntentHireReason: 3,
+	},
+	"hire": {
+		IntentHireReason: 3,
+	},
+	"hiring": {
 		IntentHireReason: 3,
 	},
 	"contrataria": {
@@ -238,13 +336,34 @@ var intentKeywords = map[string]map[Intent]int{
 	"diferenciais": {
 		IntentHireReason: 3,
 	},
+	"reason": {
+		IntentHireReason: 2,
+	},
+	"reasons": {
+		IntentHireReason: 2,
+	},
+	"differential": {
+		IntentHireReason: 3,
+	},
+	"why": {
+		IntentHireReason: 2,
+	},
 	"sobre": {
+		IntentAbout: 3,
+	},
+	"about": {
 		IntentAbout: 3,
 	},
 	"fale": {
 		IntentAbout: 2,
 	},
+	"tell": {
+		IntentAbout: 2,
+	},
 	"explique": {
+		IntentAbout: 3,
+	},
+	"explain": {
 		IntentAbout: 3,
 	},
 	"descreva": {

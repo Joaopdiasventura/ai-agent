@@ -11,6 +11,10 @@ func CalculateIntentBoost(analysis *nlp.QueryAnalysis, document *domain.Document
 		return boost
 	}
 
+	if boost := calculateGeneralTechnologyBoost(analysis.PrimaryIntent, document); boost != 0 {
+		return boost
+	}
+
 	if !analysis.HasEntity {
 		return 0
 	}

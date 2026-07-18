@@ -5,11 +5,15 @@ import (
 	"ai-agent/internal/nlp"
 )
 
-func FilterDocumentsByIntent(documents []*domain.Document, intent nlp.Intent) []*domain.Document {
+func FilterDocumentsByIntent(documents []*domain.Document, analysis *nlp.QueryAnalysis) []*domain.Document {
 	candidates := make([]*domain.Document, 0)
 
 	for _, document := range documents {
-		if matchesIntent(document, intent) {
+		if document.Language != string(analysis.Language) {
+			continue
+		}
+
+		if matchesIntent(document, analysis.PrimaryIntent) {
 			candidates = append(candidates, document)
 		}
 	}
@@ -36,10 +40,10 @@ func FilterDocumentsByEntity(results []Result, entity nlp.Entity) []Result {
 func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 	switch intent {
 	case nlp.IntentCurrentJob:
-		return document.ID == "career-current-job"
+		return documentIDMatches(document, "career-current-job")
 
 	case nlp.IntentFirstJob:
-		return document.ID == "career-first-job"
+		return documentIDMatches(document, "career-first-job")
 
 	case nlp.IntentEducation:
 		return document.Category == "education"
@@ -49,7 +53,8 @@ func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 			document.Category == "comparison"
 
 	case nlp.IntentTechnologies:
-		return document.Category == "project" ||
+		return document.Category == "technology" ||
+			document.Category == "project" ||
 			document.Category == "career"
 
 	case nlp.IntentContact:
@@ -57,20 +62,20 @@ func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 
 	case nlp.IntentVisitorSummary:
 		return document.Category == "identity" ||
-			document.ID == "profile-focus"
+			documentIDMatches(document, "profile-focus")
 
 	case nlp.IntentVisitorProjects:
-		return document.ID == "project-comparison-best" ||
+		return documentIDMatches(document, "project-comparison-best") ||
 			document.Category == "project"
 
 	case nlp.IntentVisitorServices:
 		return document.Category == "service"
 
 	case nlp.IntentHireReason:
-		return document.ID == "identity-professional-summary" ||
-			document.ID == "profile-focus" ||
-			document.ID == "profile-availability" ||
-			document.ID == "career-current-impact"
+		return documentIDMatches(document, "identity-professional-summary") ||
+			documentIDMatches(document, "profile-focus") ||
+			documentIDMatches(document, "profile-availability") ||
+			documentIDMatches(document, "career-current-impact")
 
 	case nlp.IntentAbout:
 		return document.Category == "identity"

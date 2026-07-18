@@ -13,7 +13,7 @@ func calculateVisitorIntentBoost(intent nlp.Intent, document *domain.Document) f
 		}
 
 	case nlp.IntentVisitorProjects:
-		if document.ID == "project-comparison-best" {
+		if documentIDMatches(document, "project-comparison-best") {
 			return 0.30
 		}
 
@@ -27,11 +27,10 @@ func calculateVisitorIntentBoost(intent nlp.Intent, document *domain.Document) f
 		}
 
 	case nlp.IntentHireReason:
-		switch document.ID {
-		case "identity-professional-summary",
-			"profile-focus",
-			"profile-availability",
-			"career-current-impact":
+		if documentIDMatches(document, "identity-professional-summary") ||
+			documentIDMatches(document, "profile-focus") ||
+			documentIDMatches(document, "profile-availability") ||
+			documentIDMatches(document, "career-current-impact") {
 			return 0.20
 		}
 	}

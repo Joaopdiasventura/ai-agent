@@ -5,9 +5,10 @@ type QueryAnalysis struct {
 	AnswerMode    AnswerMode
 	Entity        Entity
 	HasEntity     bool
+	Language      Language
 }
 
-func AnalyzeQuery(tokens []string, entity Entity, hasEntity bool) *QueryAnalysis {
+func AnalyzeQuery(tokens []string, entity Entity, hasEntity bool, language Language) *QueryAnalysis {
 	intent := DetectIntent(tokens)
 	intent = ResolveIntent(intent, entity, hasEntity)
 
@@ -18,5 +19,6 @@ func AnalyzeQuery(tokens []string, entity Entity, hasEntity bool) *QueryAnalysis
 		AnswerMode:    answerMode,
 		Entity:        entity,
 		HasEntity:     hasEntity,
+		Language:      language,
 	}
 }
