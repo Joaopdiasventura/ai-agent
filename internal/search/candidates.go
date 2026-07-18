@@ -45,7 +45,8 @@ func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 		return document.Category == "education"
 
 	case nlp.IntentProject:
-		return document.Category == "project"
+		return document.Category == "project" ||
+			document.Category == "comparison"
 
 	case nlp.IntentTechnologies:
 		return document.Category == "project" ||
@@ -53,6 +54,9 @@ func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 
 	case nlp.IntentContact:
 		return document.Category == "contact"
+
+	case nlp.IntentAbout:
+		return document.Category == "identity"
 
 	default:
 		return true

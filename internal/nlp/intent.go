@@ -50,7 +50,9 @@ func ResolveIntent(intent Intent, entity Entity, hasEntity bool) Intent {
 
 	switch entity.Type {
 	case EntityProject:
-		if intent == IntentCurrentJob || intent == IntentUnknown {
+		if intent == IntentAbout ||
+			intent == IntentCurrentJob ||
+			intent == IntentUnknown {
 			return IntentProject
 		}
 

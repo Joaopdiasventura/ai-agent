@@ -14,6 +14,37 @@ var queryExpansions = map[string][]string{
 		"feito",
 		"descrição",
 	},
+	"joão": {
+		"desenvolvedor",
+		"software",
+		"sistemas",
+	},
+	"joao": {
+		"desenvolvedor",
+		"software",
+		"sistemas",
+	},
+	"projetos": {
+		"projeto",
+		"portfólio",
+		"portfolio",
+	},
+	"portfolio": {
+		"projeto",
+		"projetos",
+		"portfólio",
+	},
+	"portfólio": {
+		"projeto",
+		"projetos",
+		"portfolio",
+	},
+	"contato": {
+		"entrar",
+		"email",
+		"telefone",
+		"linkedin",
+	},
 	"trabalho": {
 		"trabalha",
 		"atualmente",

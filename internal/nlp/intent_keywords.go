@@ -4,6 +4,7 @@ var intentPriority = []Intent{
 	IntentContact,
 	IntentProject,
 	IntentTechnologies,
+	IntentAbout,
 	IntentCurrentJob,
 	IntentFirstJob,
 	IntentEducation,
@@ -12,6 +13,13 @@ var intentPriority = []Intent{
 var intentKeywords = map[string]map[Intent]int{
 	"faz": {
 		IntentCurrentJob: 3,
+		IntentAbout:      1,
+	},
+	"joão": {
+		IntentAbout: 1,
+	},
+	"joao": {
+		IntentAbout: 1,
 	},
 	"desenvolvido": {
 		IntentTechnologies: 3,
