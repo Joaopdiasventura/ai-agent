@@ -1,7 +1,6 @@
 package answer
 
 import (
-	"ai-agent/internal/memory"
 	"ai-agent/internal/nlp"
 	"strings"
 )
@@ -57,16 +56,14 @@ var templatesByIntent = map[nlp.Intent][]string{
 	},
 }
 
-func SelectTemplateForPlan(plan Plan, session *memory.Session) string {
+func SelectTemplateForPlan(plan Plan) string {
 	templates, exists := templatesByIntent[plan.Intent]
 
 	if !exists || len(templates) == 0 {
 		return "{fact}"
 	}
 
-	lastIndex := session.GetLastTemplateIndex(plan.Intent)
-
-	template, selectedIndex := SelectTemplate(templates, lastIndex)
+	template := SelectTemplate(templates)
 
 	if plan.DetailLevel == DetailMedium ||
 		plan.DetailLevel == DetailDetailed {
@@ -75,10 +72,6 @@ func SelectTemplateForPlan(plan Plan, session *memory.Session) string {
 			"{fact}",
 			"{facts}",
 		)
-	}
-
-	if selectedIndex >= 0 {
-		session.SetLastTemplateIndex(plan.Intent, selectedIndex)
 	}
 
 	return template

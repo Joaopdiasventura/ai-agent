@@ -3,7 +3,6 @@ package app
 import (
 	"ai-agent/internal/answer"
 	"ai-agent/internal/knowledge"
-	"ai-agent/internal/memory"
 	"ai-agent/internal/search"
 	"bufio"
 	"fmt"
@@ -15,7 +14,6 @@ func Run() {
 	documents := knowledge.Documents()
 	engine := search.NewEngine(documents, minimumSimilarity)
 
-	session := memory.NewSession()
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Chatbot iniciado.")
@@ -40,7 +38,7 @@ func Run() {
 			break
 		}
 
-		searchResult := engine.Search(question, session, maximumSearchResults)
+		searchResult := engine.Search(question, maximumSearchResults)
 
 		if !searchResult.Found {
 			fmt.Println("Bot: Não encontrei informações relacionadas à pergunta.")
@@ -49,7 +47,7 @@ func Run() {
 
 		plan := answer.BuildPlan(searchResult.Tokens, searchResult.Intent, searchResult.Results)
 
-		template := answer.SelectTemplateForPlan(plan, session)
+		template := answer.SelectTemplateForPlan(plan)
 
 		response := answer.RenderTemplate(template, plan)
 

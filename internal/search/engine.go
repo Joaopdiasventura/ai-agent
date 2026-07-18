@@ -2,7 +2,6 @@ package search
 
 import (
 	"ai-agent/internal/domain"
-	"ai-agent/internal/memory"
 	"ai-agent/internal/nlp"
 	"ai-agent/internal/tfidf"
 	"ai-agent/internal/tokenizer"
@@ -36,7 +35,6 @@ func NewEngine(documents []*domain.Document, minimumSimilarity float64) *Engine 
 
 func (engine *Engine) Search(
 	question string,
-	session *memory.Session,
 	limit int,
 ) SearchResult {
 	if limit <= 0 {
@@ -55,9 +53,7 @@ func (engine *Engine) Search(
 
 	expandedTokens := nlp.ExpandQuery(tokens)
 
-	detectedEntity, hasDetectedEntity := nlp.DetectEntity(expandedTokens)
-
-	entity, hasEntity := session.ResolveEntity(question, detectedEntity, hasDetectedEntity)
+	entity, hasEntity := nlp.DetectEntity(expandedTokens)
 
 	analysis := nlp.AnalyzeQuery(expandedTokens, entity, hasEntity)
 
