@@ -378,6 +378,12 @@ var queryExpansions = map[string][]string{
 		"atualmente",
 		"desenvolvedor",
 	},
+	"sobre": {
+		"é",
+		"como",
+		"feito",
+		"descrição",
+	},
 	"trabalho": {
 		"trabalha",
 		"atualmente",

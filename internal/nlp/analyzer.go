@@ -45,9 +45,12 @@ func ExpandQuery(tokens []string) []string {
 
 	for _, token := range tokens {
 		addToken(token)
+	}
+
+	for index := 0; index < len(expandedTokens); index++ {
+		token := expandedTokens[index]
 
 		expansions, exists := queryExpansions[token]
-
 		if !exists {
 			continue
 		}
