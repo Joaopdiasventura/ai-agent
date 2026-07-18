@@ -50,14 +50,14 @@ func main() {
 			break
 		}
 
-		results, found := engine.SearchResults(question, session, maximumSearchResults)
+		results, tokens, found := engine.SearchResults(question, session, maximumSearchResults)
 
 		if !found {
 			fmt.Println("Bot: Não encontrei informações relacionadas à pergunta.")
 			continue
 		}
 
-		plan := answer.BuildPlanFromResults(results)
+		plan := answer.BuildPlan(tokens, results)
 
 		template := answer.SelectTemplateForPlan(plan, session)
 

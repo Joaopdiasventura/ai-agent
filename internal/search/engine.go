@@ -31,15 +31,15 @@ func (engine *Engine) SearchResults(
 	question string,
 	session *memory.Session,
 	limit int,
-) ([]Result, bool) {
+) ([]Result, []string, bool) {
 	if limit <= 0 {
-		return nil, false
+		return nil, nil, false
 	}
 
 	tokens := tokenizer.Tokenize(question)
 
 	if len(tokens) == 0 {
-		return nil, false
+		return nil, nil, false
 	}
 
 	expandedTokens := nlp.ExpandQuery(tokens)
@@ -54,7 +54,7 @@ func (engine *Engine) SearchResults(
 	candidates := FilterDocumentsByIntent(engine.Documents, intent)
 
 	if len(candidates) == 0 {
-		return nil, false
+		return nil, nil, false
 	}
 
 	if hasEntity {
@@ -65,7 +65,7 @@ func (engine *Engine) SearchResults(
 	questionVector := tfidf.CalculateTFIDF(expandedTokens, engine.IDF)
 
 	if len(questionVector) == 0 {
-		return nil, false
+		return nil, nil, false
 	}
 
 	searchLimit := 1
@@ -79,7 +79,7 @@ func (engine *Engine) SearchResults(
 	results = FilterRelevantResults(results, engine.MinimumSimilarity)
 
 	if len(results) == 0 {
-		return nil, false
+		return nil, nil, false
 	}
 
 	for index := range results {
@@ -88,5 +88,5 @@ func (engine *Engine) SearchResults(
 		results[index].HasEntity = hasEntity
 	}
 
-	return results, true
+	return results, expandedTokens, true
 }

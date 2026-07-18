@@ -15,7 +15,7 @@ type Plan struct {
 	FormattedFacts string
 }
 
-func BuildPlanFromResults(results []search.Result) Plan {
+func BuildPlan(tokens []string, results []search.Result) Plan {
 	if len(results) == 0 {
 		return Plan{}
 	}
@@ -56,7 +56,7 @@ func BuildPlanFromResults(results []search.Result) Plan {
 		}
 	}
 
-	detailLevel := SelectDetailLevel()
+	detailLevel := SelectDetailLevel(tokens)
 	selectedFacts := SelectFactsByDetail(facts, detailLevel)
 	formattedFacts := FormatFacts(selectedFacts)
 

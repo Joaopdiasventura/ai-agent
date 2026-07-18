@@ -8,20 +8,24 @@ const (
 	DetailDetailed DetailLevel = "detailed"
 )
 
-func SelectDetailLevel() DetailLevel {
-	options := []string{
-		string(DetailShort),
-		string(DetailMedium),
-		string(DetailDetailed),
+var DetailKeys = map[string]DetailLevel{
+	"brevemente":     DetailShort,
+	"resuma":         DetailShort,
+	"explique":       DetailMedium,
+	"detalhes":       DetailDetailed,
+	"detalhadamente": DetailDetailed,
+}
+
+func SelectDetailLevel(tokens []string) DetailLevel {
+	detailLevel := DetailMedium
+
+	for _, token := range tokens {
+		newDetailLevel, exists := DetailKeys[token]
+
+		if exists {
+			detailLevel = newDetailLevel
+		}
 	}
 
-	weights := []float64{
-		0.25,
-		0.50,
-		0.25,
-	}
-
-	selected := SelectWeightedOption(options, weights)
-
-	return DetailLevel(selected)
+	return detailLevel
 }
