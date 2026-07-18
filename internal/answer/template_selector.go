@@ -8,45 +8,52 @@ import (
 
 var templatesByIntent = map[nlp.Intent][]string{
 	nlp.IntentCurrentJob: {
-		"{fact}",
-		"Atualmente, {subject} atua como desenvolvedor pleno na uFind Tecnologia.",
 		"Hoje, {subject} trabalha como desenvolvedor pleno na uFind Tecnologia.",
+		"{subject} está hoje na uFind Tecnologia, onde atua como desenvolvedor pleno.",
+		"No momento, {subject} trabalha na uFind Tecnologia como desenvolvedor pleno.",
+		"{fact}",
 	},
 	nlp.IntentFirstJob: {
+		"{subject} começou a carreira como estagiário na Representa Online.",
+		"A primeira experiência profissional de {subject} foi na Representa Online, como estagiário.",
+		"No início da carreira, {subject} trabalhou como estagiário na Representa Online.",
 		"{fact}",
-		"{subject} iniciou sua carreira como estagiário na Representa Online.",
-		"A primeira experiência profissional de {subject} foi na Representa Online.",
 	},
 	nlp.IntentEducation: {
+		"{subject} estuda Inteligência Artificial na FIAP.",
+		"Na formação, {subject} segue estudando Inteligência Artificial na FIAP.",
+		"A formação atual de {subject} é voltada para Inteligência Artificial na FIAP.",
 		"{fact}",
-		"Atualmente, {subject} estuda Inteligência Artificial na FIAP.",
-		"A formação atual de {subject} é em Inteligência Artificial na FIAP.",
 	},
 	nlp.IntentProject: {
+		"De forma simples: {fact}",
+		"Sobre esse projeto: {fact}",
 		"{fact}",
-		"Em resumo, {fact}",
-		"De forma direta: {fact}",
 	},
 	nlp.IntentTechnologies: {
-		"{subject} utiliza principalmente {technologies}.",
-		"A stack de {subject} inclui {technologies}.",
-		"As principais tecnologias relacionadas a {subject} são {technologies}.",
+		"{subject} trabalha principalmente com {technologies}.",
+		"No dia a dia, {subject} usa tecnologias como {technologies}.",
+		"As tecnologias mais presentes no trabalho de {subject} são {technologies}.",
 	},
 	nlp.IntentVisitorSummary: {
+		"Em poucas palavras, {fact}",
+		"De forma simples, {fact}",
 		"{fact}",
-		"Em resumo, {fact}",
 	},
 	nlp.IntentVisitorProjects: {
+		"Entre os projetos do portfólio, {fact}",
+		"Um bom resumo dos projetos é: {fact}",
 		"{fact}",
-		"Entre os projetos, {fact}",
 	},
 	nlp.IntentVisitorServices: {
-		"{fact}",
 		"Na prática, {fact}",
+		"Para empresas e projetos, {fact}",
+		"{fact}",
 	},
 	nlp.IntentHireReason: {
-		"{fact}",
 		"Vale conversar com João porque {fact}",
+		"Um bom motivo para falar com João é que {fact}",
+		"{fact}",
 	},
 }
 
