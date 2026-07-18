@@ -2,7 +2,6 @@ package memory
 
 import (
 	"ai-agent/internal/nlp"
-	"strings"
 )
 
 type Session struct {
@@ -30,36 +29,8 @@ func (session *Session) ResolveEntity(question string, detecetedEntity nlp.Entit
 		return nlp.Entity{}, false
 	}
 
-	normalizedQuestion := strings.ToLower(question)
-
-	replacer := strings.NewReplacer(
-		"?", " ",
-		"!", " ",
-		".", " ",
-		",", " ",
-		";", " ",
-		":", " ",
-	)
-
-	normalizedQuestion = replacer.Replace(normalizedQuestion)
-	normalizedQuestion = " " + strings.Join(strings.Fields(normalizedQuestion), " ") + " "
-
-	references := []string{
-		" ele ",
-		" ela ",
-		" dele ",
-		" dela ",
-		" isso ",
-		" esse ",
-		" essa ",
-		" este ",
-		" esta ",
-	}
-
-	for _, reference := range references {
-		if strings.Contains(normalizedQuestion, reference) {
-			return session.LastEntity, true
-		}
+	if referencesLastEntity(question) {
+		return session.LastEntity, true
 	}
 
 	return nlp.Entity{}, false
