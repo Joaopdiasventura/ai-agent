@@ -12,13 +12,7 @@ import (
 )
 
 func Run() {
-	documents, err := knowledge.LoadDocuments(knowledgeBasePath)
-
-	if err != nil {
-		fmt.Println("Erro:", err)
-		return
-	}
-
+	documents := knowledge.Documents()
 	engine := search.NewEngine(documents, minimumSimilarity)
 
 	session := memory.NewSession()

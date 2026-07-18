@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func calculateProjectAboutBoost(entity nlp.Entity, document domain.Document) float64 {
+func calculateProjectAboutBoost(entity nlp.Entity, document *domain.Document) float64 {
 	content := normalizeForBoost(document.Content)
 	entityValue := normalizeForBoost(entity.Value)
 

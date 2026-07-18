@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func calculateTechnologyIntentBoost(analysis nlp.QueryAnalysis, document domain.Document) float64 {
+func calculateTechnologyIntentBoost(analysis nlp.QueryAnalysis, document *domain.Document) float64 {
 	if !analysis.HasEntity {
 		return 0
 	}
@@ -54,7 +54,7 @@ func calculateTechnologyIntentBoost(analysis nlp.QueryAnalysis, document domain.
 	return score
 }
 
-func calculateProjectTechnologyBoost(entity nlp.Entity, document domain.Document) float64 {
+func calculateProjectTechnologyBoost(entity nlp.Entity, document *domain.Document) float64 {
 	content := normalizeForBoost(document.Content)
 	entityValue := normalizeForBoost(entity.Value)
 

@@ -9,7 +9,7 @@ import (
 )
 
 type Engine struct {
-	Documents         []domain.Document
+	Documents         []*domain.Document
 	IDF               map[string]float64
 	DocumentVectors   map[string]map[string]float64
 	MinimumSimilarity float64
@@ -22,7 +22,7 @@ type SearchResult struct {
 	Found   bool
 }
 
-func NewEngine(documents []domain.Document, minimumSimilarity float64) *Engine {
+func NewEngine(documents []*domain.Document, minimumSimilarity float64) *Engine {
 	idf := tfidf.CalculateIDF(documents)
 	documentsVectors := tfidf.CalculateDocumentVectors(documents, idf)
 

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func CalculateIntentBoost(analysis *nlp.QueryAnalysis, document domain.Document) float64 {
+func CalculateIntentBoost(analysis *nlp.QueryAnalysis, document *domain.Document) float64 {
 	if !analysis.HasEntity {
 		return 0
 	}

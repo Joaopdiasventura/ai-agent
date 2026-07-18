@@ -6,7 +6,7 @@ import (
 	"math"
 )
 
-func CalculateIDF(documents []domain.Document) map[string]float64 {
+func CalculateIDF(documents []*domain.Document) map[string]float64 {
 	idf := make(map[string]float64)
 
 	if len(documents) == 0 {
@@ -23,7 +23,7 @@ func CalculateIDF(documents []domain.Document) map[string]float64 {
 	return idf
 }
 
-func CalculateDocumentVectors(documents []domain.Document, idf map[string]float64) map[string]map[string]float64 {
+func CalculateDocumentVectors(documents []*domain.Document, idf map[string]float64) map[string]map[string]float64 {
 	vectors := make(map[string]map[string]float64)
 
 	for _, document := range documents {

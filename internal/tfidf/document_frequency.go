@@ -5,7 +5,7 @@ import (
 	"ai-agent/internal/tokenizer"
 )
 
-func calculateDF(documents []domain.Document) map[string]int {
+func calculateDF(documents []*domain.Document) map[string]int {
 	documentFrequency := make(map[string]int)
 
 	for _, document := range documents {

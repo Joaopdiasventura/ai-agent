@@ -7,7 +7,7 @@ import (
 )
 
 func FindTopDocuments(
-	documents []domain.Document,
+	documents []*domain.Document,
 	engine *Engine,
 	questionVector map[string]float64,
 	analysis *nlp.QueryAnalysis,

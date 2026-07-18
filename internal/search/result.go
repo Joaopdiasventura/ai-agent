@@ -6,7 +6,7 @@ import (
 )
 
 type Result struct {
-	Document   domain.Document
+	Document   *domain.Document
 	Similarity float64
 	Entity     nlp.Entity
 	HasEntity  bool

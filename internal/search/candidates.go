@@ -5,8 +5,8 @@ import (
 	"ai-agent/internal/nlp"
 )
 
-func FilterDocumentsByIntent(documents []domain.Document, intent nlp.Intent) []domain.Document {
-	candidates := make([]domain.Document, 0)
+func FilterDocumentsByIntent(documents []*domain.Document, intent nlp.Intent) []*domain.Document {
+	candidates := make([]*domain.Document, 0)
 
 	for _, document := range documents {
 		if matchesIntent(document, intent) {
@@ -33,7 +33,7 @@ func FilterDocumentsByEntity(results []Result, entity nlp.Entity) []Result {
 	return candidates
 }
 
-func matchesIntent(document domain.Document, intent nlp.Intent) bool {
+func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 	switch intent {
 	case nlp.IntentCurrentJob:
 		return document.ID == "career-current-job"
