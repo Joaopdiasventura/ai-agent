@@ -2,8 +2,12 @@ package nlp
 
 var intentPriority = []Intent{
 	IntentContact,
+	IntentHireReason,
+	IntentVisitorServices,
+	IntentVisitorProjects,
 	IntentProject,
 	IntentTechnologies,
+	IntentVisitorSummary,
 	IntentAbout,
 	IntentCurrentJob,
 	IntentFirstJob,
@@ -12,14 +16,32 @@ var intentPriority = []Intent{
 
 var intentKeywords = map[string]map[Intent]int{
 	"faz": {
-		IntentCurrentJob: 3,
-		IntentAbout:      1,
+		IntentVisitorSummary: 3,
+		IntentCurrentJob:     2,
+		IntentAbout:          1,
 	},
 	"joão": {
-		IntentAbout: 1,
+		IntentVisitorSummary: 2,
+		IntentAbout:          1,
 	},
 	"joao": {
-		IntentAbout: 1,
+		IntentVisitorSummary: 2,
+		IntentAbout:          1,
+	},
+	"quem": {
+		IntentVisitorSummary: 3,
+	},
+	"resumo": {
+		IntentVisitorSummary: 3,
+	},
+	"perfil": {
+		IntentVisitorSummary: 3,
+	},
+	"apresentação": {
+		IntentVisitorSummary: 3,
+	},
+	"apresentacao": {
+		IntentVisitorSummary: 3,
 	},
 	"desenvolvido": {
 		IntentTechnologies: 3,
@@ -77,10 +99,18 @@ var intentKeywords = map[string]map[Intent]int{
 		IntentEducation: 3,
 	},
 	"projeto": {
-		IntentProject: 3,
+		IntentVisitorProjects: 3,
+		IntentProject:         2,
 	},
 	"projetos": {
-		IntentProject: 3,
+		IntentVisitorProjects: 3,
+		IntentProject:         2,
+	},
+	"portfólio": {
+		IntentVisitorProjects: 3,
+	},
+	"portfolio": {
+		IntentVisitorProjects: 3,
 	},
 	"auronix": {
 		IntentProject: 3,
@@ -139,6 +169,13 @@ var intentKeywords = map[string]map[Intent]int{
 	"contato": {
 		IntentContact: 3,
 	},
+	"contatar": {
+		IntentContact: 3,
+	},
+	"conversar": {
+		IntentContact:    2,
+		IntentHireReason: 1,
+	},
 	"email": {
 		IntentContact: 3,
 	},
@@ -150,6 +187,56 @@ var intentKeywords = map[string]map[Intent]int{
 	},
 	"github": {
 		IntentContact: 3,
+	},
+	"serviço": {
+		IntentVisitorServices: 10,
+	},
+	"servico": {
+		IntentVisitorServices: 10,
+	},
+	"serviços": {
+		IntentVisitorServices: 10,
+	},
+	"servicos": {
+		IntentVisitorServices: 10,
+	},
+	"pode": {
+		IntentVisitorServices: 2,
+	},
+	"desenvolve": {
+		IntentVisitorServices: 3,
+	},
+	"cria": {
+		IntentVisitorServices: 2,
+		IntentVisitorSummary:  1,
+	},
+	"ajudar": {
+		IntentVisitorServices: 2,
+		IntentHireReason:      2,
+	},
+	"contratar": {
+		IntentHireReason: 3,
+	},
+	"contrataria": {
+		IntentHireReason: 3,
+	},
+	"contrato": {
+		IntentHireReason: 2,
+	},
+	"vale": {
+		IntentHireReason: 2,
+	},
+	"motivo": {
+		IntentHireReason: 2,
+	},
+	"motivos": {
+		IntentHireReason: 2,
+	},
+	"diferencial": {
+		IntentHireReason: 3,
+	},
+	"diferenciais": {
+		IntentHireReason: 3,
 	},
 	"sobre": {
 		IntentAbout: 3,

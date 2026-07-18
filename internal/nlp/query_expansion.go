@@ -2,11 +2,8 @@ package nlp
 
 var queryExpansions = map[string][]string{
 	"faz": {
-		"trabalha",
-		"cursa",
-		"estuda",
-		"atualmente",
 		"desenvolvedor",
+		"sistemas",
 	},
 	"sobre": {
 		"é",
@@ -44,6 +41,54 @@ var queryExpansions = map[string][]string{
 		"email",
 		"telefone",
 		"linkedin",
+	},
+	"serviços": {
+		"pode",
+		"desenvolver",
+		"sites",
+		"aplicações",
+		"automações",
+		"integrações",
+		"sistemas",
+	},
+	"servicos": {
+		"pode",
+		"desenvolver",
+		"sites",
+		"aplicações",
+		"automações",
+		"integrações",
+		"sistemas",
+	},
+	"serviço": {
+		"pode",
+		"desenvolver",
+		"sites",
+		"aplicações",
+		"automações",
+		"integrações",
+		"sistemas",
+	},
+	"servico": {
+		"pode",
+		"desenvolver",
+		"sites",
+		"aplicações",
+		"automações",
+		"integrações",
+		"sistemas",
+	},
+	"contratar": {
+		"confiáveis",
+		"negócio",
+		"automações",
+		"produtos",
+	},
+	"contrataria": {
+		"confiáveis",
+		"negócio",
+		"automações",
+		"produtos",
 	},
 	"trabalho": {
 		"trabalha",

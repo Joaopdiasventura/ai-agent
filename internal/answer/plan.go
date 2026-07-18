@@ -57,6 +57,7 @@ func BuildPlan(tokens []string, intent nlp.Intent, results []search.Result) Plan
 	}
 
 	detailLevel := SelectDetailLevel(tokens)
+	detailLevel = SelectIntentDetailLevel(intent, detailLevel)
 	selectedFacts := SelectFactsByDetail(facts, detailLevel)
 	formattedFacts := FormatFacts(selectedFacts)
 

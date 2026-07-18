@@ -3,14 +3,18 @@ package nlp
 type Intent string
 
 const (
-	IntentUnknown      Intent = "unknown"
-	IntentAbout        Intent = "about"
-	IntentCurrentJob   Intent = "current_job"
-	IntentFirstJob     Intent = "first_job"
-	IntentEducation    Intent = "education"
-	IntentProject      Intent = "project"
-	IntentTechnologies Intent = "technologies"
-	IntentContact      Intent = "contact"
+	IntentUnknown         Intent = "unknown"
+	IntentAbout           Intent = "about"
+	IntentCurrentJob      Intent = "current_job"
+	IntentFirstJob        Intent = "first_job"
+	IntentEducation       Intent = "education"
+	IntentProject         Intent = "project"
+	IntentTechnologies    Intent = "technologies"
+	IntentContact         Intent = "contact"
+	IntentVisitorSummary  Intent = "visitor_summary"
+	IntentVisitorProjects Intent = "visitor_projects"
+	IntentVisitorServices Intent = "visitor_services"
+	IntentHireReason      Intent = "hire_reason"
 )
 
 func DetectIntent(tokens []string) Intent {

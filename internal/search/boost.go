@@ -7,6 +7,10 @@ import (
 )
 
 func CalculateIntentBoost(analysis *nlp.QueryAnalysis, document *domain.Document) float64 {
+	if boost := calculateVisitorIntentBoost(analysis.PrimaryIntent, document); boost != 0 {
+		return boost
+	}
+
 	if !analysis.HasEntity {
 		return 0
 	}

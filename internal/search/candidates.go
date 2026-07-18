@@ -55,6 +55,23 @@ func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 	case nlp.IntentContact:
 		return document.Category == "contact"
 
+	case nlp.IntentVisitorSummary:
+		return document.Category == "identity" ||
+			document.ID == "profile-focus"
+
+	case nlp.IntentVisitorProjects:
+		return document.ID == "project-comparison-best" ||
+			document.Category == "project"
+
+	case nlp.IntentVisitorServices:
+		return document.Category == "service"
+
+	case nlp.IntentHireReason:
+		return document.ID == "identity-professional-summary" ||
+			document.ID == "profile-focus" ||
+			document.ID == "profile-availability" ||
+			document.ID == "career-current-impact"
+
 	case nlp.IntentAbout:
 		return document.Category == "identity"
 

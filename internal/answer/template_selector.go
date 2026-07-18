@@ -32,6 +32,22 @@ var templatesByIntent = map[nlp.Intent][]string{
 		"A stack de {subject} inclui {technologies}.",
 		"As principais tecnologias relacionadas a {subject} são {technologies}.",
 	},
+	nlp.IntentVisitorSummary: {
+		"{fact}",
+		"Em resumo, {fact}",
+	},
+	nlp.IntentVisitorProjects: {
+		"{fact}",
+		"Entre os projetos, {fact}",
+	},
+	nlp.IntentVisitorServices: {
+		"{fact}",
+		"Na prática, {fact}",
+	},
+	nlp.IntentHireReason: {
+		"{fact}",
+		"Vale conversar com João porque {fact}",
+	},
 }
 
 func SelectTemplateForPlan(plan Plan, session *memory.Session) string {

@@ -1,5 +1,7 @@
 package answer
 
+import "ai-agent/internal/nlp"
+
 type DetailLevel string
 
 const (
@@ -24,6 +26,20 @@ func SelectDetailLevel(tokens []string) DetailLevel {
 
 		if exists {
 			detailLevel = newDetailLevel
+		}
+	}
+
+	return detailLevel
+}
+
+func SelectIntentDetailLevel(intent nlp.Intent, detailLevel DetailLevel) DetailLevel {
+	switch intent {
+	case nlp.IntentVisitorSummary,
+		nlp.IntentVisitorProjects,
+		nlp.IntentVisitorServices,
+		nlp.IntentHireReason:
+		if detailLevel == DetailMedium {
+			return DetailShort
 		}
 	}
 
