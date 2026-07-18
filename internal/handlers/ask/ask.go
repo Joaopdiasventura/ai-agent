@@ -3,7 +3,10 @@ package handlers
 import (
 	"ai-agent/internal/app"
 	"encoding/json"
+	"errors"
+	"io"
 	"net/http"
+	"strings"
 )
 
 const maxRequestBodyBytes = 2048
@@ -17,16 +20,52 @@ func Handle() http.HandlerFunc {
 		decoder := json.NewDecoder(r.Body)
 		decoder.DisallowUnknownFields()
 
-		err := decoder.Decode(r.Body)
+		if err := decoder.Decode(&body); err != nil {
+			var maxBytesError *http.MaxBytesError
+			var syntaxError *json.SyntaxError
+			var typeError *json.UnmarshalTypeError
 
-		if err != nil {
+			switch {
+			case errors.As(err, &maxBytesError):
+				writeJSON(w, http.StatusRequestEntityTooLarge, AskResponse{
+					Response: "Body da requisição excede o limite permitido.",
+				})
+			case errors.As(err, &syntaxError):
+				writeJSON(w, http.StatusBadRequest, AskResponse{
+					Response: "JSON inválido.",
+				})
+			case errors.As(err, &typeError):
+				writeJSON(w, http.StatusBadRequest, AskResponse{
+					Response: "Tipo de campo inválido.",
+				})
+			case errors.Is(err, io.EOF):
+				writeJSON(w, http.StatusBadRequest, AskResponse{
+					Response: "Body da requisição vazio.",
+				})
+			default:
+				writeJSON(w, http.StatusBadRequest, AskResponse{
+					Response: "Body da requisição inválido.",
+				})
+			}
+
+			return
+		}
+
+		if err := decoder.Decode(&struct{}{}); !errors.Is(err, io.EOF) {
 			writeJSON(w, http.StatusBadRequest, AskResponse{
-				Response: "Body da requisição inválido.",
+				Response: "O body deve conter apenas um objeto JSON.",
 			})
 			return
 		}
 
-		question := body.Content
+		question := strings.TrimSpace(body.Content)
+
+		if question == "" {
+			writeJSON(w, http.StatusBadRequest, AskResponse{
+				Response: "O campo content é obrigatório.",
+			})
+			return
+		}
 
 		response, hasResponse := app.AgentResponse(question)
 
@@ -37,6 +76,8 @@ func Handle() http.HandlerFunc {
 			return
 		}
 
-		writeJSON(w, http.StatusOK, AskResponse{Response: response})
+		writeJSON(w, http.StatusOK, AskResponse{
+			Response: response,
+		})
 	}
 }
