@@ -4,6 +4,7 @@ type Intent string
 
 const (
 	IntentUnknown      Intent = "unknown"
+	IntentAbout        Intent = "about"
 	IntentCurrentJob   Intent = "current_job"
 	IntentFirstJob     Intent = "first_job"
 	IntentEducation    Intent = "education"
@@ -24,6 +25,22 @@ const (
 type Entity struct {
 	Type  EntityType
 	Value string
+}
+
+type AnswerMode string
+
+const (
+	AnswerModeDefault    AnswerMode = "default"
+	AnswerModeAbout      AnswerMode = "about"
+	AnswerModeTechnology AnswerMode = "technology"
+	AnswerModeComparison AnswerMode = "comparison"
+)
+
+type QueryAnalysis struct {
+	PrimaryIntent Intent
+	AnswerMode    AnswerMode
+	Entity        Entity
+	HasEntity     bool
 }
 
 func ExpandQuery(tokens []string) []string {
@@ -135,6 +152,32 @@ func ResolveIntent(intent Intent, entity Entity, hasEntity bool) Intent {
 	}
 
 	return intent
+}
+
+func AnalyzeQuery(tokens []string, entity Entity, hasEntity bool) *QueryAnalysis {
+	intent := DetectIntent(tokens)
+	intent = ResolveIntent(intent, entity, hasEntity)
+
+	answerMode := DetectAnswerMode(tokens)
+
+	return &QueryAnalysis{
+		PrimaryIntent: intent,
+		AnswerMode:    answerMode,
+		Entity:        entity,
+		HasEntity:     hasEntity,
+	}
+}
+
+func DetectAnswerMode(tokens []string) AnswerMode {
+	for _, token := range tokens {
+		answerMode, exists := answerModeToken[token]
+
+		if exists {
+			return answerMode
+		}
+	}
+
+	return AnswerModeDefault
 }
 
 func containsTokenSequence(tokens []string, sequence []string) bool {

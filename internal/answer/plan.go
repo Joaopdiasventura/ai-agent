@@ -15,7 +15,7 @@ type Plan struct {
 	FormattedFacts string
 }
 
-func BuildPlan(tokens []string, results []search.Result) Plan {
+func BuildPlan(tokens []string, intent nlp.Intent, results []search.Result) Plan {
 	if len(results) == 0 {
 		return Plan{}
 	}
@@ -44,7 +44,7 @@ func BuildPlan(tokens []string, results []search.Result) Plan {
 			}
 		}
 
-		for _, technology := range ExtractTechnologies(result.Document.Content) {
+		for _, technology := range nlp.ExtractTechnologies(result.Document.Content) {
 			normalizedTechnology := strings.ToLower(technology)
 
 			if _, exists := knowTechnologies[normalizedTechnology]; exists {
@@ -61,7 +61,7 @@ func BuildPlan(tokens []string, results []search.Result) Plan {
 	formattedFacts := FormatFacts(selectedFacts)
 
 	return Plan{
-		Intent:         results[0].Intent,
+		Intent:         intent,
 		Subject:        subject,
 		Facts:          facts,
 		Technologies:   technologies,

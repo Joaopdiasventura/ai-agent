@@ -5,6 +5,7 @@ type entityAlias struct {
 	Entity Entity
 }
 
+
 var entityAliases = []entityAlias{
 	{
 		Tokens: []string{"ufind", "tecnologia"},
@@ -368,6 +369,44 @@ var intentKeywords = map[string]map[Intent]int{
 	"github": {
 		IntentContact: 3,
 	},
+	"sobre": {
+		IntentAbout: 3,
+	},
+	"fale": {
+		IntentAbout: 2,
+	},
+	"explique": {
+		IntentAbout: 3,
+	},
+	"descreva": {
+		IntentAbout: 3,
+	},
+	"é": {
+		IntentAbout: 2,
+	},
+}
+
+var answerModeToken = map[string]AnswerMode{
+	"sobre":       AnswerModeAbout,
+	"fale":        AnswerModeAbout,
+	"explique":    AnswerModeAbout,
+	"descreva":    AnswerModeAbout,
+	"resuma":      AnswerModeAbout,
+	"resumo":      AnswerModeAbout,
+	"tecnologia":  AnswerModeTechnology,
+	"tecnologias": AnswerModeTechnology,
+	"stack":       AnswerModeTechnology,
+	"usa":         AnswerModeTechnology,
+	"utiliza":     AnswerModeTechnology,
+	"utilizadas":  AnswerModeTechnology,
+	"usadas":      AnswerModeTechnology,
+	"comparar":    AnswerModeComparison,
+	"comparação":  AnswerModeComparison,
+	"comparacao":  AnswerModeComparison,
+	"diferenca":   AnswerModeComparison,
+	"diferença":   AnswerModeComparison,
+	"melhor":      AnswerModeComparison,
+	"principal":   AnswerModeComparison,
 }
 
 var queryExpansions = map[string][]string{

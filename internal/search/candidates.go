@@ -21,6 +21,18 @@ func FilterDocumentsByIntent(documents []domain.Document, intent nlp.Intent) []d
 	return candidates
 }
 
+func FilterDocumentsByEntity(results []Result, entity nlp.Entity) []Result {
+	candidates := make([]Result, 0)
+
+	for _, result := range results {
+		if result.Entity.Value == entity.Value {
+			candidates = append(candidates, result)
+		}
+	}
+
+	return candidates
+}
+
 func matchesIntent(document domain.Document, intent nlp.Intent) bool {
 	switch intent {
 	case nlp.IntentCurrentJob:

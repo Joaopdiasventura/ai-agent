@@ -15,6 +15,13 @@ type Engine struct {
 	MinimumSimilarity float64
 }
 
+type SearchResult struct {
+	Results []Result
+	Tokens  []string
+	Intent  nlp.Intent
+	Found   bool
+}
+
 func NewEngine(documents []domain.Document, minimumSimilarity float64) *Engine {
 	idf := tfidf.CalculateIDF(documents)
 	documentsVectors := tfidf.CalculateDocumentVectors(documents, idf)
@@ -27,19 +34,23 @@ func NewEngine(documents []domain.Document, minimumSimilarity float64) *Engine {
 	}
 }
 
-func (engine *Engine) SearchResults(
+func (engine *Engine) Search(
 	question string,
 	session *memory.Session,
 	limit int,
-) ([]Result, []string, bool) {
+) SearchResult {
 	if limit <= 0 {
-		return nil, nil, false
+		return SearchResult{
+			Found: false,
+		}
 	}
 
 	tokens := tokenizer.Tokenize(question)
 
 	if len(tokens) == 0 {
-		return nil, nil, false
+		return SearchResult{
+			Found: false,
+		}
 	}
 
 	expandedTokens := nlp.ExpandQuery(tokens)
@@ -48,13 +59,14 @@ func (engine *Engine) SearchResults(
 
 	entity, hasEntity := session.ResolveEntity(question, detectedEntity, hasDetectedEntity)
 
-	intent := nlp.DetectIntent(expandedTokens)
-	intent = nlp.ResolveIntent(intent, entity, hasEntity)
+	analysis := nlp.AnalyzeQuery(expandedTokens, entity, hasEntity)
 
-	candidates := FilterDocumentsByIntent(engine.Documents, intent)
+	candidates := FilterDocumentsByIntent(engine.Documents, analysis.PrimaryIntent)
 
 	if len(candidates) == 0 {
-		return nil, nil, false
+		return SearchResult{
+			Found: false,
+		}
 	}
 
 	if hasEntity {
@@ -65,28 +77,34 @@ func (engine *Engine) SearchResults(
 	questionVector := tfidf.CalculateTFIDF(expandedTokens, engine.IDF)
 
 	if len(questionVector) == 0 {
-		return nil, nil, false
+		return SearchResult{
+			Found: false,
+		}
 	}
 
 	searchLimit := 1
 
-	if ShouldSearchMultipleDocuments(intent, hasEntity) {
+	if ShouldSearchMultipleDocuments(analysis.PrimaryIntent, hasEntity) {
 		searchLimit = limit
 	}
 
-	results := FindTopDocuments(candidates, engine.DocumentVectors, questionVector, searchLimit)
-
-	results = FilterRelevantResults(results, engine.MinimumSimilarity)
+	results := FindTopDocuments(candidates, engine, questionVector, analysis, searchLimit)
 
 	if len(results) == 0 {
-		return nil, nil, false
+		return SearchResult{
+			Found: false,
+		}
 	}
 
 	for index := range results {
-		results[index].Intent = intent
 		results[index].Entity = entity
 		results[index].HasEntity = hasEntity
 	}
 
-	return results, expandedTokens, true
+	return SearchResult{
+		Results: results,
+		Tokens:  expandedTokens,
+		Intent:  analysis.PrimaryIntent,
+		Found:   true,
+	}
 }

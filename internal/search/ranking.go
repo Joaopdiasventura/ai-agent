@@ -2,13 +2,15 @@ package search
 
 import (
 	"ai-agent/internal/domain"
+	"ai-agent/internal/nlp"
 	"sort"
 )
 
 func FindTopDocuments(
 	documents []domain.Document,
-	documentVectors map[string]map[string]float64,
+	engine *Engine,
 	questionVector map[string]float64,
+	analysis *nlp.QueryAnalysis,
 	limit int,
 ) []Result {
 	if len(documents) == 0 || len(questionVector) == 0 || limit <= 0 {
@@ -18,17 +20,18 @@ func FindTopDocuments(
 	results := make([]Result, 0, len(documents))
 
 	for _, document := range documents {
-		documentVectors, exists := documentVectors[document.ID]
+		documentVectors, exists := engine.DocumentVectors[document.ID]
 
 		if !exists {
 			continue
 		}
 
 		similarity := CosineSimilarity(questionVector, documentVectors)
+		boost := CalculateIntentBoost(analysis, document)
 
 		results = append(results, Result{
 			Document:   document,
-			Similarity: similarity,
+			Similarity: similarity + boost,
 		})
 	}
 
@@ -40,5 +43,5 @@ func FindTopDocuments(
 		limit = len(results)
 	}
 
-	return results[:limit]
+	return FilterRelevantResults(results[:limit], analysis, engine.MinimumSimilarity)
 }

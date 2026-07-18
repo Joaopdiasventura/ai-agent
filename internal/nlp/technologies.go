@@ -1,11 +1,11 @@
-package answer
+package nlp
 
 import (
 	"regexp"
 	"strings"
 )
 
-var knownTechnologies = []string{
+var KnownTechnologies = []string{
 	"Node.js",
 	"TypeScript",
 	"Java",
@@ -35,7 +35,7 @@ var knownTechnologies = []string{
 func ExtractTechnologies(content string) []string {
 	technologies := make([]string, 0)
 
-	for _, technology := range knownTechnologies {
+	for _, technology := range KnownTechnologies {
 		pattern := `(?i)(^|[^\p{L}\p{N}])` +
 			regexp.QuoteMeta(technology) +
 			`($|[^\p{L}\p{N}])`
