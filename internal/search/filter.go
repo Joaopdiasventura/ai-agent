@@ -13,12 +13,13 @@ func FilterRelevantResults(results []Result, analysis *nlp.QueryAnalysis, minimu
 			continue
 		}
 
-		if analysis.HasEntity &&
-			strings.Contains(
-				result.Document.Content,
-				analysis.Entity.Value) {
-			relevantResults = append(relevantResults, result)
+		if analysis.HasEntity && !strings.Contains(
+			result.Document.Content,
+			analysis.Entity.Value) {
+			continue
 		}
+
+		relevantResults = append(relevantResults, result)
 	}
 
 	return relevantResults
