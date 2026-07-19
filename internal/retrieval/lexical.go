@@ -22,6 +22,7 @@ func LexicalSearch(index vectorindex.Index, query domain.Query, limit int) []dom
 
 	for _, entry := range index.Entries {
 		score := lexicalScore(entry.Document, queryTokens)
+		score += metadataLexicalScore(entry.Document, query)
 		if score <= 0 {
 			continue
 		}
@@ -53,6 +54,28 @@ func LexicalSearch(index vectorindex.Index, query domain.Query, limit int) []dom
 	}
 
 	return results
+}
+
+func metadataLexicalScore(document domain.Document, query domain.Query) float64 {
+	score := 0.0
+
+	if query.Language != "" && document.Language == query.Language {
+		score += 0.5
+	}
+
+	if query.Category != "" && document.Category == query.Category {
+		score += 5
+	}
+
+	if query.TemporalStatus != "" && query.TemporalStatus != domain.TemporalTimeless && document.TemporalStatus == query.TemporalStatus {
+		score += 4
+	}
+
+	if query.Project != "" && document.Project == query.Project {
+		score += 6
+	}
+
+	return score
 }
 
 func lexicalScore(document domain.Document, queryTokens []string) float64 {

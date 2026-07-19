@@ -11,7 +11,7 @@ func Run() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Chatbot iniciado.")
-	fmt.Printf("%d documentos carregados.\n", len(documents))
+	fmt.Printf("%d documentos carregados.\n", DocumentCount())
 	fmt.Println("Digite 'sair' para encerrar.")
 
 	for {

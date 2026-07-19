@@ -2,6 +2,7 @@ package evidence
 
 import (
 	"ai-agent/internal/domain"
+	"sort"
 	"strings"
 )
 
@@ -19,8 +20,13 @@ func (selector Selector) Select(query domain.Query, results []domain.SearchResul
 	}
 
 	maxEvidence := selector.MaxEvidence
-	if !requiresSynthesis(query) {
+	synthesis := requiresSynthesis(query)
+	if !synthesis {
 		maxEvidence = 1
+	}
+
+	if synthesis && query.Project != "" {
+		results = prioritizeProjectEvidence(results)
 	}
 
 	evidence := make([]domain.Evidence, 0, maxEvidence)
@@ -34,11 +40,19 @@ func (selector Selector) Select(query domain.Query, results []domain.SearchResul
 
 		document := result.Document
 
+		if strings.Contains(document.ID, "project-comparison") {
+			continue
+		}
+
 		if query.Language != "" && document.Language != query.Language {
 			continue
 		}
 
 		if selectedProject != "" && document.Project != "" && document.Project != selectedProject {
+			continue
+		}
+
+		if selectedProject != "" && requiresSynthesis(query) && query.Category == "project" && document.Project == "" {
 			continue
 		}
 
@@ -89,4 +103,38 @@ func requiresSynthesis(query domain.Query) bool {
 	}
 
 	return false
+}
+
+func prioritizeProjectEvidence(results []domain.SearchResult) []domain.SearchResult {
+	prioritized := append([]domain.SearchResult(nil), results...)
+
+	sort.SliceStable(prioritized, func(firstIndex int, secondIndex int) bool {
+		firstPriority := evidencePriority(prioritized[firstIndex])
+		secondPriority := evidencePriority(prioritized[secondIndex])
+
+		if firstPriority == secondPriority {
+			return prioritized[firstIndex].FinalScore > prioritized[secondIndex].FinalScore
+		}
+
+		return firstPriority < secondPriority
+	})
+
+	return prioritized
+}
+
+func evidencePriority(result domain.SearchResult) int {
+	if result.Document == nil {
+		return 99
+	}
+
+	switch result.Document.Category {
+	case "impact":
+		return 0
+	case "project":
+		return 1
+	case "technology":
+		return 2
+	default:
+		return 3
+	}
 }

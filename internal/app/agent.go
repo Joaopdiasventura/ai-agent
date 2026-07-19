@@ -1,33 +1,26 @@
 package app
 
 import (
-	"ai-agent/internal/answer"
-	"ai-agent/internal/knowledge"
+	"ai-agent/internal/agent"
+	"ai-agent/internal/embedding"
+	"ai-agent/internal/generation"
 	"ai-agent/internal/nlp"
-	"ai-agent/internal/search"
+	"ai-agent/internal/ranking"
+	"ai-agent/internal/retrieval"
+	"ai-agent/internal/vectorindex"
+	"context"
 )
 
-var documents = knowledge.Documents()
-var engine = search.NewEngine(documents, minimumSimilarity)
+var agentIndex = mustLoadAgentIndex()
+var service = mustCreateAgentService(agentIndex)
 
 func AgentResponse(question string) (string, bool, nlp.Language) {
-	searchResult := engine.Search(question, maximumSearchResults)
-
-	if !searchResult.Found {
-		return "", false, searchResult.Language
+	response, hasResponse, language, err := service.Answer(context.Background(), question, maximumSearchResults)
+	if err != nil {
+		return "", false, nlp.LanguagePortuguese
 	}
 
-	plan := answer.BuildPlan(searchResult)
-
-	if searchResult.Intent == nlp.IntentProjectRecommendation {
-		return answer.RenderProjectRecommendation(plan), true, searchResult.Language
-	}
-
-	template := answer.SelectTemplateForPlan(plan)
-
-	response := answer.RenderTemplate(template, plan)
-
-	return response, true, searchResult.Language
+	return response, hasResponse, nlp.Language(language)
 }
 
 func NotFoundMessage(language nlp.Language) string {
@@ -36,4 +29,36 @@ func NotFoundMessage(language nlp.Language) string {
 	}
 
 	return "Não encontrei essa informação específica, mas posso falar sobre experiência, projetos, tecnologias, serviços ou contato do João."
+}
+
+func DocumentCount() int {
+	return len(agentIndex.Entries)
+}
+
+func mustLoadAgentIndex() vectorindex.Index {
+	index, err := vectorindex.LoadEmbedded()
+	if err != nil {
+		panic(err)
+	}
+
+	return index
+}
+
+func mustCreateAgentService(index vectorindex.Index) *agent.Service {
+	embedder, err := embedding.NewDeterministicEmbedder(index.Dimension)
+	if err != nil {
+		panic(err)
+	}
+
+	service, err := agent.NewService(
+		embedder,
+		retrieval.NewHybridRetriever(index),
+		ranking.DefaultMetadataReranker(),
+		generation.NewGroundedGenerator(),
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	return service
 }

@@ -26,7 +26,7 @@ type Policy struct {
 func DefaultPolicy() Policy {
 	return Policy{
 		HighThreshold:   75,
-		MediumThreshold: 45,
+		MediumThreshold: 0,
 	}
 }
 
@@ -35,7 +35,15 @@ func (policy Policy) Assess(query domain.Query, results []domain.SearchResult, e
 		return Assessment{Level: Low, Reason: "no_evidence"}
 	}
 
+	if query.Category == "" && query.Project == "" && len(query.ExactTerms) == 0 {
+		return Assessment{Level: Low, Reason: "unspecified_query"}
+	}
+
 	first := results[0]
+	if first.Document != nil && query.Language != "" && first.Document.Language != query.Language {
+		return Assessment{Level: Low, Reason: "language_mismatch"}
+	}
+
 	score := first.FinalScore
 
 	if score == 0 {
@@ -77,6 +85,10 @@ func (policy Policy) Assess(query domain.Query, results []domain.SearchResult, e
 
 	if len(first.PenaltyReasons) > 0 {
 		score -= float64(len(first.PenaltyReasons) * 15)
+	}
+
+	if query.Category == "" && len(query.ExactTerms) == 0 && !hasSource(first.Sources, "lexical") {
+		score -= 45
 	}
 
 	switch {

@@ -7,13 +7,14 @@ import (
 	"unicode"
 )
 
-var exactTermPattern = regexp.MustCompile(`[\w.+-]+@[\w.-]+|\+?\d[\d\s().-]{5,}\d|[A-Z][A-Za-z0-9+#.]*`)
+var exactTermPattern = regexp.MustCompile(`[\w.+-]+@[\w.-]+|\+?\d[\d\s().-]{5,}\d`)
 
 func Analyze(text string) domain.Query {
 	tokens := queryTokens(text)
 
 	return domain.Query{
 		Text:           strings.TrimSpace(text),
+		Tokens:         tokens,
 		Language:       detectLanguage(tokens),
 		Category:       detectCategory(tokens),
 		Project:        detectProject(tokens),
@@ -53,6 +54,7 @@ func detectLanguage(tokens []string) string {
 			"what": 3, "which": 3, "where": 3, "who": 3, "his": 3, "email": 1,
 			"study": 3, "studied": 3, "work": 3, "worked": 3, "project": 2,
 			"phone": 3, "education": 3, "experience": 2, "about": 2,
+			"unrelated": 3, "question": 2,
 		})
 	}
 
@@ -64,6 +66,10 @@ func detectLanguage(tokens []string) string {
 }
 
 func detectCategory(tokens []string) string {
+	if containsAnyToken(tokens, "projeto", "projetos", "project", "projects") {
+		return "project"
+	}
+
 	scores := map[string]int{}
 
 	for _, token := range tokens {
@@ -134,6 +140,18 @@ func detectProject(tokens []string) string {
 		return "ggcompress"
 	case strings.Contains(joined, "auditex"):
 		return "auditex"
+	case containsAnyToken(tokens, "lideranca", "liderança", "leadership"):
+		return "x-tube"
+	case containsAnyToken(tokens, "complexo", "complexos", "complex", "dificil", "difícil", "dificeis", "difíceis", "desafio", "challenge"):
+		return "x-tube"
+	case containsAnyToken(tokens, "concorrencia", "concorrência", "desempenho", "performance", "throughput", "benchmark", "go", "golang"):
+		return "ggcompress"
+	case containsAnyToken(tokens, "auditabilidade", "auditability", "criptografia", "cryptography", "historica", "histórica", "historical"):
+		return "auditex"
+	case containsAnyToken(tokens, "destacaria", "destacar", "recrutador", "recruiter", "highlight"):
+		return "auronix"
+	case containsAnyToken(tokens, "financeiro", "financeiros", "financial", "banco", "banking", "capacidade", "tecnica", "técnica"):
+		return "auronix"
 	default:
 		return ""
 	}
@@ -178,6 +196,18 @@ func bestScore(scores map[string]int) string {
 
 func mapScore(token string, scores map[string]int) int {
 	return scores[token]
+}
+
+func containsAnyToken(tokens []string, terms ...string) bool {
+	for _, token := range tokens {
+		for _, term := range terms {
+			if token == term {
+				return true
+			}
+		}
+	}
+
+	return false
 }
 
 func normalize(text string) string {

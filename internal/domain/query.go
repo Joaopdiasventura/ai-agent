@@ -2,11 +2,13 @@ package domain
 
 type Query struct {
 	Text           string
+	Tokens         []string
 	Language       string
 	Category       string
 	Project        string
 	TemporalStatus string
 	ExactTerms     []string
+	Vector         []float32
 }
 
 type SearchResult struct {

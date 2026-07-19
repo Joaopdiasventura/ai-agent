@@ -54,7 +54,7 @@ func (generator GroundedGenerator) generatePortuguese(query domain.Query, eviden
 
 	if projectName != "" && containsAny(strings.ToLower(query.Text), []string{"melhor", "maior", "mais", "demonstra", "impacto", "liderança", "desempenho", "auditabilidade"}) {
 		return join([]string{
-			"O " + projectName + " é o projeto mais alinhado a esse critério.",
+			portugueseOpening(query, projectName),
 			facts,
 		})
 	}
@@ -68,7 +68,7 @@ func (generator GroundedGenerator) generateEnglish(query domain.Query, evidence 
 
 	if projectName != "" && containsAny(strings.ToLower(query.Text), []string{"best", "most", "demonstrates", "impact", "leadership", "performance", "auditability"}) {
 		return join([]string{
-			projectName + " is the project that best matches this criterion.",
+			englishOpening(query, projectName),
 			facts,
 		})
 	}
@@ -114,6 +114,40 @@ func displayProject(evidence []domain.Evidence) string {
 	}
 
 	return ""
+}
+
+func portugueseOpening(query domain.Query, projectName string) string {
+	text := strings.ToLower(query.Text)
+
+	switch {
+	case containsAny(text, []string{"capacidade técnica", "capacidade tecnica"}):
+		return "O " + projectName + " é o projeto mais alinhado ao critério de capacidade técnica."
+	case containsAny(text, []string{"auditabilidade"}):
+		return "O " + projectName + " é o projeto mais alinhado ao critério de auditabilidade e validação histórica."
+	case containsAny(text, []string{"desempenho", "concorrência", "concorrencia"}):
+		return "O " + projectName + " é o projeto mais alinhado ao critério de desempenho e concorrência."
+	case containsAny(text, []string{"liderança", "lideranca"}):
+		return "O " + projectName + " é o projeto mais alinhado ao critério de liderança técnica."
+	default:
+		return "O " + projectName + " é o projeto mais alinhado a esse critério."
+	}
+}
+
+func englishOpening(query domain.Query, projectName string) string {
+	text := strings.ToLower(query.Text)
+
+	switch {
+	case containsAny(text, []string{"technical capability"}):
+		return projectName + " is the project that best matches the technical capability criterion."
+	case containsAny(text, []string{"auditability"}):
+		return projectName + " is the project that best matches the auditability and historical validation criterion."
+	case containsAny(text, []string{"performance", "concurrency"}):
+		return projectName + " is the project that best matches the performance and concurrency criterion."
+	case containsAny(text, []string{"leadership"}):
+		return projectName + " is the project that best matches the technical leadership criterion."
+	default:
+		return projectName + " is the project that best matches this criterion."
+	}
 }
 
 func join(parts []string) string {
