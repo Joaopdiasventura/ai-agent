@@ -1,0 +1,8 @@
+{
+  "version": "knowledge-index-v1",
+  "model": "deterministic-hash-v1",
+  "dimension": 128,
+  "document_count": 134,
+  "base_hash": "72bdca0e371e24c050052c1052a14a2a97d2c9574d518a1063264accf70830ab",
+  "generated_at": "2026-07-19T04:38:47Z"
+}
