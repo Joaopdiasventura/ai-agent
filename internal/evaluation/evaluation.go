@@ -1,10 +1,15 @@
 package evaluation
 
 import (
+	"ai-agent/internal/agent"
 	"ai-agent/internal/app"
-	"ai-agent/internal/knowledge"
-	"ai-agent/internal/nlp"
-	"ai-agent/internal/search"
+	"ai-agent/internal/domain"
+	"ai-agent/internal/embedding"
+	"ai-agent/internal/generation"
+	"ai-agent/internal/ranking"
+	"ai-agent/internal/retrieval"
+	"ai-agent/internal/vectorindex"
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -51,8 +56,7 @@ type rankedDocument struct {
 	TemporalStatus string
 }
 
-const baselineMinimumSimilarity = 0.1
-const baselineSearchLimit = 5
+const evaluationSearchLimit = 5
 
 func LoadCases(path string) ([]Case, error) {
 	content, err := os.ReadFile(path)
@@ -69,7 +73,13 @@ func LoadCases(path string) ([]Case, error) {
 }
 
 func Run(cases []Case) Metrics {
-	engine := search.NewEngine(knowledge.Documents(), baselineMinimumSimilarity)
+	service, err := evaluationService()
+	if err != nil {
+		return Metrics{
+			Total:    len(cases),
+			Failures: []Failure{{CaseName: "setup", Reason: err.Error()}},
+		}
+	}
 
 	var metrics Metrics
 	metrics.Total = len(cases)
@@ -85,10 +95,14 @@ func Run(cases []Case) Metrics {
 
 	for _, testCase := range cases {
 		start := time.Now()
-		searchResult := engine.Search(testCase.Question, baselineSearchLimit)
+		retrievalResult, err := service.Retrieve(context.Background(), testCase.Question, evaluationSearchLimit)
 		totalRetrievalDuration += time.Since(start)
+		if err != nil {
+			metrics.Failures = append(metrics.Failures, Failure{CaseName: testCase.Name, Reason: err.Error()})
+			continue
+		}
 
-		documents := rankedDocuments(searchResult)
+		documents := rankedDocuments(retrievalResult.Results)
 		rank := firstExpectedRank(documents, testCase.ExpectedDocumentIDs)
 
 		if rank > 0 {
@@ -104,7 +118,7 @@ func Run(cases []Case) Metrics {
 			recallAt5++
 		}
 
-		if string(searchResult.Language) == testCase.Language {
+		if retrievalResult.Query.Language == testCase.Language {
 			languageHits++
 		} else {
 			metrics.Failures = append(metrics.Failures, Failure{CaseName: testCase.Name, Reason: "language mismatch"})
@@ -189,13 +203,13 @@ func Print(metrics Metrics) {
 	}
 }
 
-func rankedDocuments(searchResult *search.SearchResult) []rankedDocument {
-	if searchResult == nil || !searchResult.Found {
-		return []rankedDocument{}
-	}
+func rankedDocuments(results []domain.SearchResult) []rankedDocument {
+	documents := make([]rankedDocument, 0, len(results))
+	for _, result := range results {
+		if result.Document == nil {
+			continue
+		}
 
-	documents := make([]rankedDocument, 0, len(searchResult.Results))
-	for _, result := range searchResult.Results {
 		documents = append(documents, rankedDocument{
 			ID:             result.Document.ID,
 			Category:       result.Document.Category,
@@ -205,6 +219,25 @@ func rankedDocuments(searchResult *search.SearchResult) []rankedDocument {
 	}
 
 	return documents
+}
+
+func evaluationService() (*agent.Service, error) {
+	index, err := vectorindex.LoadEmbedded()
+	if err != nil {
+		return nil, err
+	}
+
+	embedder, err := embedding.NewDeterministicEmbedder(index.Dimension)
+	if err != nil {
+		return nil, err
+	}
+
+	return agent.NewService(
+		embedder,
+		retrieval.NewHybridRetriever(index),
+		ranking.DefaultMetadataReranker(),
+		generation.NewGroundedGenerator(),
+	)
 }
 
 func firstExpectedRank(documents []rankedDocument, expectedIDs []string) int {
@@ -250,12 +283,12 @@ func temporalMatches(documents []rankedDocument, expectedTemporalStatus string) 
 	return documents[0].TemporalStatus == expectedTemporalStatus
 }
 
-func responseMatches(testCase Case, response string, hasResponse bool, language nlp.Language) bool {
+func responseMatches(testCase Case, response string, hasResponse bool, language string) bool {
 	if len(testCase.ExpectedDocumentIDs) == 0 {
 		return !hasResponse
 	}
 
-	if !hasResponse || string(language) != testCase.Language {
+	if !hasResponse || language != testCase.Language {
 		return false
 	}
 

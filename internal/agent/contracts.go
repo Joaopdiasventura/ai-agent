@@ -36,6 +36,13 @@ type Service struct {
 
 var ErrMissingDependency = errors.New("missing agent dependency")
 
+type RetrievalResult struct {
+	Query      domain.Query
+	Results    []domain.SearchResult
+	Evidence   []domain.Evidence
+	Confidence confidence.Assessment
+}
+
 func NewService(embedder Embedder, retriever Retriever, reranker Reranker, generator Generator) (*Service, error) {
 	if embedder == nil || retriever == nil || reranker == nil || generator == nil {
 		return nil, ErrMissingDependency
@@ -52,34 +59,49 @@ func NewService(embedder Embedder, retriever Retriever, reranker Reranker, gener
 }
 
 func (service *Service) Answer(ctx context.Context, question string, limit int) (string, bool, string, error) {
+	retrievalResult, err := service.Retrieve(ctx, question, limit)
+	if err != nil {
+		query := queryanalysis.Analyze(question)
+		return "", false, query.Language, err
+	}
+
+	if retrievalResult.Confidence.Level == confidence.Low {
+		return "", false, retrievalResult.Query.Language, nil
+	}
+
+	response, err := service.generator.Generate(ctx, retrievalResult.Query, retrievalResult.Evidence)
+	if err != nil {
+		return "", false, retrievalResult.Query.Language, err
+	}
+
+	return response, true, retrievalResult.Query.Language, nil
+}
+
+func (service *Service) Retrieve(ctx context.Context, question string, limit int) (RetrievalResult, error) {
 	query := queryanalysis.Analyze(question)
 
 	vector, err := service.embedder.Embed(ctx, query.Text)
 	if err != nil {
-		return "", false, query.Language, err
+		return RetrievalResult{Query: query}, err
 	}
 
 	query.Vector = vector
 
 	results, err := service.retriever.Search(ctx, query, candidateLimit(limit))
 	if err != nil {
-		return "", false, query.Language, err
+		return RetrievalResult{Query: query}, err
 	}
 
 	reranked := service.reranker.Rerank(query, results)
 	selectedEvidence := service.evidenceSelector.Select(query, reranked)
 	assessment := service.confidencePolicy.Assess(query, reranked, selectedEvidence)
 
-	if assessment.Level == confidence.Low {
-		return "", false, query.Language, nil
-	}
-
-	response, err := service.generator.Generate(ctx, query, selectedEvidence)
-	if err != nil {
-		return "", false, query.Language, err
-	}
-
-	return response, true, query.Language, nil
+	return RetrievalResult{
+		Query:      query,
+		Results:    reranked,
+		Evidence:   selectedEvidence,
+		Confidence: assessment,
+	}, nil
 }
 
 func candidateLimit(limit int) int {

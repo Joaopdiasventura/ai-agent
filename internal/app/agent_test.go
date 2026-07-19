@@ -1,7 +1,6 @@
 package app
 
 import (
-	"ai-agent/internal/nlp"
 	"strings"
 	"testing"
 )
@@ -13,8 +12,8 @@ func TestAgentResponseReturnsPortugueseAnswerForPortugueseQuestion(t *testing.T)
 		t.Fatal("AgentResponse() did not find a response")
 	}
 
-	if language != nlp.LanguagePortuguese {
-		t.Fatalf("AgentResponse() language = %q, want %q", language, nlp.LanguagePortuguese)
+	if language != "pt" {
+		t.Fatalf("AgentResponse() language = %q, want %q", language, "pt")
 	}
 
 	if !strings.Contains(response, "Auronix") {
@@ -29,8 +28,8 @@ func TestAgentResponseReturnsEnglishAnswerForEnglishQuestion(t *testing.T) {
 		t.Fatal("AgentResponse() did not find a response")
 	}
 
-	if language != nlp.LanguageEnglish {
-		t.Fatalf("AgentResponse() language = %q, want %q", language, nlp.LanguageEnglish)
+	if language != "en" {
+		t.Fatalf("AgentResponse() language = %q, want %q", language, "en")
 	}
 
 	if !strings.Contains(response, "Auronix") {
@@ -42,19 +41,19 @@ func TestAgentResponseReturnsLocalizedFallbackForUnknownQuestion(t *testing.T) {
 	tests := []struct {
 		name             string
 		question         string
-		expectedLanguage nlp.Language
+		expectedLanguage string
 		expectedFallback string
 	}{
 		{
 			name:             "portuguese unknown question",
 			question:         "Pergunta sem relação",
-			expectedLanguage: nlp.LanguagePortuguese,
+			expectedLanguage: "pt",
 			expectedFallback: "Não encontrei essa informação específica",
 		},
 		{
 			name:             "english unknown question",
 			question:         "Unrelated question",
-			expectedLanguage: nlp.LanguageEnglish,
+			expectedLanguage: "en",
 			expectedFallback: "I don't have that specific information",
 		},
 	}
@@ -91,14 +90,14 @@ func TestAgentResponseRegressionExamples(t *testing.T) {
 	tests := []struct {
 		name           string
 		question       string
-		language       nlp.Language
+		language       string
 		expectedTerms  []string
 		forbiddenTerms []string
 	}{
 		{
 			name:          "current education",
 			question:      "onde joão estuda?",
-			language:      nlp.LanguagePortuguese,
+			language:      "pt",
 			expectedTerms: []string{"FIAP", "Inteligência Artificial"},
 			forbiddenTerms: []string{
 				"FIAP segue estudando",
@@ -108,7 +107,7 @@ func TestAgentResponseRegressionExamples(t *testing.T) {
 		{
 			name:          "past education",
 			question:      "onde joão estudou?",
-			language:      nlp.LanguagePortuguese,
+			language:      "pt",
 			expectedTerms: []string{"Etec de Guarulhos", "Desenvolvimento de Sistemas"},
 			forbiddenTerms: []string{
 				"Engenheiro de Software Full Stack",
@@ -118,7 +117,7 @@ func TestAgentResponseRegressionExamples(t *testing.T) {
 		{
 			name:          "email pronoun",
 			question:      "qual o email dele?",
-			language:      nlp.LanguagePortuguese,
+			language:      "pt",
 			expectedTerms: []string{"joaopdias.dev@gmail.com"},
 			forbiddenTerms: []string{
 				"To contact",
@@ -169,8 +168,8 @@ func TestAgentResponseProjectRecommendationRegression(t *testing.T) {
 		t.Fatal("AgentResponse() did not find a response")
 	}
 
-	if language != nlp.LanguagePortuguese {
-		t.Fatalf("AgentResponse() language = %q, want %q", language, nlp.LanguagePortuguese)
+	if language != "pt" {
+		t.Fatalf("AgentResponse() language = %q, want %q", language, "pt")
 	}
 
 	expectedTerms := []string{
@@ -249,8 +248,8 @@ func TestAgentResponseProjectRecommendationVariations(t *testing.T) {
 				t.Fatalf("AgentResponse(%q) did not find a response", test.question)
 			}
 
-			if language != nlp.LanguagePortuguese {
-				t.Fatalf("AgentResponse(%q) language = %q, want %q", test.question, language, nlp.LanguagePortuguese)
+			if language != "pt" {
+				t.Fatalf("AgentResponse(%q) language = %q, want %q", test.question, language, "pt")
 			}
 
 			if !strings.Contains(response, test.expectedProject) {
@@ -349,8 +348,8 @@ func TestAgentResponseProjectRecommendationByCriterion(t *testing.T) {
 				t.Fatalf("AgentResponse(%q) did not find a response", test.question)
 			}
 
-			if language != nlp.LanguagePortuguese {
-				t.Fatalf("AgentResponse(%q) language = %q, want %q", test.question, language, nlp.LanguagePortuguese)
+			if language != "pt" {
+				t.Fatalf("AgentResponse(%q) language = %q, want %q", test.question, language, "pt")
 			}
 
 			for _, term := range test.expectedTerms {

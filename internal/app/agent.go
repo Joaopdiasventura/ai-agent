@@ -4,7 +4,6 @@ import (
 	"ai-agent/internal/agent"
 	"ai-agent/internal/embedding"
 	"ai-agent/internal/generation"
-	"ai-agent/internal/nlp"
 	"ai-agent/internal/ranking"
 	"ai-agent/internal/retrieval"
 	"ai-agent/internal/vectorindex"
@@ -14,17 +13,17 @@ import (
 var agentIndex = mustLoadAgentIndex()
 var service = mustCreateAgentService(agentIndex)
 
-func AgentResponse(question string) (string, bool, nlp.Language) {
+func AgentResponse(question string) (string, bool, string) {
 	response, hasResponse, language, err := service.Answer(context.Background(), question, maximumSearchResults)
 	if err != nil {
-		return "", false, nlp.LanguagePortuguese
+		return "", false, "pt"
 	}
 
-	return response, hasResponse, nlp.Language(language)
+	return response, hasResponse, language
 }
 
-func NotFoundMessage(language nlp.Language) string {
-	if language == nlp.LanguageEnglish {
+func NotFoundMessage(language string) string {
+	if language == "en" {
 		return "I don't have that specific information, but I can talk about João's experience, projects, technologies, services, or contact details."
 	}
 
