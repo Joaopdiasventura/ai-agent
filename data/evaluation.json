@@ -1,0 +1,212 @@
+[
+  {
+    "name": "pt identity",
+    "question": "Quem é João Paulo?",
+    "language": "pt",
+    "expected_document_ids": ["identity-basic-pt"],
+    "expected_category": "identity",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["Engenheiro de Software Full Stack"],
+    "forbidden_terms": ["I don't"]
+  },
+  {
+    "name": "pt email",
+    "question": "Qual é o email dele?",
+    "language": "pt",
+    "expected_document_ids": ["contact-email-pt"],
+    "expected_category": "contact",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["joaopdias.dev@gmail.com"],
+    "forbidden_terms": ["To contact"]
+  },
+  {
+    "name": "pt current education",
+    "question": "Onde João estuda?",
+    "language": "pt",
+    "expected_document_ids": ["education-fiap-pt"],
+    "expected_category": "education",
+    "expected_temporal_status": "future",
+    "required_terms": ["FIAP", "Inteligência Artificial"],
+    "forbidden_terms": ["Etec"]
+  },
+  {
+    "name": "pt completed education",
+    "question": "Onde João estudou?",
+    "language": "pt",
+    "expected_document_ids": ["education-etec-pt"],
+    "expected_category": "education",
+    "expected_temporal_status": "past",
+    "required_terms": ["Etec de Guarulhos", "Desenvolvimento de Sistemas"],
+    "forbidden_terms": ["FIAP segue"]
+  },
+  {
+    "name": "pt current job",
+    "question": "Onde João trabalha atualmente?",
+    "language": "pt",
+    "expected_document_ids": ["career-current-job-pt"],
+    "expected_category": "career",
+    "expected_temporal_status": "current",
+    "required_terms": ["uFind Tecnologia"],
+    "forbidden_terms": ["Estagiário"]
+  },
+  {
+    "name": "pt previous job",
+    "question": "Onde João trabalhou antes da uFind?",
+    "language": "pt",
+    "expected_document_ids": ["career-junior-job-pt"],
+    "expected_category": "career",
+    "expected_temporal_status": "past",
+    "required_terms": ["Representa Online"],
+    "forbidden_terms": ["junho de 2025 até o momento"]
+  },
+  {
+    "name": "pt technologies",
+    "question": "Quais tecnologias João utiliza?",
+    "language": "pt",
+    "expected_document_ids": ["technology-backend-pt", "technology-frontend-pt", "technology-cloud-devops-pt"],
+    "expected_category": "technology",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["Angular", "Spring Boot", "Go"],
+    "forbidden_terms": ["To answer"]
+  },
+  {
+    "name": "pt certifications",
+    "question": "Quais certificações João possui?",
+    "language": "pt",
+    "expected_document_ids": ["certificate-aws-pt", "certificate-mongodb-pt", "certificate-edb-pt"],
+    "expected_category": "certificate",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["AWS"],
+    "forbidden_terms": ["I don't"]
+  },
+  {
+    "name": "pt services",
+    "question": "Que serviços João pode fazer para empresas?",
+    "language": "pt",
+    "expected_document_ids": ["service-business-automation-pt", "service-apis-internal-systems-pt"],
+    "expected_category": "service",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["sistemas"],
+    "forbidden_terms": ["preços"]
+  },
+  {
+    "name": "pt auronix",
+    "question": "Me fale sobre o Auronix",
+    "language": "pt",
+    "expected_document_ids": ["project-auronix-description-pt", "project-auronix-consistency-pt"],
+    "expected_category": "project",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["Auronix", "plataforma financeira"],
+    "forbidden_terms": ["X Tube"]
+  },
+  {
+    "name": "pt xtube",
+    "question": "Me fale sobre o X Tube",
+    "language": "pt",
+    "expected_document_ids": ["project-xtube-description-pt", "project-xtube-leadership-pt"],
+    "expected_category": "project",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["X Tube", "streaming"],
+    "forbidden_terms": ["Auronix"]
+  },
+  {
+    "name": "pt ggcompress",
+    "question": "O que é o GGCompress?",
+    "language": "pt",
+    "expected_document_ids": ["project-ggcompress-description-pt"],
+    "expected_category": "project",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["GGCompress"],
+    "forbidden_terms": ["Auditex"]
+  },
+  {
+    "name": "pt auditex",
+    "question": "O que é o Auditex?",
+    "language": "pt",
+    "expected_document_ids": ["project-auditex-description-pt"],
+    "expected_category": "project",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["Auditex"],
+    "forbidden_terms": ["descentralizada"]
+  },
+  {
+    "name": "pt technical capability comparison",
+    "question": "Qual projeto demonstra maior capacidade técnica?",
+    "language": "pt",
+    "expected_document_ids": ["project-auronix-description-pt", "project-auronix-consistency-pt"],
+    "expected_category": "project",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["Auronix"],
+    "forbidden_terms": ["projetos prioritários"]
+  },
+  {
+    "name": "pt leadership comparison",
+    "question": "Qual projeto demonstra liderança?",
+    "language": "pt",
+    "expected_document_ids": ["project-xtube-leadership-pt"],
+    "expected_category": "impact",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["X Tube", "liderança"],
+    "forbidden_terms": ["Auronix é"]
+  },
+  {
+    "name": "pt financial comparison",
+    "question": "Qual projeto demonstra experiência com sistemas financeiros?",
+    "language": "pt",
+    "expected_document_ids": ["project-auronix-consistency-pt"],
+    "expected_category": "impact",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["Auronix", "transferências"],
+    "forbidden_terms": ["X Tube"]
+  },
+  {
+    "name": "pt performance comparison",
+    "question": "Qual projeto demonstra concorrência e desempenho?",
+    "language": "pt",
+    "expected_document_ids": ["project-ggcompress-concurrency-pt", "project-ggcompress-performance-pt"],
+    "expected_category": "project",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["GGCompress", "1.23 GB/s"],
+    "forbidden_terms": ["Auditex"]
+  },
+  {
+    "name": "pt auditability comparison",
+    "question": "Qual projeto demonstra auditabilidade?",
+    "language": "pt",
+    "expected_document_ids": ["project-auditex-integrity-pt", "project-auditex-validation-pt"],
+    "expected_category": "impact",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["Auditex", "auditabilidade"],
+    "forbidden_terms": ["descentralizada"]
+  },
+  {
+    "name": "en email",
+    "question": "What is his email?",
+    "language": "en",
+    "expected_document_ids": ["contact-email-en"],
+    "expected_category": "contact",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["joaopdias.dev@gmail.com"],
+    "forbidden_terms": ["Qual"]
+  },
+  {
+    "name": "en auronix",
+    "question": "Tell me about Auronix",
+    "language": "en",
+    "expected_document_ids": ["project-auronix-description-en"],
+    "expected_category": "project",
+    "expected_temporal_status": "timeless",
+    "required_terms": ["Auronix"],
+    "forbidden_terms": ["X Tube"]
+  },
+  {
+    "name": "pt unknown",
+    "question": "Qual é o endereço residencial do João?",
+    "language": "pt",
+    "expected_document_ids": [],
+    "expected_category": "",
+    "expected_temporal_status": "timeless",
+    "required_terms": [],
+    "forbidden_terms": ["Rua", "Avenida"]
+  }
+]
