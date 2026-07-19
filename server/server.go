@@ -4,7 +4,7 @@ import (
 	handlers "ai-agent/internal/handlers/ask"
 	"encoding/json"
 	"net/http"
-	"sync"
+	"slices"
 )
 
 var allowedOrigins = []string{
@@ -12,26 +12,17 @@ var allowedOrigins = []string{
 	"http://localhost:4200",
 }
 
-var (
-	handlerMu sync.Mutex
-	handler   http.Handler
-)
+var handler = NewHandler()
 
 func Handler() (http.Handler, error) {
-	handlerMu.Lock()
-	defer handlerMu.Unlock()
-
-	if handler != nil {
-		return handler, nil
-	}
-
-	handler = NewHandler()
 	return handler, nil
 }
 
 func NewHandler() http.Handler {
 	mux := http.NewServeMux()
+
 	mux.HandleFunc("QUERY /ask", handlers.Handle())
+
 	return CORS(mux)
 }
 
@@ -39,7 +30,14 @@ func CORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
 
-		if isAllowedOrigin(origin) {
+		if origin != "" && !isAllowedOrigin(origin) {
+			WriteJSON(w, http.StatusForbidden, handlers.AskResponse{
+				Response: "Forbidden origin.",
+			})
+			return
+		}
+
+		if origin != "" {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
 			w.Header().Set("Vary", "Origin")
 			w.Header().Set("Access-Control-Allow-Methods", "QUERY, OPTIONS")
@@ -47,14 +45,7 @@ func CORS(next http.Handler) http.Handler {
 		}
 
 		if r.Method == http.MethodOptions {
-			if isAllowedOrigin(origin) {
-				w.WriteHeader(http.StatusNoContent)
-				return
-			}
-
-			WriteJSON(w, http.StatusForbidden, handlers.AskResponse{
-				Response: "Forbidden origin.",
-			})
+			w.WriteHeader(http.StatusNoContent)
 			return
 		}
 
@@ -63,16 +54,14 @@ func CORS(next http.Handler) http.Handler {
 }
 
 func isAllowedOrigin(origin string) bool {
-	for _, allowedOrigin := range allowedOrigins {
-		if origin == allowedOrigin {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(allowedOrigins, origin)
 }
 
-func WriteJSON(w http.ResponseWriter, statusCode int, response handlers.AskResponse) {
+func WriteJSON(
+	w http.ResponseWriter,
+	statusCode int,
+	response handlers.AskResponse,
+) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 	json.NewEncoder(w).Encode(response)
