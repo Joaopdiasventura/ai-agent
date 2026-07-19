@@ -175,19 +175,16 @@ var intentKeywords = map[string]map[Intent]int{
 	"auronix": {
 		IntentProject: 3,
 	},
-	"modularis": {
+	"xtube": {
 		IntentProject: 3,
 	},
-	"votrix": {
+	"tube": {
 		IntentProject: 3,
 	},
 	"ggcompress": {
 		IntentProject: 3,
 	},
-	"vox": {
-		IntentProject: 3,
-	},
-	"etecfy": {
+	"auditex": {
 		IntentProject: 3,
 	},
 	"usadas": {

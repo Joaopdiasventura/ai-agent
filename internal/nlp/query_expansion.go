@@ -227,6 +227,37 @@ var queryExpansions = map[string][]string{
 		"digital",
 		"transacional",
 	},
+	"financeiro": {
+		"auronix",
+		"auditex",
+		"transacional",
+	},
+	"streaming": {
+		"xtube",
+		"vídeo",
+		"video",
+		"processamento",
+	},
+	"vídeo": {
+		"xtube",
+		"streaming",
+		"processamento",
+	},
+	"video": {
+		"xtube",
+		"streaming",
+		"processing",
+	},
+	"ledger": {
+		"auditex",
+		"financeiro",
+		"auditável",
+	},
+	"blockchain": {
+		"auditex",
+		"ledger",
+		"financeiro",
+	},
 	"compressão": {
 		"ggcompress",
 		"gzip",

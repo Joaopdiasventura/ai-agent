@@ -24,7 +24,7 @@ var entityAliases = []entityAlias{
 		Tokens: []string{"etec", "guarulhos"},
 		Entity: Entity{
 			Type:  EntityInstitution,
-			Value: "Etec Guarulhos",
+			Value: "Etec de Guarulhos",
 		},
 	},
 	{
@@ -35,10 +35,17 @@ var entityAliases = []entityAlias{
 		},
 	},
 	{
-		Tokens: []string{"docker", "compose"},
+		Tokens: []string{"amazon", "sqs"},
 		Entity: Entity{
 			Type:  EntityTechnology,
-			Value: "Docker Compose",
+			Value: "Amazon SQS",
+		},
+	},
+	{
+		Tokens: []string{"amazon", "eks"},
+		Entity: Entity{
+			Type:  EntityTechnology,
+			Value: "Amazon EKS",
 		},
 	},
 	{
@@ -49,17 +56,17 @@ var entityAliases = []entityAlias{
 		},
 	},
 	{
-		Tokens: []string{"modularis"},
+		Tokens: []string{"x", "tube"},
 		Entity: Entity{
 			Type:  EntityProject,
-			Value: "Modularis",
+			Value: "X Tube",
 		},
 	},
 	{
-		Tokens: []string{"votrix"},
+		Tokens: []string{"xtube"},
 		Entity: Entity{
 			Type:  EntityProject,
-			Value: "Votrix",
+			Value: "X Tube",
 		},
 	},
 	{
@@ -77,17 +84,10 @@ var entityAliases = []entityAlias{
 		},
 	},
 	{
-		Tokens: []string{"vox"},
+		Tokens: []string{"auditex"},
 		Entity: Entity{
 			Type:  EntityProject,
-			Value: "VOX",
-		},
-	},
-	{
-		Tokens: []string{"etecfy"},
-		Entity: Entity{
-			Type:  EntityProject,
-			Value: "Etecfy",
+			Value: "Auditex",
 		},
 	},
 	{
@@ -115,7 +115,7 @@ var entityAliases = []entityAlias{
 		Tokens: []string{"etec"},
 		Entity: Entity{
 			Type:  EntityInstitution,
-			Value: "Etec Guarulhos",
+			Value: "Etec de Guarulhos",
 		},
 	},
 	{
@@ -154,17 +154,24 @@ var entityAliases = []entityAlias{
 		},
 	},
 	{
+		Tokens: []string{"react"},
+		Entity: Entity{
+			Type:  EntityTechnology,
+			Value: "React",
+		},
+	},
+	{
+		Tokens: []string{"next", "js"},
+		Entity: Entity{
+			Type:  EntityTechnology,
+			Value: "Next.js",
+		},
+	},
+	{
 		Tokens: []string{"nestjs"},
 		Entity: Entity{
 			Type:  EntityTechnology,
 			Value: "NestJS",
-		},
-	},
-	{
-		Tokens: []string{"fastify"},
-		Entity: Entity{
-			Type:  EntityTechnology,
-			Value: "Fastify",
 		},
 	},
 	{
@@ -182,10 +189,17 @@ var entityAliases = []entityAlias{
 		},
 	},
 	{
-		Tokens: []string{"bullmq"},
+		Tokens: []string{"kafka"},
 		Entity: Entity{
 			Type:  EntityTechnology,
-			Value: "BullMQ",
+			Value: "Kafka",
+		},
+	},
+	{
+		Tokens: []string{"sqs"},
+		Entity: Entity{
+			Type:  EntityTechnology,
+			Value: "Amazon SQS",
 		},
 	},
 	{
@@ -210,17 +224,24 @@ var entityAliases = []entityAlias{
 		},
 	},
 	{
-		Tokens: []string{"capacitor"},
+		Tokens: []string{"docker"},
 		Entity: Entity{
 			Type:  EntityTechnology,
-			Value: "Capacitor",
+			Value: "Docker",
 		},
 	},
 	{
-		Tokens: []string{"tauri"},
+		Tokens: []string{"terraform"},
 		Entity: Entity{
 			Type:  EntityTechnology,
-			Value: "Tauri",
+			Value: "Terraform",
+		},
+	},
+	{
+		Tokens: []string{"kubernetes"},
+		Entity: Entity{
+			Type:  EntityTechnology,
+			Value: "Kubernetes",
 		},
 	},
 }

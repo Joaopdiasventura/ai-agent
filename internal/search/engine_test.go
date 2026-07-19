@@ -69,6 +69,54 @@ func TestSearchFindsPortugueseAuronixDocument(t *testing.T) {
 	t.Fatalf("Search() did not return a portuguese Auronix document: %#v", searchResult.Results)
 }
 
+func TestSearchFindsPriorityProjects(t *testing.T) {
+	tests := []struct {
+		name       string
+		question   string
+		documentID string
+		language   string
+	}{
+		{
+			name:       "english x tube question",
+			question:   "Tell me about X Tube",
+			documentID: "project-xtube",
+			language:   "en",
+		},
+		{
+			name:       "portuguese auditex question",
+			question:   "O que é o Auditex?",
+			documentID: "project-auditex",
+			language:   "pt",
+		},
+	}
+
+	engine := newTestEngine()
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			searchResult := engine.Search(test.question, 5)
+
+			if !searchResult.Found {
+				t.Fatalf("Search(%q) did not find results", test.question)
+			}
+
+			for _, result := range searchResult.Results {
+				if strings.Contains(result.Document.ID, test.documentID) &&
+					result.Document.Language == test.language {
+					return
+				}
+			}
+
+			t.Fatalf("Search(%q) did not return %q document in %q: %#v",
+				test.question,
+				test.documentID,
+				test.language,
+				searchResult.Results,
+			)
+		})
+	}
+}
+
 func TestSearchTechnologiesQuestionReturnsMultipleTechnologyResults(t *testing.T) {
 	searchResult := newTestEngine().Search("What technologies does João use?", 5)
 
