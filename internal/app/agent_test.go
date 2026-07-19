@@ -86,3 +86,78 @@ func TestAgentResponseReturnsLocalizedFallbackForUnknownQuestion(t *testing.T) {
 		})
 	}
 }
+
+func TestAgentResponseRegressionExamples(t *testing.T) {
+	tests := []struct {
+		name           string
+		question       string
+		language       nlp.Language
+		expectedTerms  []string
+		forbiddenTerms []string
+	}{
+		{
+			name:          "current education",
+			question:      "onde joão estuda?",
+			language:      nlp.LanguagePortuguese,
+			expectedTerms: []string{"FIAP", "Inteligência Artificial"},
+			forbiddenTerms: []string{
+				"FIAP segue estudando",
+				"Etec",
+			},
+		},
+		{
+			name:          "past education",
+			question:      "onde joão estudou?",
+			language:      nlp.LanguagePortuguese,
+			expectedTerms: []string{"Etec de Guarulhos", "Desenvolvimento de Sistemas"},
+			forbiddenTerms: []string{
+				"Engenheiro de Software Full Stack",
+				"trabalha como",
+			},
+		},
+		{
+			name:          "email pronoun",
+			question:      "qual o email dele?",
+			language:      nlp.LanguagePortuguese,
+			expectedTerms: []string{"joaopdias.dev@gmail.com"},
+			forbiddenTerms: []string{
+				"To contact",
+				"phone",
+			},
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			response, hasResponse, language := AgentResponse(test.question)
+
+			if !hasResponse {
+				t.Fatalf("AgentResponse(%q) did not find a response", test.question)
+			}
+
+			if language != test.language {
+				t.Fatalf("AgentResponse(%q) language = %q, want %q", test.question, language, test.language)
+			}
+
+			for _, expectedTerm := range test.expectedTerms {
+				if !strings.Contains(response, expectedTerm) {
+					t.Fatalf("AgentResponse(%q) = %q, want it to contain %q",
+						test.question,
+						response,
+						expectedTerm,
+					)
+				}
+			}
+
+			for _, forbiddenTerm := range test.forbiddenTerms {
+				if strings.Contains(response, forbiddenTerm) {
+					t.Fatalf("AgentResponse(%q) = %q, want it not to contain %q",
+						test.question,
+						response,
+						forbiddenTerm,
+					)
+				}
+			}
+		})
+	}
+}

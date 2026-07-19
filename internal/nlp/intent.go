@@ -74,6 +74,9 @@ func ResolveIntent(intent Intent, entity Entity, hasEntity bool) Intent {
 		if intent == IntentUnknown {
 			return IntentTechnologies
 		}
+
+	case EntityPerson:
+		return intent
 	}
 
 	return intent

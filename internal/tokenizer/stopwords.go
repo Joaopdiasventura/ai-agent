@@ -10,4 +10,9 @@ var stopWords = map[string]bool{
 	"foi": true, "era": true, "ser": true, "são": true,
 	"ele": true, "ela": true, "dele": true, "dela": true,
 	"seu": true, "sua": true, "seus": true, "suas": true,
+	"the": true, "an": true, "to": true,
+	"is": true, "are": true, "was": true, "were": true,
+	"does": true, "did": true, "where": true, "what": true,
+	"which": true, "who": true, "how": true, "his": true,
+	"him": true, "he": true,
 }

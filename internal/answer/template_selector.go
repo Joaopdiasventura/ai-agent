@@ -8,22 +8,13 @@ import (
 var templatesByLanguageAndIntent = map[nlp.Language]map[nlp.Intent][]string{
 	nlp.LanguagePortuguese: {
 		nlp.IntentCurrentJob: {
-			"Hoje, {subject} trabalha como desenvolvedor pleno na uFind Tecnologia.",
-			"{subject} está hoje na uFind Tecnologia, onde atua como desenvolvedor pleno.",
-			"No momento, {subject} trabalha na uFind Tecnologia como desenvolvedor pleno.",
-			"{fact}",
+			"{facts}",
 		},
 		nlp.IntentFirstJob: {
-			"{subject} começou a carreira como estagiário na Representa Online.",
-			"A primeira experiência profissional de {subject} foi na Representa Online, como estagiário.",
-			"No início da carreira, {subject} trabalhou como estagiário na Representa Online.",
-			"{fact}",
+			"{facts}",
 		},
 		nlp.IntentEducation: {
-			"{subject} estuda Inteligência Artificial na FIAP.",
-			"Na formação, {subject} segue estudando Inteligência Artificial na FIAP.",
-			"A formação atual de {subject} é voltada para Inteligência Artificial na FIAP.",
-			"{fact}",
+			"{facts}",
 		},
 		nlp.IntentProject: {
 			"De forma simples: {fact}",
@@ -66,21 +57,13 @@ var templatesByLanguageAndIntent = map[nlp.Language]map[nlp.Intent][]string{
 	},
 	nlp.LanguageEnglish: {
 		nlp.IntentCurrentJob: {
-			"Today, {subject} works as a mid-level developer at uFind Tecnologia.",
-			"{subject} currently works at uFind Tecnologia as a mid-level developer.",
-			"Right now, {subject} works as a mid-level developer at uFind Tecnologia.",
-			"{fact}",
+			"{facts}",
 		},
 		nlp.IntentFirstJob: {
-			"{subject} started his career as a systems development intern at Representa Online.",
-			"{subject}'s first professional experience was at Representa Online as an intern.",
-			"Early in his career, {subject} worked as an intern at Representa Online.",
-			"{fact}",
+			"{facts}",
 		},
 		nlp.IntentEducation: {
-			"{subject} studies Artificial Intelligence at FIAP.",
-			"{subject}'s current education is focused on Artificial Intelligence at FIAP.",
-			"{fact}",
+			"{facts}",
 		},
 		nlp.IntentProject: {
 			"In simple terms: {fact}",

@@ -21,11 +21,11 @@ var intentKeywords = map[string]map[Intent]int{
 		IntentAbout:          1,
 	},
 	"joão": {
-		IntentVisitorSummary: 2,
+		IntentVisitorSummary: 1,
 		IntentAbout:          1,
 	},
 	"joao": {
-		IntentVisitorSummary: 2,
+		IntentVisitorSummary: 1,
 		IntentAbout:          1,
 	},
 	"quem": {
@@ -61,6 +61,12 @@ var intentKeywords = map[string]map[Intent]int{
 	"trabalha": {
 		IntentCurrentJob: 3,
 	},
+	"trabalhou": {
+		IntentCurrentJob: 4,
+	},
+	"atuou": {
+		IntentCurrentJob: 4,
+	},
 	"work": {
 		IntentCurrentJob:      2,
 		IntentVisitorServices: 1,
@@ -70,6 +76,9 @@ var intentKeywords = map[string]map[Intent]int{
 	},
 	"working": {
 		IntentCurrentJob: 2,
+	},
+	"worked": {
+		IntentCurrentJob: 4,
 	},
 	"trabalho": {
 		IntentCurrentJob: 2,
@@ -126,10 +135,40 @@ var intentKeywords = map[string]map[Intent]int{
 	"estuda": {
 		IntentEducation: 3,
 	},
+	"estudando": {
+		IntentEducation: 3,
+	},
+	"estudou": {
+		IntentEducation: 3,
+	},
+	"cursa": {
+		IntentEducation: 3,
+	},
+	"cursando": {
+		IntentEducation: 3,
+	},
+	"formou": {
+		IntentEducation: 3,
+	},
+	"concluiu": {
+		IntentEducation: 3,
+	},
 	"studies": {
 		IntentEducation: 3,
 	},
 	"study": {
+		IntentEducation: 3,
+	},
+	"studying": {
+		IntentEducation: 3,
+	},
+	"studied": {
+		IntentEducation: 3,
+	},
+	"completed": {
+		IntentEducation: 3,
+	},
+	"graduated": {
 		IntentEducation: 3,
 	},
 	"faculdade": {

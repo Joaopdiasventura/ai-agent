@@ -45,10 +45,11 @@ func (engine *Engine) Search(
 		}
 	}
 
+	analysisTokens := tokenizer.TokenizeForAnalysis(question)
 	tokens := tokenizer.Tokenize(question)
-	language := nlp.DetectLanguage(tokens)
+	language := nlp.DetectLanguage(analysisTokens)
 
-	if len(tokens) == 0 {
+	if len(analysisTokens) == 0 && len(tokens) == 0 {
 		return &SearchResult{
 			Language: language,
 			Found:    false,
@@ -56,10 +57,12 @@ func (engine *Engine) Search(
 	}
 
 	expandedTokens := nlp.ExpandQuery(tokens)
+	expandedAnalysisTokens := nlp.ExpandQuery(mergeTokens(analysisTokens, expandedTokens))
 
-	entity, hasEntity := nlp.DetectEntity(expandedTokens)
+	entity, hasEntity := nlp.DetectEntity(expandedAnalysisTokens)
 
-	analysis := nlp.AnalyzeQuery(expandedTokens, entity, hasEntity, language)
+	analysis := nlp.AnalyzeQuery(analysisTokens, entity, hasEntity, language)
+	analysis.Question = question
 
 	candidates := FilterDocumentsByIntent(engine.Documents, analysis)
 
@@ -70,7 +73,7 @@ func (engine *Engine) Search(
 		}
 	}
 
-	if hasEntity {
+	if hasEntity && entity.Type != nlp.EntityPerson {
 		entityTokens := tokenizer.Tokenize(entity.Value)
 		expandedTokens = append(expandedTokens, entityTokens...)
 	}
@@ -91,6 +94,9 @@ func (engine *Engine) Search(
 	}
 
 	results := FindTopDocuments(candidates, engine, questionVector, analysis, searchLimit)
+	if len(results) == 0 {
+		results = FindTopDocuments(filterDocumentsByLanguage(engine.Documents, language), engine, questionVector, analysis, searchLimit)
+	}
 
 	if len(results) == 0 {
 		return &SearchResult{
@@ -106,9 +112,31 @@ func (engine *Engine) Search(
 
 	return &SearchResult{
 		Results:  results,
-		Tokens:   expandedTokens,
+		Tokens:   expandedAnalysisTokens,
 		Intent:   analysis.PrimaryIntent,
 		Language: language,
 		Found:    true,
 	}
+}
+
+func mergeTokens(tokenGroups ...[]string) []string {
+	merged := make([]string, 0)
+	seen := make(map[string]struct{})
+
+	for _, tokens := range tokenGroups {
+		for _, token := range tokens {
+			if token == "" {
+				continue
+			}
+
+			if _, exists := seen[token]; exists {
+				continue
+			}
+
+			seen[token] = struct{}{}
+			merged = append(merged, token)
+		}
+	}
+
+	return merged
 }

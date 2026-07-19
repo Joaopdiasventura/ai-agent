@@ -28,6 +28,11 @@ func TestDetectLanguageUsesWeightedSignals(t *testing.T) {
 			tokens:   []string{"auronix", "joão"},
 			expected: LanguagePortuguese,
 		},
+		{
+			name:     "portuguese email question wins over english email token",
+			tokens:   []string{"qual", "o", "email", "dele"},
+			expected: LanguagePortuguese,
+		},
 	}
 
 	for _, test := range tests {

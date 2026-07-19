@@ -13,9 +13,9 @@ func FilterRelevantResults(results []Result, analysis *nlp.QueryAnalysis, minimu
 			continue
 		}
 
-		if analysis.HasEntity && !strings.Contains(
-			result.Document.Content,
-			analysis.Entity.Value) {
+		if shouldFilterByEntity(analysis) && !strings.Contains(
+			strings.ToLower(result.Document.Content),
+			strings.ToLower(analysis.Entity.Value)) {
 			continue
 		}
 
@@ -23,4 +23,12 @@ func FilterRelevantResults(results []Result, analysis *nlp.QueryAnalysis, minimu
 	}
 
 	return relevantResults
+}
+
+func shouldFilterByEntity(analysis *nlp.QueryAnalysis) bool {
+	if !analysis.HasEntity {
+		return false
+	}
+
+	return analysis.Entity.Type != nlp.EntityPerson
 }

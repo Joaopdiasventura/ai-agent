@@ -158,6 +158,67 @@ var queryExpansions = map[string][]string{
 		"atualmente",
 		"desenvolvedor",
 	},
+	"trabalhou": {
+		"representa",
+		"online",
+		"desenvolvedor",
+		"júnior",
+		"estagiário",
+	},
+	"atuou": {
+		"representa",
+		"online",
+		"desenvolvedor",
+		"júnior",
+		"estagiário",
+	},
+	"primeiro": {
+		"estagiário",
+		"estágio",
+		"representa",
+		"online",
+	},
+	"primeira": {
+		"estagiário",
+		"estágio",
+		"representa",
+		"online",
+	},
+	"emprego": {
+		"trabalhou",
+		"desenvolvedor",
+		"estagiário",
+		"representa",
+		"online",
+	},
+	"job": {
+		"worked",
+		"developer",
+		"intern",
+		"representa",
+		"online",
+	},
+	"before": {
+		"worked",
+		"previous",
+		"representa",
+		"online",
+		"junior",
+		"intern",
+	},
+	"previous": {
+		"worked",
+		"representa",
+		"online",
+		"junior",
+		"intern",
+	},
+	"first": {
+		"intern",
+		"internship",
+		"representa",
+		"online",
+	},
 	"profissão": {
 		"trabalha",
 		"atualmente",
@@ -192,6 +253,18 @@ var queryExpansions = map[string][]string{
 		"feito",
 		"desenvolvido",
 	},
+	"tecnologias": {
+		"tecnologia",
+		"stack",
+		"usa",
+		"utiliza",
+	},
+	"tecnologia": {
+		"tecnologias",
+		"stack",
+		"usa",
+		"utiliza",
+	},
 	"uses": {
 		"technologies",
 		"stack",
@@ -216,6 +289,35 @@ var queryExpansions = map[string][]string{
 	"estuda": {
 		"cursa",
 		"fiap",
+	},
+	"estudando": {
+		"cursa",
+		"fiap",
+	},
+	"cursa": {
+		"estuda",
+		"fiap",
+	},
+	"cursando": {
+		"estuda",
+		"fiap",
+	},
+	"estudou": {
+		"concluiu",
+		"etec",
+		"desenvolvimento",
+		"sistemas",
+	},
+	"formou": {
+		"concluiu",
+		"etec",
+		"desenvolvimento",
+		"sistemas",
+	},
+	"concluiu": {
+		"etec",
+		"desenvolvimento",
+		"sistemas",
 	},
 	"curso": {
 		"cursa",

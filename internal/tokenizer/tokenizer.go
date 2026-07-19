@@ -12,10 +12,7 @@ func IsStopWord(word string) bool {
 }
 
 func Tokenize(text string) []string {
-	text = strings.ToLower(text)
-	text = invalidCharactersRegex.ReplaceAllString(text, " ")
-
-	words := strings.Fields(text)
+	words := TokenizeForAnalysis(text)
 	tokens := make([]string, 0, len(words))
 
 	for _, word := range words {
@@ -23,6 +20,17 @@ func Tokenize(text string) []string {
 			tokens = append(tokens, word)
 		}
 	}
+
+	return tokens
+}
+
+func TokenizeForAnalysis(text string) []string {
+	text = strings.ToLower(text)
+	text = invalidCharactersRegex.ReplaceAllString(text, " ")
+
+	words := strings.Fields(text)
+	tokens := make([]string, len(words))
+	copy(tokens, words)
 
 	return tokens
 }

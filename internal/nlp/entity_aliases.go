@@ -7,6 +7,90 @@ type entityAlias struct {
 
 var entityAliases = []entityAlias{
 	{
+		Tokens: []string{"joão", "paulo", "dias", "ventura"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"joao", "paulo", "dias", "ventura"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"joão", "paulo"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"joao", "paulo"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"joão"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"joao"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"ele"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"dele"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"seu"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"desenvolvedor"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"engenheiro"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
+		Tokens: []string{"profissional"},
+		Entity: Entity{
+			Type:  EntityPerson,
+			Value: "João Paulo",
+		},
+	},
+	{
 		Tokens: []string{"ufind", "tecnologia"},
 		Entity: Entity{
 			Type:  EntityCompany,

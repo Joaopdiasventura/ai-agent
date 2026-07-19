@@ -165,3 +165,196 @@ func TestSearchInvalidInputsDoNotFindResults(t *testing.T) {
 		})
 	}
 }
+
+func TestSearchRegressionExamplesReturnExpectedTopDocuments(t *testing.T) {
+	tests := []struct {
+		name       string
+		question   string
+		documentID string
+		language   string
+	}{
+		{
+			name:       "current education in portuguese",
+			question:   "onde joão estuda?",
+			documentID: "education-fiap-pt",
+			language:   "pt",
+		},
+		{
+			name:       "past education in portuguese",
+			question:   "onde joão estudou?",
+			documentID: "education-etec-pt",
+			language:   "pt",
+		},
+		{
+			name:       "email pronoun in portuguese",
+			question:   "qual o email dele?",
+			documentID: "contact-email-pt",
+			language:   "pt",
+		},
+		{
+			name:       "current job in portuguese",
+			question:   "onde joão trabalha?",
+			documentID: "career-current-job-pt",
+			language:   "pt",
+		},
+		{
+			name:       "past job in portuguese",
+			question:   "onde joão trabalhou?",
+			documentID: "career-junior-job-pt",
+			language:   "pt",
+		},
+		{
+			name:       "first job in portuguese",
+			question:   "qual foi o primeiro emprego?",
+			documentID: "career-intern-job-pt",
+			language:   "pt",
+		},
+		{
+			name:       "past job in english",
+			question:   "Where did João work before?",
+			documentID: "career-junior-job-en",
+			language:   "en",
+		},
+	}
+
+	engine := newTestEngine()
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			searchResult := engine.Search(test.question, 5)
+
+			if !searchResult.Found {
+				t.Fatalf("Search(%q) did not find a result", test.question)
+			}
+
+			if string(searchResult.Language) != test.language {
+				t.Fatalf("Search(%q) language = %q, want %q", test.question, searchResult.Language, test.language)
+			}
+
+			if len(searchResult.Results) == 0 {
+				t.Fatalf("Search(%q) returned no results", test.question)
+			}
+
+			topDocument := searchResult.Results[0].Document
+			if topDocument.ID != test.documentID {
+				t.Fatalf("Search(%q) top document = %q, want %q", test.question, topDocument.ID, test.documentID)
+			}
+
+			for _, result := range searchResult.Results {
+				if result.Document.Language != test.language {
+					t.Fatalf("Search(%q) returned %q with language %q, want %q",
+						test.question,
+						result.Document.ID,
+						result.Document.Language,
+						test.language,
+					)
+				}
+			}
+		})
+	}
+}
+
+func TestSearchShortAmbiguousQuestionsArePredictable(t *testing.T) {
+	tests := []struct {
+		question   string
+		documentID string
+		language   string
+	}{
+		{question: "João", documentID: "identity-basic-pt", language: "pt"},
+		{question: "FIAP", documentID: "education-fiap-pt", language: "pt"},
+		{question: "email", documentID: "contact-email-pt", language: "pt"},
+		{question: "projetos", documentID: "project-comparison-best-pt", language: "pt"},
+		{question: "tecnologias", documentID: "technology-messaging-pt", language: "pt"},
+		{question: "trabalho", documentID: "career-current-job-pt", language: "pt"},
+		{question: "formação", documentID: "education-etec-pt", language: "pt"},
+		{question: "Auronix", documentID: "project-auronix-description-pt", language: "pt"},
+		{question: "X Tube", documentID: "project-xtube-description-pt", language: "pt"},
+		{question: "GGCompress", documentID: "project-ggcompress-description-pt", language: "pt"},
+		{question: "Auditex", documentID: "project-auditex-description-pt", language: "pt"},
+	}
+
+	engine := newTestEngine()
+
+	for _, test := range tests {
+		t.Run(test.question, func(t *testing.T) {
+			searchResult := engine.Search(test.question, 5)
+
+			if !searchResult.Found {
+				t.Fatalf("Search(%q) did not find a result", test.question)
+			}
+
+			topDocument := searchResult.Results[0].Document
+			if topDocument.ID != test.documentID {
+				t.Fatalf("Search(%q) top document = %q, want %q", test.question, topDocument.ID, test.documentID)
+			}
+
+			if topDocument.Language != test.language {
+				t.Fatalf("Search(%q) top language = %q, want %q", test.question, topDocument.Language, test.language)
+			}
+		})
+	}
+}
+
+func TestSearchNegativeCategoryAndLanguageRegressions(t *testing.T) {
+	tests := []struct {
+		name             string
+		question         string
+		forbiddenIDParts []string
+		forbiddenTerms   []string
+	}{
+		{
+			name:             "education does not return contact",
+			question:         "onde joão estuda?",
+			forbiddenIDParts: []string{"contact-"},
+			forbiddenTerms:   []string{"+55", "joaopdias.dev@gmail.com"},
+		},
+		{
+			name:             "email does not return projects",
+			question:         "qual o email dele?",
+			forbiddenIDParts: []string{"project-"},
+			forbiddenTerms:   []string{"Auronix", "GGCompress", "X Tube", "Auditex"},
+		},
+		{
+			name:             "current job does not return internship",
+			question:         "onde joão trabalha?",
+			forbiddenIDParts: []string{"career-intern", "career-junior"},
+			forbiddenTerms:   []string{"Estagiário", "Júnior"},
+		},
+		{
+			name:             "auronix does not return ggcompress",
+			question:         "Me fale sobre o Auronix",
+			forbiddenIDParts: []string{"project-ggcompress"},
+			forbiddenTerms:   []string{"GGCompress"},
+		},
+	}
+
+	engine := newTestEngine()
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			searchResult := engine.Search(test.question, 5)
+
+			if !searchResult.Found {
+				t.Fatalf("Search(%q) did not find a result", test.question)
+			}
+
+			for _, result := range searchResult.Results {
+				for _, forbiddenIDPart := range test.forbiddenIDParts {
+					if strings.Contains(result.Document.ID, forbiddenIDPart) {
+						t.Fatalf("Search(%q) returned forbidden document %q", test.question, result.Document.ID)
+					}
+				}
+
+				for _, forbiddenTerm := range test.forbiddenTerms {
+					if strings.Contains(result.Document.Content, forbiddenTerm) {
+						t.Fatalf("Search(%q) returned forbidden term %q in document %q",
+							test.question,
+							forbiddenTerm,
+							result.Document.ID,
+						)
+					}
+				}
+			}
+		})
+	}
+}

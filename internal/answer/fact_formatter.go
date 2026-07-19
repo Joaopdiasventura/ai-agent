@@ -29,25 +29,12 @@ func FormatFacts(facts []string, language nlp.Language) string {
 		return formattedFacts[0] + "."
 	}
 
-	connectors := connectorsByLanguage(language)
-
-	weights := []float64{
-		0.40,
-		0.25,
-		0.20,
-		0.15,
-	}
-
 	builder := strings.Builder{}
 	builder.WriteString(formattedFacts[0])
 
 	for _, fact := range formattedFacts[1:] {
-		connector := SelectWeightedOption(connectors, weights)
-
-		builder.WriteString(".")
-		builder.WriteString(connector)
-		builder.WriteString(strings.ToLower(fact[:1]))
-		builder.WriteString(fact[1:])
+		builder.WriteString(". ")
+		builder.WriteString(fact)
 	}
 
 	builder.WriteString(".")

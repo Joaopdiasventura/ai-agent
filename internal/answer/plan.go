@@ -23,7 +23,8 @@ func BuildPlan(searchResult *search.SearchResult) Plan {
 
 	subject := "João Paulo"
 
-	if searchResult.Results[0].HasEntity {
+	if searchResult.Results[0].HasEntity &&
+		searchResult.Results[0].Entity.Type != nlp.EntityPerson {
 		subject = searchResult.Results[0].Entity.Value
 	}
 

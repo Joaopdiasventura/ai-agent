@@ -17,8 +17,12 @@ func calculateGeneralTechnologyBoost(intent nlp.Intent, document *domain.Documen
 		score += 0.25
 	}
 
+	if strings.HasPrefix(document.ID, "technology-") {
+		score += 0.25
+	}
+
 	if strings.Contains(document.ID, "-technologies") {
-		score += 0.20
+		score += 0.10
 	}
 
 	return score
