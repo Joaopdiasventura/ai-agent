@@ -89,6 +89,11 @@ func (selector Selector) Select(query domain.Query, results []domain.SearchResul
 }
 
 func requiresSynthesis(query domain.Query) bool {
+	switch query.Category {
+	case "project", "technology", "service", "certificate":
+		return true
+	}
+
 	text := strings.ToLower(query.Text)
 	synthesisSignals := []string{
 		"compar", "melhor", "maior", "mais", "demonstra", "impacto", "porque", "por que",

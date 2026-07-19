@@ -83,6 +83,8 @@ func detectCategory(tokens []string) string {
 
 func categoryScores(token string) map[string]int {
 	switch token {
+	case "quem", "who", "profile", "perfil":
+		return map[string]int{"identity": 4}
 	case "email", "telefone", "phone", "contato", "contact", "linkedin", "github":
 		return map[string]int{"contact": 5}
 	case "estuda", "estudou", "formacao", "formação", "faculdade", "education", "study", "studied", "school", "fiap", "etec":
@@ -95,9 +97,9 @@ func categoryScores(token string) map[string]int {
 		return map[string]int{"project": 4}
 	case "impacto", "resultado", "result", "impact", "reduziu", "redução", "reduction", "demonstrates", "demonstra":
 		return map[string]int{"impact": 3}
-	case "certificacao", "certificação", "certificações", "certificate", "certification", "mongodb", "edb":
+	case "certificacao", "certificacoes", "certificação", "certificações", "certificate", "certification", "mongodb", "edb":
 		return map[string]int{"certificate": 4}
-	case "servico", "serviço", "serviços", "service", "services", "empresa", "business":
+	case "servico", "servicos", "serviço", "serviços", "service", "services", "empresa", "business":
 		return map[string]int{"service": 4}
 	default:
 		return nil
