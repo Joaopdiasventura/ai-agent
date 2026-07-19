@@ -200,7 +200,7 @@ func rankedDocuments(searchResult *search.SearchResult) []rankedDocument {
 			ID:             result.Document.ID,
 			Category:       result.Document.Category,
 			Language:       result.Document.Language,
-			TemporalStatus: inferTemporalStatus(result.Document.ID),
+			TemporalStatus: result.Document.TemporalStatus,
 		})
 	}
 
@@ -274,15 +274,4 @@ func responseMatches(testCase Case, response string, hasResponse bool, language 
 	}
 
 	return true
-}
-
-func inferTemporalStatus(id string) string {
-	switch {
-	case strings.Contains(id, "current"), strings.Contains(id, "fiap"):
-		return "current"
-	case strings.Contains(id, "junior"), strings.Contains(id, "internship"), strings.Contains(id, "etec"):
-		return "past"
-	default:
-		return "timeless"
-	}
 }

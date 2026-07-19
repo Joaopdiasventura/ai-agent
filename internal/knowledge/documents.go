@@ -819,6 +819,7 @@ func documentPointers() []*domain.Document {
 	documents := make([]*domain.Document, 0, len(staticDocuments))
 
 	for index := range staticDocuments {
+		applyDocumentMetadata(&staticDocuments[index])
 		documents = append(documents, &staticDocuments[index])
 	}
 
