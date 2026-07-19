@@ -36,6 +36,24 @@ func TestAnalyzeDetectsLanguageCategoryAndTemporalStatus(t *testing.T) {
 			category:       "career",
 			temporalStatus: domain.TemporalPast,
 		},
+		{
+			question:       "O que ele faz?",
+			language:       "pt",
+			category:       "profile",
+			temporalStatus: domain.TemporalTimeless,
+		},
+		{
+			question:       "O que João Paulo faz?",
+			language:       "pt",
+			category:       "profile",
+			temporalStatus: domain.TemporalTimeless,
+		},
+		{
+			question:       "O que João Paulo pode fazer?",
+			language:       "pt",
+			category:       "service",
+			temporalStatus: domain.TemporalTimeless,
+		},
 	}
 
 	for _, test := range tests {

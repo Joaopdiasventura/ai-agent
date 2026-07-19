@@ -46,15 +46,16 @@ func detectLanguage(tokens []string) string {
 
 	for _, token := range tokens {
 		ptScore += mapScore(token, map[string]int{
-			"qual": 3, "quais": 3, "onde": 3, "joao": 2, "joão": 2, "dele": 3,
+			"qual": 3, "quais": 3, "onde": 3, "que": 3, "joao": 2, "joão": 2, "ele": 3, "dele": 3,
 			"estuda": 3, "estudou": 3, "trabalha": 3, "trabalhou": 3, "projeto": 2,
 			"telefone": 3, "formacao": 3, "formação": 3, "experiencia": 2, "experiência": 2,
+			"faz": 3, "fazer": 3, "pode": 3,
 		})
 		enScore += mapScore(token, map[string]int{
 			"what": 3, "which": 3, "where": 3, "who": 3, "his": 3, "email": 1,
 			"study": 3, "studied": 3, "work": 3, "worked": 3, "project": 2,
 			"phone": 3, "education": 3, "experience": 2, "about": 2,
-			"unrelated": 3, "question": 2,
+			"unrelated": 3, "question": 2, "does": 3, "do": 2, "can": 3,
 		})
 	}
 
@@ -68,6 +69,12 @@ func detectLanguage(tokens []string) string {
 func detectCategory(tokens []string) string {
 	if containsAnyToken(tokens, "projeto", "projetos", "project", "projects") {
 		return "project"
+	}
+	if isServiceCapabilityQuestion(tokens) {
+		return "service"
+	}
+	if isProfileActivityQuestion(tokens) {
+		return "profile"
 	}
 
 	scores := map[string]int{}
@@ -83,7 +90,11 @@ func detectCategory(tokens []string) string {
 
 func categoryScores(token string) map[string]int {
 	switch token {
-	case "quem", "who", "profile", "perfil":
+	case "faz", "does":
+		return map[string]int{"profile": 4}
+	case "profile", "perfil":
+		return map[string]int{"profile": 4}
+	case "quem", "who":
 		return map[string]int{"identity": 4}
 	case "email", "telefone", "phone", "contato", "contact", "linkedin", "github":
 		return map[string]int{"contact": 5}
@@ -99,11 +110,21 @@ func categoryScores(token string) map[string]int {
 		return map[string]int{"impact": 3}
 	case "certificacao", "certificacoes", "certificação", "certificações", "certificate", "certification", "mongodb", "edb":
 		return map[string]int{"certificate": 4}
-	case "servico", "servicos", "serviço", "serviços", "service", "services", "empresa", "business":
+	case "servico", "servicos", "serviço", "serviços", "service", "services", "empresa", "business", "fazer", "pode", "can", "build", "deliver":
 		return map[string]int{"service": 4}
 	default:
 		return nil
 	}
+}
+
+func isServiceCapabilityQuestion(tokens []string) bool {
+	return containsAnyToken(tokens, "pode", "can", "could") &&
+		containsAnyToken(tokens, "fazer", "faz", "do", "build", "deliver", "oferecer", "oferece")
+}
+
+func isProfileActivityQuestion(tokens []string) bool {
+	return containsAnyToken(tokens, "que", "what") &&
+		containsAnyToken(tokens, "faz", "does", "do")
 }
 
 func detectTemporalStatus(tokens []string) string {

@@ -124,6 +124,36 @@ func TestAgentResponseRegressionExamples(t *testing.T) {
 				"phone",
 			},
 		},
+		{
+			name:          "profile activity pronoun",
+			question:      "o que ele faz?",
+			language:      "pt",
+			expectedTerms: []string{"João Paulo"},
+			forbiddenTerms: []string{
+				"Não encontrei",
+				"I don't have",
+			},
+		},
+		{
+			name:          "profile activity name",
+			question:      "o que João Paulo faz?",
+			language:      "pt",
+			expectedTerms: []string{"João Paulo"},
+			forbiddenTerms: []string{
+				"Não encontrei",
+				"I don't have",
+			},
+		},
+		{
+			name:          "service capability",
+			question:      "o que João Paulo pode fazer?",
+			language:      "pt",
+			expectedTerms: []string{"João Paulo", "processos"},
+			forbiddenTerms: []string{
+				"Não encontrei",
+				"I don't have",
+			},
+		},
 	}
 
 	for _, test := range tests {
