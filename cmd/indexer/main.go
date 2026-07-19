@@ -16,6 +16,9 @@ import (
 const outputDirectory = "data/generated"
 const indexPath = "data/generated/knowledge.index.json"
 const manifestPath = "data/generated/manifest.json"
+const embeddedOutputDirectory = "internal/vectorindex/generated"
+const embeddedIndexPath = "internal/vectorindex/generated/knowledge.index.json"
+const embeddedManifestPath = "internal/vectorindex/generated/manifest.json"
 const deterministicDimension = 128
 const deterministicModel = "deterministic-hash-v1"
 
@@ -39,13 +42,28 @@ func main() {
 		os.Exit(1)
 	}
 
+	if err := os.MkdirAll(embeddedOutputDirectory, 0755); err != nil {
+		fmt.Fprintf(os.Stderr, "failed to create embedded output directory: %v\n", err)
+		os.Exit(1)
+	}
+
 	if err := writeJSON(indexPath, index); err != nil {
 		fmt.Fprintf(os.Stderr, "failed to write index: %v\n", err)
 		os.Exit(1)
 	}
 
+	if err := writeJSON(embeddedIndexPath, index); err != nil {
+		fmt.Fprintf(os.Stderr, "failed to write embedded index: %v\n", err)
+		os.Exit(1)
+	}
+
 	if err := writeJSON(manifestPath, manifest); err != nil {
 		fmt.Fprintf(os.Stderr, "failed to write manifest: %v\n", err)
+		os.Exit(1)
+	}
+
+	if err := writeJSON(embeddedManifestPath, manifest); err != nil {
+		fmt.Fprintf(os.Stderr, "failed to write embedded manifest: %v\n", err)
 		os.Exit(1)
 	}
 
@@ -55,6 +73,8 @@ func main() {
 	fmt.Printf("base_hash: %s\n", report.BaseHash)
 	fmt.Printf("index: %s\n", filepath.ToSlash(indexPath))
 	fmt.Printf("manifest: %s\n", filepath.ToSlash(manifestPath))
+	fmt.Printf("embedded_index: %s\n", filepath.ToSlash(embeddedIndexPath))
+	fmt.Printf("embedded_manifest: %s\n", filepath.ToSlash(embeddedManifestPath))
 }
 
 func configuredEmbedder() (indexing.Embedder, string, error) {
