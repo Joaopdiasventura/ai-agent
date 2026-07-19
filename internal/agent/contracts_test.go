@@ -9,7 +9,11 @@ import (
 
 type testEmbedder struct{}
 
-func (testEmbedder) Embed(context.Context, string) ([]float32, error) {
+func (testEmbedder) Embed(ctx context.Context, text string) ([]float32, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+
 	return []float32{1}, nil
 }
 
@@ -48,5 +52,20 @@ func TestNewServiceAcceptsCompleteDependencies(t *testing.T) {
 
 	if service == nil {
 		t.Fatal("NewService() returned nil service")
+	}
+}
+
+func TestServiceAnswerRespectsCanceledContext(t *testing.T) {
+	service, err := NewService(testEmbedder{}, testRetriever{}, testReranker{}, testGenerator{})
+	if err != nil {
+		t.Fatalf("NewService() returned error: %v", err)
+	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+
+	_, _, _, err = service.Answer(ctx, "Qual é o email dele?", 5)
+	if !errors.Is(err, context.Canceled) {
+		t.Fatalf("Answer() error = %v, want %v", err, context.Canceled)
 	}
 }
