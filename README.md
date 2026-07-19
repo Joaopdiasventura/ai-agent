@@ -34,7 +34,7 @@ The application is a compact question-answering system for a professional portfo
 - an interactive CLI started from `cmd/ai-agent`;
 - a serverless HTTP entrypoint in `api/index.go`, routed to `QUERY /ask`.
 
-The knowledge base is compiled into Go source code in `internal/knowledge/documents.go`. The current base contains 130 documents: 65 in Portuguese and 65 in English. Portuguese IDs end with `-pt`; English IDs end with `-en`. Documents are shared through pointers returned by `knowledge.Documents()`.
+The knowledge base is compiled into Go source code in `internal/knowledge/documents.go`. The current base contains 140 documents: 70 in Portuguese and 70 in English. Portuguese IDs end with `-pt`; English IDs end with `-en`. Documents are shared through pointers returned by `knowledge.Documents()`.
 
 ## Problem and Purpose
 

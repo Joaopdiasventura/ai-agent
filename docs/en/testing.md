@@ -28,9 +28,9 @@ go test ./...
 
 `internal/knowledge/documents_test.go` validates:
 
-- 130 documents;
-- 65 Portuguese documents;
-- 65 English documents;
+- 140 documents;
+- 70 Portuguese documents;
+- 70 English documents;
 - unique IDs;
 - required fields;
 - `-pt` and `-en` suffixes.

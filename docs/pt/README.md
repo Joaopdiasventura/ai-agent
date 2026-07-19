@@ -34,7 +34,7 @@ A aplicação é um sistema compacto de perguntas e respostas para um portfólio
 - uma CLI interativa iniciada em `cmd/ai-agent`;
 - um ponto de entrada HTTP serverless em `api/index.go`, roteado para `QUERY /ask`.
 
-A base de conhecimento é compilada em código Go em `internal/knowledge/documents.go`. A base atual contém 130 documentos: 65 em português e 65 em inglês. IDs em português terminam com `-pt`; IDs em inglês terminam com `-en`. Os documentos são compartilhados por ponteiros retornados por `knowledge.Documents()`.
+A base de conhecimento é compilada em código Go em `internal/knowledge/documents.go`. A base atual contém 140 documentos: 70 em português e 70 em inglês. IDs em português terminam com `-pt`; IDs em inglês terminam com `-en`. Os documentos são compartilhados por ponteiros retornados por `knowledge.Documents()`.
 
 ## Problema E Propósito
 

@@ -28,9 +28,9 @@ go test ./...
 
 `internal/knowledge/documents_test.go` valida:
 
-- 130 documentos;
-- 65 documentos em português;
-- 65 documentos em inglês;
+- 140 documentos;
+- 70 documentos em português;
+- 70 documentos em inglês;
 - IDs únicos;
 - campos obrigatórios;
 - sufixos `-pt` e `-en`.

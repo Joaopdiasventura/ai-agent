@@ -70,6 +70,18 @@ var staticDocuments = [...]domain.Document{
 		Content:  "João Paulo está aberto a oportunidades em que possa criar sistemas importantes para o negócio, especialmente automações, produtos digitais e plataformas internas.",
 	},
 	{
+		ID:       "profile-delivery-style-pt",
+		Category: "profile",
+		Language: "pt",
+		Content:  "João Paulo costuma conectar backend, frontend, infraestrutura e dados para entregar sistemas completos, não apenas partes isoladas.",
+	},
+	{
+		ID:       "profile-business-impact-pt",
+		Category: "impact",
+		Language: "pt",
+		Content:  "A experiência pública de João Paulo inclui automação de faturamento, preparação de dados para inteligência artificial e projetos com testes automatizados.",
+	},
+	{
 		ID:       "career-first-job-pt",
 		Category: "career",
 		Language: "pt",
@@ -196,6 +208,12 @@ var staticDocuments = [...]domain.Document{
 		Content:  "Para ver códigos e projetos de João Paulo, acesse github.com/Joaopdiasventura.",
 	},
 	{
+		ID:       "contact-public-channels-pt",
+		Category: "contact",
+		Language: "pt",
+		Content:  "Os canais públicos de contato de João Paulo incluem email, telefone, LinkedIn e GitHub.",
+	},
+	{
 		ID:       "services-web-pt",
 		Category: "service",
 		Language: "pt",
@@ -251,9 +269,15 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-auronix-metrics-pt",
-		Category: "project",
+		Category: "impact",
 		Language: "pt",
 		Content:  "O Auronix possui 248 testes automatizados e regras para expirar solicitações, reforçando a confiabilidade do projeto.",
+	},
+	{
+		ID:       "project-auronix-impact-pt",
+		Category: "impact",
+		Language: "pt",
+		Content:  "O Auronix mostra experiência de João Paulo com fluxos financeiros, atualização em tempo real e cuidado com consistência de transações.",
 	},
 	{
 		ID:       "project-modularis-description-pt",
@@ -269,9 +293,15 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-modularis-metrics-pt",
-		Category: "project",
+		Category: "impact",
 		Language: "pt",
 		Content:  "O Modularis mostra a capacidade de João de organizar sistemas grandes em vários serviços que trabalham juntos.",
+	},
+	{
+		ID:       "project-modularis-impact-pt",
+		Category: "impact",
+		Language: "pt",
+		Content:  "O Modularis evidencia experiência de João Paulo em sistemas distribuídos, pagamentos, login e comunicação entre serviços.",
 	},
 	{
 		ID:       "project-votrix-description-pt",
@@ -287,7 +317,7 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-votrix-performance-pt",
-		Category: "project",
+		Category: "impact",
 		Language: "pt",
 		Content:  "O Votrix alcançou mais de 30 mil requisições por segundo em testes, mostrando foco em velocidade e eficiência.",
 	},
@@ -305,13 +335,13 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-ggcompress-integrity-pt",
-		Category: "project",
+		Category: "impact",
 		Language: "pt",
 		Content:  "O GGCompress verifica se os arquivos continuam íntegros depois do processamento, usando SHA-256.",
 	},
 	{
 		ID:       "project-ggcompress-performance-pt",
-		Category: "project",
+		Category: "impact",
 		Language: "pt",
 		Content:  "O GGCompress conseguiu processar quase 10 GiB de dados com alta velocidade em testes controlados.",
 	},
@@ -329,7 +359,7 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-vox-metrics-pt",
-		Category: "project",
+		Category: "impact",
 		Language: "pt",
 		Content:  "O VOX foi testado para suportar mais de 500 usuários ao mesmo tempo e possui 108 testes automatizados.",
 	},
@@ -347,7 +377,7 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-etecfy-metrics-pt",
-		Category: "project",
+		Category: "impact",
 		Language: "pt",
 		Content:  "O Etecfy recebeu 1,3 mil acessos nas primeiras seis horas, mostrando boa recepção inicial do projeto.",
 	},
@@ -458,6 +488,18 @@ var staticDocuments = [...]domain.Document{
 		Category: "profile",
 		Language: "en",
 		Content:  "João Paulo is open to opportunities where he can build important business systems, especially automations, digital products, and internal platforms.",
+	},
+	{
+		ID:       "profile-delivery-style-en",
+		Category: "profile",
+		Language: "en",
+		Content:  "João Paulo tends to connect backend, frontend, infrastructure, and data work to deliver complete systems, not only isolated parts.",
+	},
+	{
+		ID:       "profile-business-impact-en",
+		Category: "impact",
+		Language: "en",
+		Content:  "João Paulo's public experience includes billing automation, data preparation for artificial intelligence, and projects with automated tests.",
 	},
 	{
 		ID:       "career-first-job-en",
@@ -586,6 +628,12 @@ var staticDocuments = [...]domain.Document{
 		Content:  "To see João Paulo's code and projects, visit github.com/Joaopdiasventura.",
 	},
 	{
+		ID:       "contact-public-channels-en",
+		Category: "contact",
+		Language: "en",
+		Content:  "João Paulo's public contact channels include email, phone, LinkedIn, and GitHub.",
+	},
+	{
 		ID:       "services-web-en",
 		Category: "service",
 		Language: "en",
@@ -641,9 +689,15 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-auronix-metrics-en",
-		Category: "project",
+		Category: "impact",
 		Language: "en",
 		Content:  "Auronix has 248 automated tests and rules for expiring requests, reinforcing the reliability of the project.",
+	},
+	{
+		ID:       "project-auronix-impact-en",
+		Category: "impact",
+		Language: "en",
+		Content:  "Auronix shows João Paulo's experience with financial flows, real-time updates, and transaction consistency.",
 	},
 	{
 		ID:       "project-modularis-description-en",
@@ -659,9 +713,15 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-modularis-metrics-en",
-		Category: "project",
+		Category: "impact",
 		Language: "en",
 		Content:  "Modularis shows João's ability to organize large systems into several services that work together.",
+	},
+	{
+		ID:       "project-modularis-impact-en",
+		Category: "impact",
+		Language: "en",
+		Content:  "Modularis highlights João Paulo's experience with distributed systems, payments, login, and service-to-service communication.",
 	},
 	{
 		ID:       "project-votrix-description-en",
@@ -677,7 +737,7 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-votrix-performance-en",
-		Category: "project",
+		Category: "impact",
 		Language: "en",
 		Content:  "Votrix reached more than 30 thousand requests per second in tests, showing a focus on speed and efficiency.",
 	},
@@ -695,13 +755,13 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-ggcompress-integrity-en",
-		Category: "project",
+		Category: "impact",
 		Language: "en",
 		Content:  "GGCompress checks whether files remain intact after processing by using SHA-256.",
 	},
 	{
 		ID:       "project-ggcompress-performance-en",
-		Category: "project",
+		Category: "impact",
 		Language: "en",
 		Content:  "GGCompress processed almost 10 GiB of data at high speed in controlled tests.",
 	},
@@ -719,7 +779,7 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-vox-metrics-en",
-		Category: "project",
+		Category: "impact",
 		Language: "en",
 		Content:  "VOX was tested to support more than 500 users at the same time and has 108 automated tests.",
 	},
@@ -737,7 +797,7 @@ var staticDocuments = [...]domain.Document{
 	},
 	{
 		ID:       "project-etecfy-metrics-en",
-		Category: "project",
+		Category: "impact",
 		Language: "en",
 		Content:  "Etecfy received 1.3 thousand visits in its first six hours, showing good initial reception for the project.",
 	},

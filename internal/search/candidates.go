@@ -50,6 +50,7 @@ func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 
 	case nlp.IntentProject:
 		return document.Category == "project" ||
+			document.Category == "impact" ||
 			document.Category == "comparison"
 
 	case nlp.IntentTechnologies:
@@ -75,7 +76,8 @@ func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 		return documentIDMatches(document, "identity-professional-summary") ||
 			documentIDMatches(document, "profile-focus") ||
 			documentIDMatches(document, "profile-availability") ||
-			documentIDMatches(document, "career-current-impact")
+			documentIDMatches(document, "career-current-impact") ||
+			document.Category == "impact"
 
 	case nlp.IntentAbout:
 		return document.Category == "identity"

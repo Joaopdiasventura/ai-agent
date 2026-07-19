@@ -8,8 +8,8 @@ import (
 func TestDocumentsStaticBaseInvariants(t *testing.T) {
 	documents := Documents()
 
-	if len(documents) != 130 {
-		t.Fatalf("Documents() returned %d documents, want 130", len(documents))
+	if len(documents) != 140 {
+		t.Fatalf("Documents() returned %d documents, want 140", len(documents))
 	}
 
 	seenIDs := make(map[string]struct{}, len(documents))
@@ -17,6 +17,7 @@ func TestDocumentsStaticBaseInvariants(t *testing.T) {
 		"pt": 0,
 		"en": 0,
 	}
+	categoryCounts := map[string]int{}
 
 	for _, document := range documents {
 		if document == nil {
@@ -59,13 +60,18 @@ func TestDocumentsStaticBaseInvariants(t *testing.T) {
 		}
 
 		languageCounts[document.Language]++
+		categoryCounts[document.Category]++
 	}
 
-	if languageCounts["pt"] != 65 {
-		t.Fatalf("portuguese document count = %d, want 65", languageCounts["pt"])
+	if languageCounts["pt"] != 70 {
+		t.Fatalf("portuguese document count = %d, want 70", languageCounts["pt"])
 	}
 
-	if languageCounts["en"] != 65 {
-		t.Fatalf("english document count = %d, want 65", languageCounts["en"])
+	if languageCounts["en"] != 70 {
+		t.Fatalf("english document count = %d, want 70", languageCounts["en"])
+	}
+
+	if categoryCounts["impact"] == 0 {
+		t.Fatal("Documents() has no impact documents")
 	}
 }
