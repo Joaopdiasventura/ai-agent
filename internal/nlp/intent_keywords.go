@@ -4,6 +4,7 @@ var intentPriority = []Intent{
 	IntentContact,
 	IntentHireReason,
 	IntentVisitorServices,
+	IntentProjectRecommendation,
 	IntentVisitorProjects,
 	IntentProject,
 	IntentTechnologies,
@@ -190,20 +191,24 @@ var intentKeywords = map[string]map[Intent]int{
 		IntentEducation: 3,
 	},
 	"projeto": {
-		IntentVisitorProjects: 3,
-		IntentProject:         2,
+		IntentVisitorProjects:       3,
+		IntentProject:               2,
+		IntentProjectRecommendation: 1,
 	},
 	"project": {
-		IntentVisitorProjects: 3,
-		IntentProject:         2,
+		IntentVisitorProjects:       3,
+		IntentProject:               2,
+		IntentProjectRecommendation: 1,
 	},
 	"projetos": {
-		IntentVisitorProjects: 3,
-		IntentProject:         2,
+		IntentVisitorProjects:       3,
+		IntentProject:               2,
+		IntentProjectRecommendation: 1,
 	},
 	"projects": {
-		IntentVisitorProjects: 3,
-		IntentProject:         2,
+		IntentVisitorProjects:       3,
+		IntentProject:               2,
+		IntentProjectRecommendation: 1,
 	},
 	"portfólio": {
 		IntentVisitorProjects: 3,
@@ -407,5 +412,59 @@ var intentKeywords = map[string]map[Intent]int{
 	},
 	"é": {
 		IntentAbout: 2,
+	},
+	"melhor": {
+		IntentProjectRecommendation: 5,
+	},
+	"best": {
+		IntentProjectRecommendation: 5,
+	},
+	"complexo": {
+		IntentProjectRecommendation: 4,
+	},
+	"complexos": {
+		IntentProjectRecommendation: 4,
+	},
+	"complex": {
+		IntentProjectRecommendation: 4,
+	},
+	"demonstra": {
+		IntentProjectRecommendation: 4,
+	},
+	"demonstrates": {
+		IntentProjectRecommendation: 4,
+	},
+	"mostra": {
+		IntentProjectRecommendation: 4,
+	},
+	"shows": {
+		IntentProjectRecommendation: 4,
+	},
+	"representa": {
+		IntentProjectRecommendation: 4,
+	},
+	"represents": {
+		IntentProjectRecommendation: 4,
+	},
+	"destacaria": {
+		IntentProjectRecommendation: 5,
+	},
+	"destaca": {
+		IntentProjectRecommendation: 4,
+	},
+	"highlight": {
+		IntentProjectRecommendation: 5,
+	},
+	"desafio": {
+		IntentProjectRecommendation: 4,
+	},
+	"challenge": {
+		IntentProjectRecommendation: 4,
+	},
+	"relevante": {
+		IntentProjectRecommendation: 3,
+	},
+	"relevant": {
+		IntentProjectRecommendation: 3,
 	},
 }

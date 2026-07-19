@@ -7,13 +7,15 @@ import (
 )
 
 type Plan struct {
-	Intent         nlp.Intent
-	Language       nlp.Language
-	Subject        string
-	Facts          []string
-	Technologies   []string
-	DetailLevel    DetailLevel
-	FormattedFacts string
+	Intent           nlp.Intent
+	Language         nlp.Language
+	Subject          string
+	Facts            []string
+	Technologies     []string
+	DetailLevel      DetailLevel
+	FormattedFacts   string
+	SelectedProject  string
+	ProjectCriterion nlp.ProjectCriterion
 }
 
 func BuildPlan(searchResult *search.SearchResult) Plan {
@@ -64,12 +66,14 @@ func BuildPlan(searchResult *search.SearchResult) Plan {
 	formattedFacts := FormatFacts(selectedFacts, searchResult.Language)
 
 	return Plan{
-		Intent:         searchResult.Intent,
-		Language:       searchResult.Language,
-		Subject:        subject,
-		Facts:          facts,
-		Technologies:   technologies,
-		FormattedFacts: formattedFacts,
-		DetailLevel:    detailLevel,
+		Intent:           searchResult.Intent,
+		Language:         searchResult.Language,
+		Subject:          subject,
+		Facts:            facts,
+		Technologies:     technologies,
+		FormattedFacts:   formattedFacts,
+		DetailLevel:      detailLevel,
+		SelectedProject:  searchResult.SelectedProject,
+		ProjectCriterion: searchResult.ProjectCriterion,
 	}
 }

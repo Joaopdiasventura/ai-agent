@@ -1,14 +1,15 @@
 package nlp
 
 type QueryAnalysis struct {
-	PrimaryIntent   Intent
-	AnswerMode      AnswerMode
-	Entity          Entity
-	HasEntity       bool
-	Language        Language
-	TemporalContext TemporalContext
-	CategoryHint    CategoryHint
-	Question        string
+	PrimaryIntent    Intent
+	AnswerMode       AnswerMode
+	Entity           Entity
+	HasEntity        bool
+	Language         Language
+	TemporalContext  TemporalContext
+	CategoryHint     CategoryHint
+	ProjectCriterion ProjectCriterion
+	Question         string
 }
 
 func AnalyzeQuery(tokens []string, entity Entity, hasEntity bool, language Language) *QueryAnalysis {
@@ -18,14 +19,16 @@ func AnalyzeQuery(tokens []string, entity Entity, hasEntity bool, language Langu
 	answerMode := DetectAnswerMode(tokens)
 	temporalContext := DetectTemporalContext(tokens, intent)
 	categoryHint := DetectCategoryHint(tokens, intent)
+	projectCriterion := DetectProjectCriterion(tokens, intent)
 
 	return &QueryAnalysis{
-		PrimaryIntent:   intent,
-		AnswerMode:      answerMode,
-		Entity:          entity,
-		HasEntity:       hasEntity,
-		Language:        language,
-		TemporalContext: temporalContext,
-		CategoryHint:    categoryHint,
+		PrimaryIntent:    intent,
+		AnswerMode:       answerMode,
+		Entity:           entity,
+		HasEntity:        hasEntity,
+		Language:         language,
+		TemporalContext:  temporalContext,
+		CategoryHint:     categoryHint,
+		ProjectCriterion: projectCriterion,
 	}
 }

@@ -8,6 +8,8 @@ func ShouldSearchMultipleDocuments(intent nlp.Intent, hasEntity bool) bool {
 		return true
 	case nlp.IntentProject:
 		return true
+	case nlp.IntentProjectRecommendation:
+		return true
 	default:
 		return false
 	}

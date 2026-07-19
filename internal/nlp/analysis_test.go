@@ -60,6 +60,70 @@ func TestAnalyzeQueryDetectsCategoryAndTemporalContext(t *testing.T) {
 	}
 }
 
+func TestAnalyzeQueryDetectsProjectRecommendationCriteria(t *testing.T) {
+	tests := []struct {
+		name              string
+		tokens            []string
+		expectedCriterion ProjectCriterion
+	}{
+		{
+			name:              "complex problem recommendation",
+			tokens:            []string{"qual", "projeto", "melhor", "demonstra", "capacidade", "resolver", "problemas", "complexos"},
+			expectedCriterion: ProjectCriterionComplexProblem,
+		},
+		{
+			name:              "financial systems recommendation",
+			tokens:            []string{"qual", "projeto", "melhor", "demonstra", "experiência", "sistemas", "financeiros"},
+			expectedCriterion: ProjectCriterionFinancialSystems,
+		},
+		{
+			name:              "technical leadership recommendation",
+			tokens:            []string{"qual", "projeto", "melhor", "demonstra", "liderança", "técnica"},
+			expectedCriterion: ProjectCriterionTechnicalLeadership,
+		},
+		{
+			name:              "technical capability recommendation",
+			tokens:            []string{"qual", "projeto", "melhor", "demonstra", "capacidade", "técnica"},
+			expectedCriterion: ProjectCriterionTechnicalCapability,
+		},
+		{
+			name:              "go performance recommendation",
+			tokens:            []string{"qual", "projeto", "demonstra", "desempenho", "concorrência", "go"},
+			expectedCriterion: ProjectCriterionGoPerformance,
+		},
+		{
+			name:              "auditability recommendation",
+			tokens:            []string{"qual", "projeto", "melhor", "demonstra", "auditabilidade"},
+			expectedCriterion: ProjectCriterionAuditability,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			entity, hasEntity := DetectEntity(test.tokens)
+			analysis := AnalyzeQuery(test.tokens, entity, hasEntity, LanguagePortuguese)
+
+			if analysis.PrimaryIntent != IntentProjectRecommendation {
+				t.Fatalf("PrimaryIntent = %q, want %q", analysis.PrimaryIntent, IntentProjectRecommendation)
+			}
+
+			if analysis.ProjectCriterion != test.expectedCriterion {
+				t.Fatalf("ProjectCriterion = %q, want %q", analysis.ProjectCriterion, test.expectedCriterion)
+			}
+		})
+	}
+}
+
+func TestAnalyzeQueryDoesNotTreatNonProjectQuestionsAsRecommendations(t *testing.T) {
+	tokens := []string{"certification", "of", "joão", "paulo", "demonstrates", "study", "of", "microservice", "deployment"}
+	entity, hasEntity := DetectEntity(tokens)
+	analysis := AnalyzeQuery(tokens, entity, hasEntity, LanguageEnglish)
+
+	if analysis.PrimaryIntent == IntentProjectRecommendation {
+		t.Fatalf("PrimaryIntent = %q, want non-project intent", analysis.PrimaryIntent)
+	}
+}
+
 func TestDetectEntityResolvesPersonReferences(t *testing.T) {
 	tests := [][]string{
 		{"joão"},

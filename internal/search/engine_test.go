@@ -358,3 +358,136 @@ func TestSearchNegativeCategoryAndLanguageRegressions(t *testing.T) {
 		})
 	}
 }
+
+func TestSearchProjectRecommendationsSelectExpectedProjects(t *testing.T) {
+	tests := []struct {
+		name              string
+		question          string
+		expectedProject   string
+		expectedCriterion string
+		expectedIDs       []string
+		forbiddenIDs      []string
+	}{
+		{
+			name:              "complex problem selects x tube",
+			question:          "Qual projeto do João Paulo melhor demonstra capacidade de resolver problemas complexos e qual impacto ele gerou?",
+			expectedProject:   "X Tube",
+			expectedCriterion: "complex_problem",
+			expectedIDs:       []string{"project-xtube-description-pt", "project-xtube-leadership-pt", "project-xtube-processing-pt"},
+			forbiddenIDs:      []string{"project-comparison-best-pt"},
+		},
+		{
+			name:              "technical capability selects auronix",
+			question:          "Qual projeto do João Paulo melhor demonstra capacidade técnica?",
+			expectedProject:   "Auronix",
+			expectedCriterion: "technical_capability",
+			expectedIDs:       []string{"project-auronix-description-pt", "project-auronix-consistency-pt"},
+			forbiddenIDs:      []string{"project-comparison-best-pt", "project-xtube"},
+		},
+		{
+			name:              "recruiter recommendation selects auronix",
+			question:          "Que projeto você destacaria para um recrutador?",
+			expectedProject:   "Auronix",
+			expectedCriterion: "general_recommendation",
+			expectedIDs:       []string{"project-auronix-description-pt", "project-auronix-consistency-pt"},
+			forbiddenIDs:      []string{"project-comparison-best-pt", "project-xtube"},
+		},
+		{
+			name:              "financial systems selects auronix",
+			question:          "Qual projeto melhor demonstra experiência com sistemas financeiros?",
+			expectedProject:   "Auronix",
+			expectedCriterion: "financial_systems",
+			expectedIDs:       []string{"project-auronix-description-pt", "project-auronix-consistency-pt"},
+			forbiddenIDs:      []string{"project-comparison-best-pt"},
+		},
+		{
+			name:              "technical leadership selects x tube",
+			question:          "Qual projeto melhor demonstra liderança técnica?",
+			expectedProject:   "X Tube",
+			expectedCriterion: "technical_leadership",
+			expectedIDs:       []string{"project-xtube-leadership-pt"},
+			forbiddenIDs:      []string{"project-auronix", "project-comparison-best-pt"},
+		},
+		{
+			name:              "go performance selects ggcompress",
+			question:          "Qual projeto demonstra melhor desempenho e concorrência?",
+			expectedProject:   "GGCompress",
+			expectedCriterion: "go_performance",
+			expectedIDs:       []string{"project-ggcompress-concurrency-pt", "project-ggcompress-performance-pt"},
+			forbiddenIDs:      []string{"project-comparison-best-pt"},
+		},
+		{
+			name:              "auditability selects auditex",
+			question:          "Qual projeto melhor demonstra preocupação com auditabilidade?",
+			expectedProject:   "Auditex",
+			expectedCriterion: "auditability",
+			expectedIDs:       []string{"project-auditex-description-pt", "project-auditex-integrity-pt"},
+			forbiddenIDs:      []string{"project-ggcompress", "project-comparison-best-pt"},
+		},
+	}
+
+	engine := newTestEngine()
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			searchResult := engine.Search(test.question, 5)
+
+			if !searchResult.Found {
+				t.Fatalf("Search(%q) did not find a result", test.question)
+			}
+
+			if searchResult.Intent != "project_recommendation" {
+				t.Fatalf("Search(%q) intent = %q, want project_recommendation", test.question, searchResult.Intent)
+			}
+
+			if searchResult.SelectedProject != test.expectedProject {
+				t.Fatalf("Search(%q) selected project = %q, want %q",
+					test.question,
+					searchResult.SelectedProject,
+					test.expectedProject,
+				)
+			}
+
+			if string(searchResult.ProjectCriterion) != test.expectedCriterion {
+				t.Fatalf("Search(%q) criterion = %q, want %q",
+					test.question,
+					searchResult.ProjectCriterion,
+					test.expectedCriterion,
+				)
+			}
+
+			resultIDs := make([]string, 0, len(searchResult.Results))
+			for _, result := range searchResult.Results {
+				if result.Document.Language != "pt" {
+					t.Fatalf("Search(%q) returned document %q in language %q",
+						test.question,
+						result.Document.ID,
+						result.Document.Language,
+					)
+				}
+
+				resultIDs = append(resultIDs, result.Document.ID)
+
+				for _, forbiddenID := range test.forbiddenIDs {
+					if strings.Contains(result.Document.ID, forbiddenID) {
+						t.Fatalf("Search(%q) returned forbidden document %q", test.question, result.Document.ID)
+					}
+				}
+			}
+
+			for _, expectedID := range test.expectedIDs {
+				found := false
+				for _, resultID := range resultIDs {
+					if resultID == expectedID {
+						found = true
+						break
+					}
+				}
+
+				if !found {
+					t.Fatalf("Search(%q) returned documents %v, want %q", test.question, resultIDs, expectedID)
+				}
+			}
+		})
+	}
+}

@@ -19,6 +19,10 @@ func AgentResponse(question string) (string, bool, nlp.Language) {
 
 	plan := answer.BuildPlan(searchResult)
 
+	if searchResult.Intent == nlp.IntentProjectRecommendation {
+		return answer.RenderProjectRecommendation(plan), true, searchResult.Language
+	}
+
 	template := answer.SelectTemplateForPlan(plan)
 
 	response := answer.RenderTemplate(template, plan)

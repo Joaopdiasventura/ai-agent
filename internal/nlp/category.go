@@ -132,7 +132,7 @@ func DetectCategoryHint(tokens []string, intent Intent) CategoryHint {
 		scores[CategoryHintCareer] += 3
 	case IntentTechnologies:
 		scores[CategoryHintTechnology] += 3
-	case IntentProject, IntentVisitorProjects:
+	case IntentProject, IntentProjectRecommendation, IntentVisitorProjects:
 		scores[CategoryHintProject] += 3
 	case IntentHireReason:
 		scores[CategoryHintImpact] += 1

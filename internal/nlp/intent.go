@@ -3,18 +3,19 @@ package nlp
 type Intent string
 
 const (
-	IntentUnknown         Intent = "unknown"
-	IntentAbout           Intent = "about"
-	IntentCurrentJob      Intent = "current_job"
-	IntentFirstJob        Intent = "first_job"
-	IntentEducation       Intent = "education"
-	IntentProject         Intent = "project"
-	IntentTechnologies    Intent = "technologies"
-	IntentContact         Intent = "contact"
-	IntentVisitorSummary  Intent = "visitor_summary"
-	IntentVisitorProjects Intent = "visitor_projects"
-	IntentVisitorServices Intent = "visitor_services"
-	IntentHireReason      Intent = "hire_reason"
+	IntentUnknown               Intent = "unknown"
+	IntentAbout                 Intent = "about"
+	IntentCurrentJob            Intent = "current_job"
+	IntentFirstJob              Intent = "first_job"
+	IntentEducation             Intent = "education"
+	IntentProject               Intent = "project"
+	IntentProjectRecommendation Intent = "project_recommendation"
+	IntentTechnologies          Intent = "technologies"
+	IntentContact               Intent = "contact"
+	IntentVisitorSummary        Intent = "visitor_summary"
+	IntentVisitorProjects       Intent = "visitor_projects"
+	IntentVisitorServices       Intent = "visitor_services"
+	IntentHireReason            Intent = "hire_reason"
 )
 
 func DetectIntent(tokens []string) Intent {
@@ -44,7 +45,43 @@ func DetectIntent(tokens []string) Intent {
 		}
 	}
 
+	if bestIntent == IntentProjectRecommendation && !hasProjectRecommendationContext(tokens) {
+		scores[IntentProjectRecommendation] = 0
+		bestIntent = IntentUnknown
+		bestScore = 0
+
+		for _, intent := range intentPriority {
+			score := scores[intent]
+
+			if score > bestScore {
+				bestIntent = intent
+				bestScore = score
+			}
+		}
+	}
+
 	return bestIntent
+}
+
+func hasProjectRecommendationContext(tokens []string) bool {
+	for _, token := range tokens {
+		switch token {
+		case "projeto",
+			"projetos",
+			"project",
+			"projects",
+			"portfólio",
+			"portfolio",
+			"auronix",
+			"xtube",
+			"tube",
+			"ggcompress",
+			"auditex":
+			return true
+		}
+	}
+
+	return false
 }
 
 func ResolveIntent(intent Intent, entity Entity, hasEntity bool) Intent {

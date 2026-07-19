@@ -36,6 +36,7 @@ func SelectIntentDetailLevel(intent nlp.Intent, detailLevel DetailLevel) DetailL
 	switch intent {
 	case nlp.IntentVisitorSummary,
 		nlp.IntentVisitorProjects,
+		nlp.IntentProjectRecommendation,
 		nlp.IntentVisitorServices,
 		nlp.IntentHireReason:
 		if detailLevel == DetailMedium {

@@ -15,11 +15,13 @@ type Engine struct {
 }
 
 type SearchResult struct {
-	Results  []Result
-	Tokens   []string
-	Intent   nlp.Intent
-	Language nlp.Language
-	Found    bool
+	Results          []Result
+	Tokens           []string
+	Intent           nlp.Intent
+	Language         nlp.Language
+	ProjectCriterion nlp.ProjectCriterion
+	SelectedProject  string
+	Found            bool
 }
 
 func NewEngine(documents []*domain.Document, minimumSimilarity float64) *Engine {
@@ -63,6 +65,35 @@ func (engine *Engine) Search(
 
 	analysis := nlp.AnalyzeQuery(analysisTokens, entity, hasEntity, language)
 	analysis.Question = question
+
+	if analysis.PrimaryIntent == nlp.IntentProjectRecommendation {
+		results, selectedProject := FindProjectRecommendationDocuments(engine.Documents, analysis, limit)
+
+		if len(results) == 0 {
+			return &SearchResult{
+				Language: language,
+				Found:    false,
+			}
+		}
+
+		for index := range results {
+			results[index].Entity = nlp.Entity{
+				Type:  nlp.EntityProject,
+				Value: selectedProject,
+			}
+			results[index].HasEntity = true
+		}
+
+		return &SearchResult{
+			Results:          results,
+			Tokens:           expandedAnalysisTokens,
+			Intent:           analysis.PrimaryIntent,
+			Language:         language,
+			ProjectCriterion: analysis.ProjectCriterion,
+			SelectedProject:  selectedProject,
+			Found:            true,
+		}
+	}
 
 	candidates := FilterDocumentsByIntent(engine.Documents, analysis)
 
@@ -111,11 +142,12 @@ func (engine *Engine) Search(
 	}
 
 	return &SearchResult{
-		Results:  results,
-		Tokens:   expandedAnalysisTokens,
-		Intent:   analysis.PrimaryIntent,
-		Language: language,
-		Found:    true,
+		Results:          results,
+		Tokens:           expandedAnalysisTokens,
+		Intent:           analysis.PrimaryIntent,
+		Language:         language,
+		ProjectCriterion: analysis.ProjectCriterion,
+		Found:            true,
 	}
 }
 

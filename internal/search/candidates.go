@@ -88,6 +88,12 @@ func matchesIntent(document *domain.Document, intent nlp.Intent) bool {
 			document.Category == "impact" ||
 			document.Category == "comparison"
 
+	case nlp.IntentProjectRecommendation:
+		return document.Category == "project" ||
+			document.Category == "impact" ||
+			document.Category == "technology" ||
+			document.Category == "comparison"
+
 	case nlp.IntentTechnologies:
 		return document.Category == "technology" ||
 			document.Category == "project" ||

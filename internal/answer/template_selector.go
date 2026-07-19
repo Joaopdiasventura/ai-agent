@@ -34,10 +34,6 @@ var templatesByLanguageAndIntent = map[nlp.Language]map[nlp.Intent][]string{
 			"{fact}",
 		},
 		nlp.IntentVisitorProjects: {
-			"Entre os projetos do portfólio, {fact}",
-			"Um bom resumo dos projetos é: {fact}",
-			"Se você quer entender os projetos pelo impacto, {fact}",
-			"No portfólio, vale olhar especialmente para isto: {fact}",
 			"{fact}",
 		},
 		nlp.IntentVisitorServices: {
@@ -83,10 +79,6 @@ var templatesByLanguageAndIntent = map[nlp.Language]map[nlp.Intent][]string{
 			"{fact}",
 		},
 		nlp.IntentVisitorProjects: {
-			"Among the portfolio projects, {fact}",
-			"A good project summary is: {fact}",
-			"If you want to understand the projects by impact, {fact}",
-			"In the portfolio, this is worth noticing: {fact}",
 			"{fact}",
 		},
 		nlp.IntentVisitorServices: {
