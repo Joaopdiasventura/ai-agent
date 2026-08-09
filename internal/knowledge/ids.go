@@ -1,0 +1,66 @@
+package knowledge
+
+import "ai-agent/internal/domain"
+
+const SourceCV = "cv-joao-paulo-2026"
+
+const (
+	EntityJoao             domain.EntityID = "joao"
+	EntitySaoPaulo         domain.EntityID = "sao-paulo"
+	EntityUFind            domain.EntityID = "ufind"
+	EntityRepresentaOnline domain.EntityID = "representa-online"
+
+	EntityRoleMid    domain.EntityID = "role-mid-software-developer"
+	EntityRoleJunior domain.EntityID = "role-junior-software-developer"
+	EntityRoleIntern domain.EntityID = "role-systems-developer-intern"
+
+	EntityAuronix    domain.EntityID = "auronix"
+	EntityXTube      domain.EntityID = "x-tube"
+	EntityGGCompress domain.EntityID = "ggcompress"
+	EntityVox        domain.EntityID = "vox"
+
+	EntityAngular      domain.EntityID = "angular"
+	EntityReact        domain.EntityID = "react"
+	EntityNextJS       domain.EntityID = "nextjs"
+	EntityJava         domain.EntityID = "java"
+	EntitySpringBoot   domain.EntityID = "spring-boot"
+	EntityGo           domain.EntityID = "go"
+	EntityNodeJS       domain.EntityID = "nodejs"
+	EntityNestJS       domain.EntityID = "nestjs"
+	EntityPostgreSQL   domain.EntityID = "postgresql"
+	EntityMongoDB      domain.EntityID = "mongodb"
+	EntityRedis        domain.EntityID = "redis"
+	EntityRabbitMQ     domain.EntityID = "rabbitmq"
+	EntityKafka        domain.EntityID = "kafka"
+	EntitySQS          domain.EntityID = "sqs"
+	EntityDocker       domain.EntityID = "docker"
+	EntityTerraform    domain.EntityID = "terraform"
+	EntityKubernetes   domain.EntityID = "kubernetes"
+	EntityAWS          domain.EntityID = "aws"
+	EntityECS          domain.EntityID = "ecs"
+	EntityEKS          domain.EntityID = "eks"
+	EntityS3           domain.EntityID = "s3"
+	EntityIAM          domain.EntityID = "iam"
+	EntityCloudflare   domain.EntityID = "cloudflare"
+	EntityFFmpeg       domain.EntityID = "ffmpeg"
+	EntityPrometheus   domain.EntityID = "prometheus"
+	EntityTauri        domain.EntityID = "tauri"
+	EntityJWT          domain.EntityID = "jwt"
+	EntityOAuth2       domain.EntityID = "oauth2"
+	EntityWorkerThread domain.EntityID = "worker-threads"
+	EntityWebWorker    domain.EntityID = "web-workers"
+	EntitySHA256       domain.EntityID = "sha256"
+	EntityBase44       domain.EntityID = "base44"
+	EntityVectorStores domain.EntityID = "openai-vector-stores"
+	EntityFileSearch   domain.EntityID = "openai-file-search"
+
+	EntityFIAP domain.EntityID = "fiap"
+	EntityEtec domain.EntityID = "etec-guarulhos"
+
+	EntityCertAWS     domain.EntityID = "certification-aws"
+	EntityCertMongoDB domain.EntityID = "certification-mongodb"
+	EntityCertEDB     domain.EntityID = "certification-edb"
+
+	EntityPortuguese domain.EntityID = "portuguese"
+	EntityEnglish    domain.EntityID = "english"
+)
