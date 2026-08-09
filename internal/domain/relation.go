@@ -7,6 +7,7 @@ const (
 	RelationIs             Relation = "is"
 	RelationWorksAt        Relation = "works_at"
 	RelationWorkedAt       Relation = "worked_at"
+	RelationHasRole        Relation = "has_role"
 	RelationCreated        Relation = "created"
 	RelationWorkedOn       Relation = "worked_on"
 	RelationLed            Relation = "led"

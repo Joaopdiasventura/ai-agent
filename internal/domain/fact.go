@@ -32,6 +32,18 @@ const (
 	FactObjectBoolean FactObjectKind = "boolean"
 )
 
+type NumberOperator string
+
+const (
+	NumberOperatorExact              NumberOperator = "exact"
+	NumberOperatorGreaterThan        NumberOperator = "greater_than"
+	NumberOperatorGreaterThanOrEqual NumberOperator = "greater_than_or_equal"
+	NumberOperatorLessThan           NumberOperator = "less_than"
+	NumberOperatorLessThanOrEqual    NumberOperator = "less_than_or_equal"
+	NumberOperatorApproximately      NumberOperator = "approximately"
+	NumberOperatorUpTo               NumberOperator = "up_to"
+)
+
 type FactObject struct {
 	Kind     FactObjectKind
 	EntityID EntityID
@@ -39,6 +51,7 @@ type FactObject struct {
 	Number   float64
 	Boolean  bool
 	Unit     string
+	Operator NumberOperator
 }
 
 func EntityObject(entityID EntityID) FactObject {
@@ -57,9 +70,23 @@ func TextObject(text LocalizedText) FactObject {
 
 func NumberObject(value float64, unit string) FactObject {
 	return FactObject{
-		Kind:   FactObjectNumber,
-		Number: value,
-		Unit:   unit,
+		Kind:     FactObjectNumber,
+		Number:   value,
+		Unit:     unit,
+		Operator: NumberOperatorExact,
+	}
+}
+
+func QualifiedNumberObject(
+	value float64,
+	unit string,
+	operator NumberOperator,
+) FactObject {
+	return FactObject{
+		Kind:     FactObjectNumber,
+		Number:   value,
+		Unit:     unit,
+		Operator: operator,
 	}
 }
 
@@ -77,7 +104,7 @@ func (o FactObject) Valid() bool {
 	case FactObjectText:
 		return !o.Text.Empty()
 	case FactObjectNumber:
-		return true
+		return o.Operator != ""
 	case FactObjectBoolean:
 		return true
 	default:
@@ -135,6 +162,7 @@ type Fact struct {
 	Object     FactObject
 	Category   FactCategory
 	Concepts   []ConceptID
+	Context    []EntityID
 	Statement  LocalizedText
 	Period     *Period
 	Importance float64
@@ -163,7 +191,10 @@ func (f Fact) Validate() error {
 	}
 
 	if f.Importance < 0 || f.Importance > 1 {
-		return fmt.Errorf("fact importance must be between 0 and 1: %f", f.Importance)
+		return fmt.Errorf(
+			"fact importance must be between 0 and 1: %f",
+			f.Importance,
+		)
 	}
 
 	if f.Period != nil {
