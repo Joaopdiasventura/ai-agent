@@ -14,6 +14,7 @@ const (
 	EntityTypeCertification EntityType = "certification"
 	EntityTypeRole          EntityType = "role"
 	EntityTypeLocation      EntityType = "location"
+	EntityTypeLanguage      EntityType = "language"
 )
 
 type Entity struct {
