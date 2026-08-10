@@ -495,3 +495,67 @@ func TestEmptyInput(t *testing.T) {
 		)
 	}
 }
+
+func TestEditSimilarityKubernetesTypo(
+	t *testing.T,
+) {
+	score := EditSimilarity(
+		"kubernets",
+		"kubernetes",
+	)
+
+	if score < 0.85 {
+		t.Fatalf(
+			"expected high similarity, got %f",
+			score,
+		)
+	}
+}
+
+func TestEditSimilarityConcurrencyTypo(
+	t *testing.T,
+) {
+	score := EditSimilarity(
+		"concorencia",
+		"concorrencia",
+	)
+
+	if score < 0.85 {
+		t.Fatalf(
+			"expected high similarity, got %f",
+			score,
+		)
+	}
+}
+
+func TestFuzzySimilarityPostgresTypo(
+	t *testing.T,
+) {
+	score := FuzzySimilarity(
+		"postgress",
+		"postgresql",
+	)
+
+	if score < 0.75 {
+		t.Fatalf(
+			"expected high similarity, got %f",
+			score,
+		)
+	}
+}
+
+func TestFuzzySimilarityRejectsUnrelatedWords(
+	t *testing.T,
+) {
+	score := FuzzySimilarity(
+		"kubernetes",
+		"rabbitmq",
+	)
+
+	if score >= 0.5 {
+		t.Fatalf(
+			"expected low similarity, got %f",
+			score,
+		)
+	}
+}
