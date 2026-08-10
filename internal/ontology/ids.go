@@ -21,6 +21,7 @@ const (
 	ConceptSoftwareDevelopment      domain.ConceptID = "software-development"
 	ConceptFrontend                 domain.ConceptID = "frontend"
 	ConceptBackend                  domain.ConceptID = "backend"
+	ConceptFullStack                domain.ConceptID = "fullstack"
 	ConceptDatabase                 domain.ConceptID = "database"
 	ConceptMessaging                domain.ConceptID = "messaging"
 	ConceptDevOps                   domain.ConceptID = "devops"

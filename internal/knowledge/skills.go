@@ -8,6 +8,8 @@ func skillFacts() []domain.Fact {
 		skillFact(EntityReact, "frontend"),
 		skillFact(EntityNextJS, "frontend"),
 		skillFact(EntityJava, "backend"),
+		skillFact(EntityJavaScript, "fullstack"),
+		skillFact(EntityTypeScript, "fullstack"),
 		skillFact(EntitySpringBoot, "backend"),
 		skillFact(EntityGo, "backend"),
 		skillFact(EntityNodeJS, "backend"),
@@ -60,12 +62,16 @@ func skillFact(
 	)
 }
 
-func entityDisplayPT(id domain.EntityID) string {
+func entityDisplayPT(
+	id domain.EntityID,
+) string {
 	names := map[domain.EntityID]string{
 		EntityAngular:    "Angular",
 		EntityReact:      "React",
 		EntityNextJS:     "Next.js",
 		EntityJava:       "Java",
+		EntityJavaScript: "JavaScript",
+		EntityTypeScript: "TypeScript",
 		EntitySpringBoot: "Spring Boot",
 		EntityGo:         "Go",
 		EntityNodeJS:     "Node.js",
@@ -84,6 +90,8 @@ func entityDisplayPT(id domain.EntityID) string {
 	return names[id]
 }
 
-func entityDisplayEN(id domain.EntityID) string {
+func entityDisplayEN(
+	id domain.EntityID,
+) string {
 	return entityDisplayPT(id)
 }

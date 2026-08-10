@@ -26,6 +26,8 @@ const (
 	EntitySpringBoot   domain.EntityID = "spring-boot"
 	EntityGo           domain.EntityID = "go"
 	EntityNodeJS       domain.EntityID = "nodejs"
+	EntityJavaScript   domain.EntityID = "javascript"
+	EntityTypeScript   domain.EntityID = "typescript"
 	EntityNestJS       domain.EntityID = "nestjs"
 	EntityPostgreSQL   domain.EntityID = "postgresql"
 	EntityMongoDB      domain.EntityID = "mongodb"

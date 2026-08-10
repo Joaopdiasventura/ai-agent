@@ -113,6 +113,8 @@ func allEntities() []domain.Entity {
 		technologyEntity(EntitySpringBoot, "Spring Boot", []string{"spring"}),
 		technologyEntity(EntityGo, "Go", []string{"golang"}),
 		technologyEntity(EntityNodeJS, "Node.js", []string{"node", "nodejs"}),
+		technologyEntity(EntityJavaScript, "JavaScript", []string{"javascript", "java script"}),
+		technologyEntity(EntityTypeScript, "TypeScript", []string{"typescript", "type script"}),
 		technologyEntity(EntityNestJS, "NestJS", []string{"nest", "nest.js"}),
 		technologyEntity(EntityPostgreSQL, "PostgreSQL", []string{"postgres"}),
 		technologyEntity(EntityMongoDB, "MongoDB", []string{"mongo"}),
