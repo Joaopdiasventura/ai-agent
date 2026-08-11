@@ -17,7 +17,7 @@ Documentação técnica do `ai-agent`, um agente Go determinístico. O projeto n
 - [Confidence](./confidence.md)
 - [Agent, CLI e HTTP](./interfaces.md)
 - [Evaluation e Testing](./evaluation-testing.md)
-- [Matemática e Invariantes](./mathematics-invariants.md)
+- [Matemática](./mathematics.md)`n- [Matemática e Invariantes](./mathematics-invariants.md)
 
 ```mermaid
 flowchart LR
@@ -31,3 +31,4 @@ flowchart LR
   GN --> CF[Confidence]
   CF --> AN[Answer]
 ```
+

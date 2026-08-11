@@ -1,14 +1,23 @@
 # Indexing and Retrieval
 
-[Index](./README.md) | [Português](../pt/index-retrieval.md)
+[Index](./README.md) | [Português](../pt/index-retrieval.md) | [Mathematics](./mathematics.md)
 
 `internal/index` builds one Portuguese and one English document per fact. Documents have weighted fields: `statement`, `subject`, `object`, `concept`, `context`, `predicate`, and `category`. The index stores postings, document frequencies, vocabulary, n-gram term maps, average document lengths, average field lengths, and structural indexes by subject, entity, concept, category, and context.
 
 `retrieval.HybridRetriever.Search` runs four retrievers independently: lexical, entity, concept, and fuzzy. Returning separate rankings preserves source evidence for ranking and confidence.
 
-Lexical retrieval uses BM25F. Numeric terms get weight `1.35`, terms of length at most two get `1.15`, and other terms get `1.0`. Field weights are strongest for subject, concept, object, and context.
+Lexical retrieval uses BM25F. The core term contribution is:
 
-Entity retrieval uses explicit query entities and structural entity indexes. Person entities are intentionally weak (`0.25`) while projects and technologies are strong. This is one of the safeguards against a query containing João retrieving arbitrary facts about João.
+$$
+S_{\operatorname{BM25F}}(t,d)
+=
+w_t\cdot\operatorname{IDF}(t)\cdot
+\frac{\operatorname{wf}(t,d)(k_1+1)}{\operatorname{wf}(t,d)+k_1}
+$$
+
+Numeric terms get weight $1.35$, terms of length at most two get $1.15$, and other terms get $1.0$. Field weights are strongest for subject, concept, object, and context.
+
+Entity retrieval uses explicit query entities and structural entity indexes. Person entities are intentionally weak with weight $0.25$, while projects and technologies are strong. This is one of the safeguards against a query containing João retrieving arbitrary facts about João.
 
 Concept retrieval uses query concepts and structural concept indexes. Direct concept matches are stronger than expanded concepts. Fact importance is blended into the score.
 

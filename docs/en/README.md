@@ -17,7 +17,7 @@ Technical documentation for `ai-agent`, a deterministic Go agent. The project ha
 - [Confidence](./confidence.md)
 - [Agent, CLI, and HTTP](./interfaces.md)
 - [Evaluation and Testing](./evaluation-testing.md)
-- [Mathematics and Invariants](./mathematics-invariants.md)
+- [Mathematics](./mathematics.md)`n- [Mathematics and Invariants](./mathematics-invariants.md)
 
 ```mermaid
 flowchart LR
@@ -31,3 +31,4 @@ flowchart LR
   GN --> CF[Confidence]
   CF --> AN[Answer]
 ```
+
