@@ -151,9 +151,19 @@ func (e *EntityExtractor) Extract(
 	}
 
 	for _, term := range terms {
-		if runeLength(term) < 4 {
+		if runeLength(term) < 3 {
 			continue
 		}
+
+		type candidate struct {
+			match      domain.EntityMatch
+			similarity float64
+		}
+
+		candidates := make(
+			[]candidate,
+			0,
+		)
 
 		for _, alias := range e.aliases {
 			if !languageCompatible(
@@ -167,7 +177,7 @@ func (e *EntityExtractor) Extract(
 				continue
 			}
 
-			if runeLength(alias.Normalized) < 4 {
+			if runeLength(alias.Normalized) < 3 {
 				continue
 			}
 
@@ -196,16 +206,54 @@ func (e *EntityExtractor) Extract(
 					alias.Weight *
 					0.88
 
-			updateEntityMatch(
-				matches,
-				domain.EntityMatch{
-					EntityID:    alias.EntityID,
-					Score:       score,
-					Explicit:    true,
-					MatchedText: term,
+			candidates = append(
+				candidates,
+				candidate{
+					similarity: similarity,
+					match: domain.EntityMatch{
+						EntityID:    alias.EntityID,
+						Score:       score,
+						Explicit:    true,
+						MatchedText: term,
+					},
 				},
 			)
 		}
+
+		sort.Slice(candidates, func(i int, j int) bool {
+			if candidates[i].similarity != candidates[j].similarity {
+				return candidates[i].similarity > candidates[j].similarity
+			}
+
+			return candidates[i].match.EntityID < candidates[j].match.EntityID
+		})
+
+		if len(candidates) == 0 {
+			continue
+		}
+
+		if len(candidates) > 1 {
+			secondBestDifferent := -1.0
+
+			for _, current := range candidates[1:] {
+				if current.match.EntityID == candidates[0].match.EntityID {
+					continue
+				}
+
+				secondBestDifferent = current.similarity
+				break
+			}
+
+			if secondBestDifferent >= 0 &&
+				candidates[0].similarity-secondBestDifferent < 0.08 {
+				continue
+			}
+		}
+
+		updateEntityMatch(
+			matches,
+			candidates[0].match,
+		)
 	}
 
 	result := make(
@@ -311,9 +359,11 @@ func entityFuzzyThreshold(
 	case shortest >= 7:
 		return 0.80
 	case shortest >= 5:
-		return 0.84
+		return 0.78
+	case shortest >= 4:
+		return 0.74
 	default:
-		return 0.9
+		return 0.74
 	}
 }
 

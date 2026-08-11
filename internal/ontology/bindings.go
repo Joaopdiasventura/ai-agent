@@ -14,44 +14,64 @@ func allEntityBindings() []EntityConceptBinding {
 	return []EntityConceptBinding{
 		binding(
 			knowledge.EntityAngular,
+			weighted(ConceptFramework, 1),
 			weighted(ConceptFrontend, 1),
 			weighted(ConceptSoftwareDevelopment, 0.8),
 		),
 		binding(
 			knowledge.EntityReact,
+			weighted(ConceptFramework, 1),
 			weighted(ConceptFrontend, 1),
 			weighted(ConceptSoftwareDevelopment, 0.8),
 		),
 		binding(
 			knowledge.EntityNextJS,
+			weighted(ConceptFramework, 1),
 			weighted(ConceptFrontend, 0.9),
 			weighted(ConceptBackend, 0.45),
 			weighted(ConceptSoftwareDevelopment, 0.8),
 		),
 		binding(
 			knowledge.EntityJava,
+			weighted(ConceptProgrammingLanguage, 1),
 			weighted(ConceptBackend, 0.85),
 			weighted(ConceptSoftwareDevelopment, 0.8),
 		),
 		binding(
 			knowledge.EntitySpringBoot,
+			weighted(ConceptFramework, 1),
 			weighted(ConceptBackend, 1),
 			weighted(ConceptSoftwareDevelopment, 0.85),
 		),
 		binding(
 			knowledge.EntityGo,
+			weighted(ConceptProgrammingLanguage, 1),
 			weighted(ConceptBackend, 0.85),
 			weighted(ConceptSoftwareDevelopment, 0.8),
 		),
 		binding(
 			knowledge.EntityNodeJS,
+			weighted(ConceptRuntime, 1),
 			weighted(ConceptBackend, 0.9),
 			weighted(ConceptSoftwareDevelopment, 0.8),
 		),
 		binding(
 			knowledge.EntityNestJS,
+			weighted(ConceptFramework, 1),
 			weighted(ConceptBackend, 1),
 			weighted(ConceptSoftwareDevelopment, 0.85),
+		),
+		binding(
+			knowledge.EntityJavaScript,
+			weighted(ConceptProgrammingLanguage, 1),
+			weighted(ConceptFrontend, 0.75),
+			weighted(ConceptSoftwareDevelopment, 0.8),
+		),
+		binding(
+			knowledge.EntityTypeScript,
+			weighted(ConceptProgrammingLanguage, 1),
+			weighted(ConceptFrontend, 0.75),
+			weighted(ConceptSoftwareDevelopment, 0.8),
 		),
 		binding(
 			knowledge.EntityPostgreSQL,

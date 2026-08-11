@@ -4,16 +4,16 @@ import "ai-agent/internal/domain"
 
 func skillFacts() []domain.Fact {
 	return []domain.Fact{
-		skillFact(EntityAngular, "frontend"),
-		skillFact(EntityReact, "frontend"),
-		skillFact(EntityNextJS, "frontend"),
-		skillFact(EntityJava, "backend"),
-		skillFact(EntityJavaScript, "fullstack"),
-		skillFact(EntityTypeScript, "fullstack"),
-		skillFact(EntitySpringBoot, "backend"),
-		skillFact(EntityGo, "backend"),
-		skillFact(EntityNodeJS, "backend"),
-		skillFact(EntityNestJS, "backend"),
+		skillFact(EntityAngular, "framework", "frontend"),
+		skillFact(EntityReact, "framework", "frontend"),
+		skillFact(EntityNextJS, "framework", "frontend"),
+		skillFact(EntityJava, "programming-language", "backend"),
+		skillFact(EntityJavaScript, "programming-language", "frontend"),
+		skillFact(EntityTypeScript, "programming-language", "frontend"),
+		skillFact(EntitySpringBoot, "framework", "backend"),
+		skillFact(EntityGo, "programming-language", "backend"),
+		skillFact(EntityNodeJS, "runtime", "backend"),
+		skillFact(EntityNestJS, "framework", "backend"),
 		skillFact(EntityPostgreSQL, "database"),
 		skillFact(EntityMongoDB, "database"),
 		skillFact(EntityRedis, "database"),
@@ -43,7 +43,7 @@ func skillFacts() []domain.Fact {
 
 func skillFact(
 	technology domain.EntityID,
-	concept string,
+	conceptsValue ...string,
 ) domain.Fact {
 	return entityFact(
 		"skill-"+string(technology),
@@ -51,7 +51,7 @@ func skillFact(
 		domain.RelationHasSkill,
 		technology,
 		domain.FactCategorySkill,
-		concepts(concept),
+		concepts(conceptsValue...),
 		nil,
 		localized(
 			"João possui experiência com "+entityDisplayPT(technology)+".",

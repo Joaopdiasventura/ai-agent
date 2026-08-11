@@ -5,6 +5,7 @@ import (
 
 	"ai-agent/internal/domain"
 	"ai-agent/internal/knowledge"
+	"ai-agent/internal/ontology"
 	"ai-agent/internal/ranking"
 )
 
@@ -144,7 +145,12 @@ func (r *Reasoner) generalConclusion(
 	status :=
 		SupportInsufficientEvidence
 
-	if len(evidence) > 0 {
+	filtered := r.directlyRelevantEvidence(
+		currentQuery,
+		evidence,
+	)
+
+	if len(filtered) > 0 {
 		status =
 			SupportSupported
 	}
@@ -158,7 +164,87 @@ func (r *Reasoner) generalConclusion(
 		FocusConcept: focusConcept(
 			currentQuery,
 		),
-		Evidence: evidence,
+		Evidence: filtered,
+	}
+}
+
+func (r *Reasoner) directlyRelevantEvidence(
+	currentQuery domain.Query,
+	evidence []Evidence,
+) []Evidence {
+	result := make([]Evidence, 0, len(evidence))
+
+	for _, currentEvidence := range evidence {
+		fact, found := r.base.Fact(currentEvidence.FactID)
+
+		if !found {
+			continue
+		}
+
+		if directFactRelevant(currentQuery, fact, r.base) {
+			result = append(result, currentEvidence)
+		}
+	}
+
+	sortEvidence(result)
+
+	return result
+}
+
+func directFactRelevant(
+	currentQuery domain.Query,
+	fact domain.Fact,
+	base *knowledge.Knowledge,
+) bool {
+	hasNonPersonEntity := false
+
+	for _, entityMatch := range currentQuery.Entities {
+		entity, found := base.Entity(entityMatch.EntityID)
+
+		if !found || entity.Type == domain.EntityTypePerson {
+			continue
+		}
+
+		hasNonPersonEntity = true
+
+		if factReferencesEntity(fact, entityMatch.EntityID) {
+			return true
+		}
+	}
+
+	for _, concept := range currentQuery.Concepts {
+		if concept.MatchedText == "" {
+			continue
+		}
+
+		if factHasConcept(fact, concept.ConceptID) {
+			return true
+		}
+	}
+
+	return !hasNonPersonEntity &&
+		((currentQuery.Intent == domain.IntentExperience &&
+			fact.Category == domain.FactCategoryExperience) ||
+			(currentQuery.Target != domain.QueryTargetPerson &&
+				currentQuery.Target != domain.QueryTargetAny &&
+				evidenceAllowedByTarget(currentQuery.Target, fact)))
+}
+
+func evidenceAllowedByTarget(
+	target domain.QueryTarget,
+	fact domain.Fact,
+) bool {
+	switch target {
+	case domain.QueryTargetContact:
+		return fact.Category == domain.FactCategoryContact
+	case domain.QueryTargetEducation:
+		return fact.Category == domain.FactCategoryEducation
+	case domain.QueryTargetCertification:
+		return fact.Category == domain.FactCategoryCertification
+	case domain.QueryTargetExperience:
+		return fact.Category == domain.FactCategoryExperience
+	default:
+		return false
 	}
 }
 
@@ -322,9 +408,7 @@ func (r *Reasoner) listConclusion(
 	evidence []Evidence,
 ) Conclusion {
 	entityType, supported :=
-		targetEntityType(
-			currentQuery.Target,
-		)
+		listEntityType(currentQuery)
 
 	if !supported {
 		return r.generalConclusion(
@@ -340,6 +424,8 @@ func (r *Reasoner) listConclusion(
 			evidence,
 			entityType,
 		)
+
+	groups = r.filterListGroups(currentQuery, groups)
 
 	status :=
 		SupportInsufficientEvidence
@@ -361,6 +447,88 @@ func (r *Reasoner) listConclusion(
 		Evidence: evidence,
 		Groups:   groups,
 	}
+}
+
+func listEntityType(currentQuery domain.Query) (domain.EntityType, bool) {
+	if currentQuery.HasConcept(ontology.ConceptProgrammingLanguage) ||
+		currentQuery.HasConcept(ontology.ConceptFramework) ||
+		currentQuery.HasConcept(ontology.ConceptRuntime) ||
+		currentQuery.HasConcept(ontology.ConceptDatabase) ||
+		currentQuery.HasConcept(ontology.ConceptMessaging) ||
+		currentQuery.HasConcept(ontology.ConceptCloud) ||
+		currentQuery.HasConcept(ontology.ConceptDevOps) ||
+		currentQuery.HasConcept(ontology.ConceptInfrastructure) {
+		return domain.EntityTypeTechnology, true
+	}
+
+	if currentQuery.HasConcept(ontology.ConceptLanguage) {
+		return domain.EntityTypeLanguage, true
+	}
+
+	return targetEntityType(currentQuery.Target)
+}
+
+func (r *Reasoner) filterListGroups(
+	currentQuery domain.Query,
+	groups []EntityGroup,
+) []EntityGroup {
+	focus := focusConcept(currentQuery)
+
+	if focus == "" {
+		return groups
+	}
+
+	result := make([]EntityGroup, 0, len(groups))
+
+	for _, group := range groups {
+		if !entityMatchesListConcept(group.EntityID, focus) {
+			continue
+		}
+
+		result = append(result, group)
+	}
+
+	sortGroups(result)
+
+	return result
+}
+
+func entityMatchesListConcept(
+	entityID domain.EntityID,
+	conceptID domain.ConceptID,
+) bool {
+	concepts := map[domain.ConceptID][]domain.EntityID{
+		ontology.ConceptProgrammingLanguage: {
+			knowledge.EntityJavaScript,
+			knowledge.EntityTypeScript,
+			knowledge.EntityJava,
+			knowledge.EntityGo,
+		},
+		ontology.ConceptFramework: {
+			knowledge.EntityAngular,
+			knowledge.EntityReact,
+			knowledge.EntityNextJS,
+			knowledge.EntitySpringBoot,
+			knowledge.EntityNestJS,
+		},
+		ontology.ConceptRuntime: {
+			knowledge.EntityNodeJS,
+		},
+	}
+
+	allowed, constrained := concepts[conceptID]
+
+	if !constrained {
+		return true
+	}
+
+	for _, current := range allowed {
+		if current == entityID {
+			return true
+		}
+	}
+
+	return false
 }
 
 func targetEntityType(

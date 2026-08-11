@@ -739,3 +739,240 @@ func TestSupportedAnswerUsesClaimConfidence(
 		)
 	}
 }
+
+func TestUnknownAgeAbstains(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	debug, err := service.Debug("quantos anos tem João?")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if debug.Result.HasResponse {
+		t.Fatalf("expected no public response, got %q", debug.Result.Response)
+	}
+
+	if debug.Reasoning.Conclusion.Status != reasoning.SupportInsufficientEvidence {
+		t.Fatalf("expected insufficient evidence, got %s", debug.Reasoning.Conclusion.Status)
+	}
+
+	if debug.Plan.Status != planning.PlanStatusAbstain {
+		t.Fatalf("expected abstain, got %s", debug.Plan.Status)
+	}
+
+	if len(debug.Generation.FactIDs) != 0 {
+		t.Fatalf("expected no generated facts, got %v", debug.Generation.FactIDs)
+	}
+}
+
+func TestUnknownLanguagePreferenceAbstains(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	result, err := service.Answer("João tem preferência de linguagem?")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if result.HasResponse {
+		t.Fatalf("expected no response, got %q", result.Response)
+	}
+}
+
+func TestProgrammingLanguageList(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	debug, err := service.Debug("Quais linguagens ele sabe?")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !debug.Result.HasResponse {
+		t.Fatal("expected response")
+	}
+
+	if debug.Query.Intent != domain.IntentList {
+		t.Fatalf("expected list intent, got %s", debug.Query.Intent)
+	}
+
+	for _, expected := range []string{"JavaScript", "TypeScript", "Java", "Go"} {
+		if !strings.Contains(debug.Result.Response, expected) {
+			t.Fatalf("expected %s in %q", expected, debug.Result.Response)
+		}
+	}
+
+	for _, forbidden := range []string{"Português", "Inglês"} {
+		if strings.Contains(debug.Result.Response, forbidden) {
+			t.Fatalf("did not expect %s in %q", forbidden, debug.Result.Response)
+		}
+	}
+}
+
+func TestFrameworkList(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	result, err := service.Answer("Quais frameworks ele sabe?")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !result.HasResponse {
+		t.Fatal("expected response")
+	}
+
+	for _, expected := range []string{"Angular", "React", "Next.js", "Spring Boot", "NestJS"} {
+		if !strings.Contains(result.Response, expected) {
+			t.Fatalf("expected %s in %q", expected, result.Response)
+		}
+	}
+
+	for _, forbidden := range []string{"PostgreSQL", "MongoDB", "JavaScript", "TypeScript"} {
+		if strings.Contains(result.Response, forbidden) {
+			t.Fatalf("did not expect %s in %q", forbidden, result.Response)
+		}
+	}
+}
+
+func TestTechnologyList(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	result, err := service.Answer("quais tecnologias ele sabe?")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !result.HasResponse {
+		t.Fatal("expected response")
+	}
+
+	for _, expected := range []string{"Java", "Go", "Docker"} {
+		if !strings.Contains(result.Response, expected) {
+			t.Fatalf("expected %s in %q", expected, result.Response)
+		}
+	}
+}
+
+func TestFuzzyTechnologyCapabilities(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	cases := map[string]string{
+		"ele sabe kubernts?":     "Kubernetes",
+		"ele sabe dcker?":        "Docker",
+		"ele sabe dockr?":        "Docker",
+		"ele sabe jva?":          "Java",
+		"ele sabe javascrit?":    "JavaScript",
+		"ele sabe typescrit?":    "TypeScript",
+		"ele sabe nodjs?":        "Node.js",
+		"ele sabe postgre?":      "PostgreSQL",
+		"Does João know Docker?": "Docker",
+	}
+
+	for question, expected := range cases {
+		result, err := service.Answer(question)
+
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if !result.HasResponse {
+			t.Fatalf("question %q expected response", question)
+		}
+
+		if !strings.Contains(result.Response, expected) {
+			t.Fatalf("question %q expected %s in %q", question, expected, result.Response)
+		}
+	}
+}
+
+func TestAbstractCapabilities(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	for _, question := range []string{"ele sabe backend?", "ele sabe fulstack?"} {
+		result, err := service.Answer(question)
+
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if !result.HasResponse {
+			t.Fatalf("question %q expected response", question)
+		}
+	}
+}
+
+func TestHumanLanguageList(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	result, err := service.Answer("quais idiomas ele fala?")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !result.HasResponse {
+		t.Fatal("expected response")
+	}
+
+	for _, expected := range []string{"Português", "Inglês"} {
+		if !strings.Contains(result.Response, expected) {
+			t.Fatalf("expected %s in %q", expected, result.Response)
+		}
+	}
+
+	for _, forbidden := range []string{"Java", "Go", "JavaScript"} {
+		if strings.Contains(result.Response, forbidden) {
+			t.Fatalf("did not expect %s in %q", forbidden, result.Response)
+		}
+	}
+}
+
+func TestEnglishListsAndUnknownAge(
+	t *testing.T,
+) {
+	service := createService(t)
+
+	for _, question := range []string{
+		"What programming languages does João know?",
+		"Which frameworks does João know?",
+	} {
+		result, err := service.Answer(question)
+
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if !result.HasResponse {
+			t.Fatalf("question %q expected response", question)
+		}
+	}
+
+	result, err := service.Answer("How old is João?")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if result.HasResponse {
+		t.Fatalf("expected no response, got %q", result.Response)
+	}
+}

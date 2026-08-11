@@ -300,7 +300,7 @@ func (p *Planner) planList(
 			entityListSection(
 				result.Conclusion.Groups,
 				p.selector,
-				10,
+				20,
 				ItemEntity,
 			),
 		}

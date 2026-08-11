@@ -45,6 +45,27 @@ func (d *IntentDetector) Detect(
 		return domain.IntentEducation
 	}
 
+	if hasAnyPhrase(
+		normalized,
+		preferenceMarkers,
+	) {
+		return domain.IntentUnknown
+	}
+
+	if hasAnyPhrase(
+		normalized,
+		unsupportedAttributeMarkers,
+	) {
+		return domain.IntentUnknown
+	}
+
+	if hasAnyPhrase(
+		normalized,
+		listMarkers,
+	) {
+		return domain.IntentList
+	}
+
 	if hasTechnologyEntity(entities) &&
 		hasAnyPhrase(
 			normalized,
@@ -58,13 +79,6 @@ func (d *IntentDetector) Detect(
 		capabilityMarkers,
 	) {
 		return domain.IntentCapability
-	}
-
-	if hasAnyPhrase(
-		normalized,
-		listMarkers,
-	) {
-		return domain.IntentList
 	}
 
 	if hasAnyPhrase(
@@ -157,6 +171,34 @@ var educationMarkers = []string{
 	"academic",
 }
 
+var preferenceMarkers = []string{
+	"preferencia",
+	"preferência",
+	"preferida",
+	"preferido",
+	"favorita",
+	"favorito",
+	"preferred",
+	"favorite",
+}
+
+var unsupportedAttributeMarkers = []string{
+	"quantos anos",
+	"idade",
+	"data de nascimento",
+	"nascimento",
+	"salario",
+	"salário",
+	"altura",
+	"casado",
+	"married",
+	"how old",
+	"age",
+	"birth date",
+	"salary",
+	"height",
+}
+
 var technologyUsageMarkers = []string{
 	"onde usou",
 	"onde utiliza",
@@ -220,6 +262,11 @@ var listMarkers = []string{
 	"list",
 	"what are",
 	"which technologies",
+	"which frameworks",
+	"what programming languages",
+	"which programming languages",
+	"what technologies",
+	"what languages",
 	"which skills",
 	"all projects",
 	"all technologies",
@@ -235,6 +282,10 @@ var experienceMarkers = []string{
 	"historico profissional",
 	"histórico profissional",
 	"empregos",
+	"cargo",
+	"cargo atual",
+	"funcao",
+	"função",
 	"professional experience",
 	"work experience",
 	"career",
@@ -289,6 +340,8 @@ func hasTechnologyEntity(
 			knowledge.EntityReact,
 			knowledge.EntityNextJS,
 			knowledge.EntityJava,
+			knowledge.EntityJavaScript,
+			knowledge.EntityTypeScript,
 			knowledge.EntitySpringBoot,
 			knowledge.EntityGo,
 			knowledge.EntityNodeJS,

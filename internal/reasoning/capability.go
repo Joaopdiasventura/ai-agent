@@ -3,6 +3,7 @@ package reasoning
 import (
 	"ai-agent/internal/domain"
 	"ai-agent/internal/knowledge"
+	"ai-agent/internal/ontology"
 )
 
 type CapabilityReasoner struct {
@@ -109,6 +110,14 @@ func capabilityEvidenceRelevant(
 
 		hasCapabilityTarget = true
 
+		if concept.ConceptID == ontology.ConceptFullStack {
+			if factHasConcept(fact, ontology.ConceptFrontend) ||
+				factHasConcept(fact, ontology.ConceptBackend) ||
+				factHasConcept(fact, ontology.ConceptFullStack) {
+				return true
+			}
+		}
+
 		if factHasConcept(
 			fact,
 			concept.ConceptID,
@@ -133,6 +142,10 @@ func capabilityStatus(
 		return SupportInsufficientEvidence
 	}
 
+	if currentQuery.HasConcept(ontology.ConceptFullStack) {
+		return fullStackCapabilityStatus(evidence, base)
+	}
+
 	for _, currentEvidence := range evidence {
 		if currentEvidence.Score < 0.35 {
 			continue
@@ -154,6 +167,45 @@ func capabilityStatus(
 		) {
 			return SupportSupported
 		}
+	}
+
+	return SupportInsufficientEvidence
+}
+
+func fullStackCapabilityStatus(
+	evidence []Evidence,
+	base *knowledge.Knowledge,
+) SupportStatus {
+	hasFrontend := false
+	hasBackend := false
+	hasExplicit := false
+
+	for _, currentEvidence := range evidence {
+		if currentEvidence.Score < 0.35 {
+			continue
+		}
+
+		fact, found := base.Fact(currentEvidence.FactID)
+
+		if !found {
+			continue
+		}
+
+		if factHasConcept(fact, ontology.ConceptFullStack) {
+			hasExplicit = true
+		}
+
+		if factHasConcept(fact, ontology.ConceptFrontend) {
+			hasFrontend = true
+		}
+
+		if factHasConcept(fact, ontology.ConceptBackend) {
+			hasBackend = true
+		}
+	}
+
+	if hasExplicit || (hasFrontend && hasBackend) {
+		return SupportSupported
 	}
 
 	return SupportInsufficientEvidence

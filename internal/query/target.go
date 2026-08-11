@@ -141,11 +141,21 @@ var technologyTargetMarkers = []string{
 	"frameworks",
 	"linguagem",
 	"linguagens",
+	"banco",
+	"bancos",
+	"mensageria",
+	"idioma",
+	"idiomas",
 	"technology",
 	"technologies",
 	"tech stack",
 	"language",
 	"languages",
+	"programming language",
+	"programming languages",
+	"database",
+	"databases",
+	"messaging",
 }
 
 var skillTargetMarkers = []string{

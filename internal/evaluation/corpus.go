@@ -246,6 +246,295 @@ func RegressionCases() []Case {
 			},
 		},
 		{
+			ID:       "pt-javascript-capability",
+			Question: "Ele sabe JavaScript?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentCapability,
+				Entities: []domain.EntityID{
+					knowledge.EntityJavaScript,
+				},
+				Facts: []domain.FactID{
+					"skill-javascript",
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"JavaScript",
+				},
+			},
+		},
+		{
+			ID:       "pt-typescript-capability",
+			Question: "Ele sabe TypeScript?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentCapability,
+				Entities: []domain.EntityID{
+					knowledge.EntityTypeScript,
+				},
+				Facts: []domain.FactID{
+					"skill-typescript",
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"TypeScript",
+				},
+			},
+		},
+		{
+			ID:       "pt-java-typo",
+			Question: "ele sabe jva?",
+			Category: CategoryTypo,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentCapability,
+				Entities: []domain.EntityID{
+					knowledge.EntityJava,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"Java",
+				},
+			},
+		},
+		{
+			ID:       "pt-docker-typo",
+			Question: "ele sabe dcker?",
+			Category: CategoryTypo,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentCapability,
+				Entities: []domain.EntityID{
+					knowledge.EntityDocker,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"Docker",
+				},
+			},
+		},
+		{
+			ID:       "pt-programming-languages-list",
+			Question: "Quais linguagens ele sabe?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentList,
+				Concepts: []domain.ConceptID{
+					ontology.ConceptProgrammingLanguage,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"JavaScript",
+					"TypeScript",
+					"Java",
+					"Go",
+				},
+				ResponseNotContains: []string{
+					"Português",
+					"Inglês",
+				},
+			},
+		},
+		{
+			ID:       "pt-frameworks-list",
+			Question: "Quais frameworks ele sabe?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentList,
+				Concepts: []domain.ConceptID{
+					ontology.ConceptFramework,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"Angular",
+					"React",
+					"Next.js",
+					"Spring Boot",
+					"NestJS",
+				},
+			},
+		},
+		{
+			ID:       "pt-technologies-list",
+			Question: "Quais tecnologias ele sabe?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse:    boolValue(true),
+				Language:       domain.LanguagePortuguese,
+				Intent:         domain.IntentList,
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"Java",
+					"Go",
+					"Docker",
+				},
+			},
+		},
+		{
+			ID:       "pt-human-languages-list",
+			Question: "quais idiomas ele fala?",
+			Category: CategoryDirect,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentList,
+				Concepts: []domain.ConceptID{
+					ontology.ConceptLanguage,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"Português",
+					"Inglês",
+				},
+				ResponseNotContains: []string{
+					"JavaScript",
+				},
+			},
+		},
+		{
+			ID:       "pt-unknown-age",
+			Question: "quantos anos tem João?",
+			Category: CategoryAbstention,
+			Expectation: Expectation{
+				HasResponse:    boolValue(false),
+				Language:       domain.LanguagePortuguese,
+				Intent:         domain.IntentUnknown,
+				PlanStatus:     planning.PlanStatusAbstain,
+				ConfidenceMode: confidence.ModeAbstention,
+			},
+		},
+		{
+			ID:       "pt-unknown-preference",
+			Question: "João tem preferência de linguagem?",
+			Category: CategoryAbstention,
+			Expectation: Expectation{
+				HasResponse:    boolValue(false),
+				Language:       domain.LanguagePortuguese,
+				Intent:         domain.IntentUnknown,
+				PlanStatus:     planning.PlanStatusAbstain,
+				ConfidenceMode: confidence.ModeAbstention,
+			},
+		},
+		{
+			ID:       "pt-backend-capability",
+			Question: "ele sabe backend?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentCapability,
+				Concepts: []domain.ConceptID{
+					ontology.ConceptBackend,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+			},
+		},
+		{
+			ID:       "pt-fullstack-capability",
+			Question: "ele sabe fulstack?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguagePortuguese,
+				Intent:      domain.IntentCapability,
+				Concepts: []domain.ConceptID{
+					ontology.ConceptFullStack,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+			},
+		},
+		{
+			ID:       "en-programming-languages-list",
+			Question: "What programming languages does João know?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguageEnglish,
+				Intent:      domain.IntentList,
+				Concepts: []domain.ConceptID{
+					ontology.ConceptProgrammingLanguage,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"JavaScript",
+					"TypeScript",
+					"Java",
+					"Go",
+				},
+			},
+		},
+		{
+			ID:       "en-frameworks-list",
+			Question: "Which frameworks does João know?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguageEnglish,
+				Intent:      domain.IntentList,
+				Concepts: []domain.ConceptID{
+					ontology.ConceptFramework,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"Angular",
+					"React",
+					"Next.js",
+				},
+			},
+		},
+		{
+			ID:       "en-docker-capability",
+			Question: "Does João know Docker?",
+			Category: CategoryCapability,
+			Expectation: Expectation{
+				HasResponse: boolValue(true),
+				Language:    domain.LanguageEnglish,
+				Intent:      domain.IntentCapability,
+				Entities: []domain.EntityID{
+					knowledge.EntityDocker,
+				},
+				PlanStatus:     planning.PlanStatusReady,
+				ConfidenceMode: confidence.ModeClaim,
+				ResponseContains: []string{
+					"Docker",
+				},
+			},
+		},
+		{
+			ID:       "en-unknown-age",
+			Question: "How old is João?",
+			Category: CategoryAbstention,
+			Expectation: Expectation{
+				HasResponse:    boolValue(false),
+				Language:       domain.LanguageEnglish,
+				Intent:         domain.IntentUnknown,
+				PlanStatus:     planning.PlanStatusAbstain,
+				ConfidenceMode: confidence.ModeAbstention,
+			},
+		},
+		{
 			ID:       "unknown-gibberish",
 			Question: "xyzabc123",
 			Category: CategoryUnknown,
